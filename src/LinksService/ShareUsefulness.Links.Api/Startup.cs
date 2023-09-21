@@ -1,5 +1,4 @@
 using Amazon.Lambda.Annotations;
-using Links.Dal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ShareUsefulness.Links.Api;
@@ -33,6 +32,6 @@ public class Startup
         //// the Amazon S3 service client to the dependency injection container.
         //services.AddAWSService<Amazon.S3.IAmazonS3>();
         
-        services.AddSingleton<IDataStore, DataStore>();
+        Dal.Startup.ConfigureServices(services);
     }
 }
