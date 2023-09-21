@@ -1,4 +1,4 @@
-namespace ShareUsefulness.Links.Api.Dto;
+﻿namespace ShareUsefulness.Links.Api.Dto;
 
 public class AddLinkRequestDto
 {

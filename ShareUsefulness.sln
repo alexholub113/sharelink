@@ -6,8 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8096D3B5-5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Infrastructure", "src\ShareUsefulness.Infrastructure\ShareUsefulness.Infrastructure.csproj", "{82645100-870E-4A40-A0E1-3870C19EC905}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Links.Api", "src\LinksService\Links.Api\Links.Api.csproj", "{5045C02E-7329-43F1-83E9-CABC80630101}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{BD0736EC-E559-4E11-A564-949AC854D45F}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -15,9 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LinksService", "LinksService", "{019280DC-D237-4363-BE7E-3D1FF00914BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Links.Core", "src\LinksService\Links.Core\Links.Core.csproj", "{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Core", "src\LinksService\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj", "{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Links.Dal", "src\LinksService\Links.Dal\Links.Dal.csproj", "{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Dal", "src\LinksService\ShareUsefulness.Links.Dal\ShareUsefulness.Links.Dal.csproj", "{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Api", "src\LinksService\ShareUsefulness.Links.Api\ShareUsefulness.Links.Api.csproj", "{EA5025CB-A3C8-412B-81C2-0E79697A7216}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,6 @@ Global
 		{82645100-870E-4A40-A0E1-3870C19EC905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82645100-870E-4A40-A0E1-3870C19EC905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82645100-870E-4A40-A0E1-3870C19EC905}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5045C02E-7329-43F1-83E9-CABC80630101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5045C02E-7329-43F1-83E9-CABC80630101}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5045C02E-7329-43F1-83E9-CABC80630101}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5045C02E-7329-43F1-83E9-CABC80630101}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,12 +37,16 @@ Global
 		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{82645100-870E-4A40-A0E1-3870C19EC905} = {D45B3F55-4C08-4707-9A38-0ED90EAC55EE}
 		{019280DC-D237-4363-BE7E-3D1FF00914BC} = {D45B3F55-4C08-4707-9A38-0ED90EAC55EE}
-		{5045C02E-7329-43F1-83E9-CABC80630101} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
 		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
+		{EA5025CB-A3C8-412B-81C2-0E79697A7216} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
 	EndGlobalSection
 EndGlobal

@@ -8,7 +8,7 @@
   "profile": "",
   "region": "us-west-1",
   "configuration": "Release",
-  "s3-prefix": "ShareUsefulness.Link.Api/",
+  "s3-prefix": "",
   "template": "serverless.template",
   "template-parameters": "",
   "docker-host-build-output-dir": "./bin/Release/lambda-publish"

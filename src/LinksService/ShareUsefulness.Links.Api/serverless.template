@@ -12,15 +12,18 @@
         ]
       },
       "Properties": {
-        "Runtime": "dotnet6",
-        "CodeUri": ".",
         "MemorySize": 256,
         "Timeout": 30,
         "Policies": [
           "AWSLambdaBasicExecutionRole"
         ],
-        "PackageType": "Zip",
-        "Handler": "Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_GetList_Generated::GetList",
+        "PackageType": "Image",
+        "ImageUri": ".",
+        "ImageConfig": {
+          "Command": [
+            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_GetList_Generated::GetList"
+          ]
+        },
         "Events": {
           "RootGet": {
             "Type": "HttpApi",
@@ -41,15 +44,18 @@
         ]
       },
       "Properties": {
-        "Runtime": "dotnet6",
-        "CodeUri": ".",
         "MemorySize": 256,
         "Timeout": 30,
         "Policies": [
           "AWSLambdaBasicExecutionRole"
         ],
-        "PackageType": "Zip",
-        "Handler": "Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_AddLink_Generated::AddLink",
+        "PackageType": "Image",
+        "ImageUri": ".",
+        "ImageConfig": {
+          "Command": [
+            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_AddLink_Generated::AddLink"
+          ]
+        },
         "Events": {
           "RootPost": {
             "Type": "HttpApi",
@@ -66,7 +72,7 @@
     "ApiURL": {
       "Description": "API endpoint URL for Prod environment",
       "Value": {
-        "Fn::Sub": "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
+        "Fn::Sub": "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
       }
     }
   }

@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>Links.Dal</AssemblyName>
         <RootNamespace>Links.Dal</RootNamespace>
+        <PackageId>ShareUsefulness.Links.Dal</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Links.Core\Links.Core.csproj" />
+      <ProjectReference Include="..\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj" />
     </ItemGroup>
 
 </Project>

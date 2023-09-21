@@ -1,4 +1,4 @@
-namespace Links.Core.Models;
+namespace ShareUsefulness.Links.Core.Models;
 
 public class Link
 {
