@@ -12,4 +12,8 @@
       <PackageReference Include="AWS.Lambda.Powertools.Tracing" Version="1.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\LinksService\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj" />
+    </ItemGroup>
+
 </Project>

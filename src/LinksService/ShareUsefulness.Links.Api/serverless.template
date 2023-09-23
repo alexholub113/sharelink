@@ -18,12 +18,6 @@
           "AWSLambdaBasicExecutionRole"
         ],
         "PackageType": "Image",
-        "ImageUri": ".",
-        "ImageConfig": {
-          "Command": [
-            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_GetList_Generated::GetList"
-          ]
-        },
         "Events": {
           "RootGet": {
             "Type": "HttpApi",
@@ -32,6 +26,12 @@
               "Method": "GET"
             }
           }
+        },
+        "ImageUri": ".",
+        "ImageConfig": {
+          "Command": [
+            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_GetList_Generated::GetList"
+          ]
         }
       }
     },
@@ -50,12 +50,6 @@
           "AWSLambdaBasicExecutionRole"
         ],
         "PackageType": "Image",
-        "ImageUri": ".",
-        "ImageConfig": {
-          "Command": [
-            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_AddLink_Generated::AddLink"
-          ]
-        },
         "Events": {
           "RootPost": {
             "Type": "HttpApi",
@@ -64,6 +58,12 @@
               "Method": "POST"
             }
           }
+        },
+        "ImageUri": ".",
+        "ImageConfig": {
+          "Command": [
+            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_AddLink_Generated::AddLink"
+          ]
         }
       }
     }
@@ -72,7 +72,7 @@
     "ApiURL": {
       "Description": "API endpoint URL for Prod environment",
       "Value": {
-        "Fn::Sub": "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+        "Fn::Sub": "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
       }
     }
   }

@@ -24,8 +24,7 @@ public class LinksFunctions
     [Tracing]
     public async Task<Link[]> GetList()
     {
-        var result = await _dataStore.GetList();
-        return result;
+        return await _dataStore.GetList();
     }
 
     [LambdaFunction(PackageType = LambdaPackageType.Image, Policies = "AWSLambdaBasicExecutionRole", MemorySize = 256, Timeout = 30)]

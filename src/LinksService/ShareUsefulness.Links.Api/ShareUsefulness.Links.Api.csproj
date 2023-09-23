@@ -17,9 +17,10 @@
         <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.1"/>
         <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.6.0"/>
         <PackageReference Include="AWS.Lambda.Powertools.Tracing" Version="1.3.2" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\ShareUsefulness.Infrastructure\ShareUsefulness.Infrastructure.csproj" />
       <ProjectReference Include="..\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj" />
       <ProjectReference Include="..\ShareUsefulness.Links.Dal\ShareUsefulness.Links.Dal.csproj" />
     </ItemGroup>
