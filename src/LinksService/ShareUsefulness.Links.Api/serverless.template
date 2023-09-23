@@ -3,7 +3,7 @@
   "Transform": "AWS::Serverless-2016-10-31",
   "Description": "An AWS Serverless Application. This template is partially managed by Amazon.Lambda.Annotations (v1.0.0.0).",
   "Resources": {
-    "ShareUsefulnessLinksApiFunctionsLinksFunctionsGetListGenerated": {
+    "ShareUsefulnessLinksApiLinksFunctionsGetListGenerated": {
       "Type": "AWS::Serverless::Function",
       "Metadata": {
         "Tool": "Amazon.Lambda.Annotations",
@@ -18,6 +18,12 @@
           "AWSLambdaBasicExecutionRole"
         ],
         "PackageType": "Image",
+        "ImageUri": ".",
+        "ImageConfig": {
+          "Command": [
+            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.LinksFunctions_GetList_Generated::GetList"
+          ]
+        },
         "Events": {
           "RootGet": {
             "Type": "HttpApi",
@@ -26,16 +32,10 @@
               "Method": "GET"
             }
           }
-        },
-        "ImageUri": ".",
-        "ImageConfig": {
-          "Command": [
-            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_GetList_Generated::GetList"
-          ]
         }
       }
     },
-    "ShareUsefulnessLinksApiFunctionsLinksFunctionsAddLinkGenerated": {
+    "ShareUsefulnessLinksApiLinksFunctionsAddLinkGenerated": {
       "Type": "AWS::Serverless::Function",
       "Metadata": {
         "Tool": "Amazon.Lambda.Annotations",
@@ -50,6 +50,12 @@
           "AWSLambdaBasicExecutionRole"
         ],
         "PackageType": "Image",
+        "ImageUri": ".",
+        "ImageConfig": {
+          "Command": [
+            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.LinksFunctions_AddLink_Generated::AddLink"
+          ]
+        },
         "Events": {
           "RootPost": {
             "Type": "HttpApi",
@@ -58,12 +64,6 @@
               "Method": "POST"
             }
           }
-        },
-        "ImageUri": ".",
-        "ImageConfig": {
-          "Command": [
-            "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.Functions.LinksFunctions_AddLink_Generated::AddLink"
-          ]
         }
       }
     }

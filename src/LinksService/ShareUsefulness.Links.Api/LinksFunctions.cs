@@ -2,13 +2,13 @@ using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
 using Amazon.Lambda.Core;
 using AWS.Lambda.Powertools.Tracing;
-using ShareUsefulness.Links.Core.Models;
 using Links.Dal;
 using ShareUsefulness.Links.Api.Dto;
+using ShareUsefulness.Links.Core.Models;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace ShareUsefulness.Links.Api.Functions;
+namespace ShareUsefulness.Links.Api;
 
 public class LinksFunctions
 {
