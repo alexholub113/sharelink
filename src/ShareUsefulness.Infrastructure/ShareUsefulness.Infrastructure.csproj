@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.6.0" />
-      <PackageReference Include="AWS.Lambda.Powertools.Tracing" Version="1.2.0" />
+      <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\LinksService\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj" />
     </ItemGroup>
+
 
 </Project>

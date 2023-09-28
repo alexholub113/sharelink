@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D45B3F55-4C08-4707-9A38-0ED90EAC55EE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8096D3B5-5930-4803-BF04-AC884C7AD8A8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8096D3B5-5930-4803-BF04-AC884C7AD8A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Infrastructure", "src\ShareUsefulness.Infrastructure\ShareUsefulness.Infrastructure.csproj", "{82645100-870E-4A40-A0E1-3870C19EC905}"
 EndProject
@@ -16,9 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LinksService", "LinksServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Core", "src\LinksService\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj", "{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Dal", "src\LinksService\ShareUsefulness.Links.Dal\ShareUsefulness.Links.Dal.csproj", "{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Api", "src\LinksService\ShareUsefulness.Links.Api\ShareUsefulness.Links.Api.csproj", "{D94B48C8-1ACC-4D0B-903C-5D6AB5E4DE40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Api", "src\LinksService\ShareUsefulness.Links.Api\ShareUsefulness.Links.Api.csproj", "{EA5025CB-A3C8-412B-81C2-0E79697A7216}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareUsefulness.Links.Api.Tests", "test\ShareUsefulness.Links.Api.Tests\ShareUsefulness.Links.Api.Tests.csproj", "{47FE9C9D-924F-4588-BBBE-5F5B5504CC81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,20 +34,21 @@ Global
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA5025CB-A3C8-412B-81C2-0E79697A7216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94B48C8-1ACC-4D0B-903C-5D6AB5E4DE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94B48C8-1ACC-4D0B-903C-5D6AB5E4DE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94B48C8-1ACC-4D0B-903C-5D6AB5E4DE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94B48C8-1ACC-4D0B-903C-5D6AB5E4DE40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47FE9C9D-924F-4588-BBBE-5F5B5504CC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47FE9C9D-924F-4588-BBBE-5F5B5504CC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47FE9C9D-924F-4588-BBBE-5F5B5504CC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47FE9C9D-924F-4588-BBBE-5F5B5504CC81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{82645100-870E-4A40-A0E1-3870C19EC905} = {D45B3F55-4C08-4707-9A38-0ED90EAC55EE}
 		{019280DC-D237-4363-BE7E-3D1FF00914BC} = {D45B3F55-4C08-4707-9A38-0ED90EAC55EE}
 		{C522C169-FB5C-4B3B-8681-B58ACFE06DD9} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
-		{DB156B5D-C6F5-4FD1-BB14-2D2761169F91} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
-		{EA5025CB-A3C8-412B-81C2-0E79697A7216} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
+		{D94B48C8-1ACC-4D0B-903C-5D6AB5E4DE40} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
+		{47FE9C9D-924F-4588-BBBE-5F5B5504CC81} = {8096D3B5-5930-4803-BF04-AC884C7AD8A8}
+		{8096D3B5-5930-4803-BF04-AC884C7AD8A8} = {019280DC-D237-4363-BE7E-3D1FF00914BC}
 	EndGlobalSection
 EndGlobal
