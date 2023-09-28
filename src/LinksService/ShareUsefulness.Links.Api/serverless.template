@@ -32,6 +32,12 @@
               "Method": "POST"
             }
           }
+        },
+        "Environment": {
+          "Variables": {
+            "MONGO_CONNECTION_STRING": "mongodb+srv://saj113:saj113@shareusefulnesscluster.r9yyidf.mongodb.net/?retryWrites=true&w=majority",
+            "MONGO_LINKS_DB_NAME": "LinksDb"
+          }
         }
       }
     },

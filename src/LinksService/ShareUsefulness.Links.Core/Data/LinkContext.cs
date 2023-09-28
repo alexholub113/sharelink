@@ -10,10 +10,10 @@ public interface ILinkContext
 
 public class LinkContext : ILinkContext
 {
-    public LinkContext()
+    public LinkContext(string connectionString, string databaseName)
     {
-        var client = new MongoClient("mongodb+srv://saj113:saj113@shareusefulnesscluster.r9yyidf.mongodb.net/?retryWrites=true&w=majority");
-        var database = client.GetDatabase("LinksDb");
+        var client = new MongoClient(connectionString);
+        var database = client.GetDatabase(databaseName);
         Links = database.GetCollection<Link>(nameof(Links));
 
         LinkContextSeed.SeedData(Links);
