@@ -9,8 +9,6 @@ public class Link
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
 
-    public User User { get; set; }
-    
     public LinkType Type { get; set; }
     
     public string Title { get; set; }

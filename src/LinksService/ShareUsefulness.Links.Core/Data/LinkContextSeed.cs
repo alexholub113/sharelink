@@ -22,7 +22,6 @@ public class LinkContextSeed
             new()
             {
                 Id = ObjectId.GenerateNewId().ToString(),
-                User = new User { Id = ObjectId.GenerateNewId().ToString(), Name = "Oleksandr Asdgfg" },
                 Title = "Youtube link 1",
                 Url = "https://youtu.be/iDLDcUXhM60?si=_c3RTr7b_QDbkXPo",
                 Tags = new [] { "react", "typescript" },
@@ -33,7 +32,6 @@ public class LinkContextSeed
             new()
             {
                 Id = ObjectId.GenerateNewId().ToString(),
-                User = new User { Id = ObjectId.GenerateNewId().ToString(), Name = "Oleksdfsdfandr Asdgfg" },
                 Title = "Youtube link 2",
                 Url = "https://youtu.be/iDLDcUXhM60?si=_c3RTr7b_QDbkXPo",
                 Tags = new [] { ".net", "c#" },

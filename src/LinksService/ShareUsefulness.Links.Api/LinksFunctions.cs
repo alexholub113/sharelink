@@ -2,9 +2,9 @@ using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
 using Amazon.Lambda.Core;
 using AWS.Lambda.Powertools.Tracing;
-using Links.Dal;
-using ShareUsefulness.Links.Api.Dto;
-using ShareUsefulness.Links.Core.Models;
+using ShareUsefulness.Infrastructure.Command;
+using ShareUsefulness.Links.Core.Commands.AddLink;
+using ShareUsefulness.Links.Core.Commands.GetList;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
@@ -12,27 +12,23 @@ namespace ShareUsefulness.Links.Api;
 
 public class LinksFunctions
 {
-    private IDataStore _dataStore;
-
-    public LinksFunctions(IDataStore dataStore)
-    {
-        _dataStore = dataStore;
-    }
-
     [LambdaFunction(PackageType = LambdaPackageType.Image, Policies = "AWSLambdaBasicExecutionRole", MemorySize = 256, Timeout = 30)]
-    [HttpApi(LambdaHttpMethod.Get, "/list")]
+    [HttpApi(LambdaHttpMethod.Post, "/list")]
     [Tracing]
-    public async Task<Link[]> GetList()
+    public async Task<GetListResponse> GetList(
+        [FromServices] ICommandHandler<GetListRequest, GetListResponse> handler,
+        [FromBody] GetListRequest request)
     {
-        return await _dataStore.GetList();
+        return await handler.Handle(request);
     }
 
     [LambdaFunction(PackageType = LambdaPackageType.Image, Policies = "AWSLambdaBasicExecutionRole", MemorySize = 256, Timeout = 30)]
     [HttpApi(LambdaHttpMethod.Post, "/add")]
     [Tracing]
-    public async Task AddLink([FromBody] AddLinkRequestDto requestDto)
+    public async Task<CommandResponse> AddLink(
+        [FromServices] ICommandHandler<AddLinkRequest, CommandResponse> handler,
+        [FromBody] AddLinkRequest request)
     {
-        Tracing.AddAnnotation("link", requestDto.Name);
-        await _dataStore.Add(new Link(requestDto.Name));
+        return await handler.Handle(request);
     }
 }

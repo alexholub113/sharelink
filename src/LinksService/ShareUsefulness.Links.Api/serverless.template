@@ -8,7 +8,7 @@
       "Metadata": {
         "Tool": "Amazon.Lambda.Annotations",
         "SyncedEvents": [
-          "RootGet"
+          "RootPost"
         ]
       },
       "Properties": {
@@ -25,11 +25,11 @@
           ]
         },
         "Events": {
-          "RootGet": {
+          "RootPost": {
             "Type": "HttpApi",
             "Properties": {
               "Path": "/list",
-              "Method": "GET"
+              "Method": "POST"
             }
           }
         }

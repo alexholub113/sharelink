@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using ShareUsefulness.Infrastructure.Command;
+using ShareUsefulness.Links.Core.Commands.AddLink;
+using ShareUsefulness.Links.Core.Commands.GetList;
 using ShareUsefulness.Links.Core.Data;
-using ShareUsefulness.Links.Core.Services;
 
 namespace ShareUsefulness.Links.Core;
 
@@ -9,6 +11,8 @@ public class Startup
     public static void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<ILinkContext, LinkContext>();
-        services.AddScoped<ILinkService, LinkService>();
+
+        services.AddTransient<ICommandHandler<GetListRequest, GetListResponse>, GetListHandler>();
+        services.AddTransient<ICommandHandler<AddLinkRequest, CommandResponse>, AddLinkHandler>();
     }
 }

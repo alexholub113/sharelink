@@ -17,7 +17,10 @@
 
 
     <ItemGroup>
-      <Folder Include="Repositories\" />
+      <ProjectReference Include="..\..\ShareUsefulness.Infrastructure\ShareUsefulness.Infrastructure.csproj" />
     </ItemGroup>
+
+
+
 
 </Project>

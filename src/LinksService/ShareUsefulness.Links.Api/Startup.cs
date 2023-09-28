@@ -32,6 +32,6 @@ public class Startup
         //// the Amazon S3 service client to the dependency injection container.
         //services.AddAWSService<Amazon.S3.IAmazonS3>();
         
-        Dal.Startup.ConfigureServices(services);
+        Core.Startup.ConfigureServices(services);
     }
 }

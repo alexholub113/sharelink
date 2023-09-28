@@ -6,14 +6,4 @@
         <Nullable>enable</Nullable>
         <LangVersion>latestmajor</LangVersion>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.5.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\LinksService\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj" />
-    </ItemGroup>
-
-
 </Project>

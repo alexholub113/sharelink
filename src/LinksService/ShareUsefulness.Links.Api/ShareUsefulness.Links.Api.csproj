@@ -20,8 +20,12 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\ShareUsefulness.Infrastructure\ShareUsefulness.Infrastructure.csproj" />
       <ProjectReference Include="..\ShareUsefulness.Links.Core\ShareUsefulness.Links.Core.csproj" />
-      <ProjectReference Include="..\ShareUsefulness.Links.Dal\ShareUsefulness.Links.Dal.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Dto\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Dto\AddLinkRequestDto.cs" />
     </ItemGroup>
 </Project>
