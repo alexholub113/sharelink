@@ -19,5 +19,5 @@ public class Link
     
     public int Likes { get; set; }
     
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

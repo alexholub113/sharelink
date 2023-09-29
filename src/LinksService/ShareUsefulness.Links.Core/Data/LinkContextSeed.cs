@@ -25,7 +25,7 @@ public class LinkContextSeed
                 Title = "Youtube link 1",
                 Url = "https://youtu.be/iDLDcUXhM60?si=_c3RTr7b_QDbkXPo",
                 Tags = new [] { "react", "typescript" },
-                CreatedDate = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
                 Likes = 2,
                 Type = LinkType.Youtube
             },
@@ -35,7 +35,7 @@ public class LinkContextSeed
                 Title = "Youtube link 2",
                 Url = "https://youtu.be/iDLDcUXhM60?si=_c3RTr7b_QDbkXPo",
                 Tags = new [] { ".net", "c#" },
-                CreatedDate = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
                 Likes = 1,
                 Type = LinkType.Youtube
             },

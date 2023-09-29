@@ -13,7 +13,4 @@
   "template-parameters": "",
   "docker-host-build-output-dir": "./bin/Release/lambda-publish",
   "function-runtime": "dotnet6",
-  "function-memory-size": 256,
-  "function-timeout": 30,
-  "function-handler": "ShareUsefulness.Links.Api::ShareUsefulness.Links.Api.LinksFunctions_GetList_Generated::GetList"
 }

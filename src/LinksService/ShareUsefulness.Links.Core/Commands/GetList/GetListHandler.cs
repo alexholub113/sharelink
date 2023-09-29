@@ -5,7 +5,7 @@ using ShareUsefulness.Links.Core.Data;
 
 namespace ShareUsefulness.Links.Core.Commands.GetList;
 
-public class GetListHandler : ICommandHandler<GetListRequest, GetListResponse>
+public class GetListHandler : CommandHandler<GetListRequest, GetListResponse>
 {
     private readonly ILinkContext _context;
 
@@ -14,11 +14,11 @@ public class GetListHandler : ICommandHandler<GetListRequest, GetListResponse>
         _context = context;
     }
 
-    public async Task<GetListResponse> Handle(GetListRequest request)
+    protected override async Task<GetListResponse> HandleInternal(GetListRequest request)
     {
         var items = await _context.Links
             .AsQueryable()
-            .Select(x => new GetListResponseItem { Title = x.Title })
+            .Select(x => new GetListResponseItem { Title = x.Title, Url = x.Url, Tags = x.Tags, Type = x.Type, Id = x.Id, CreatedAt = x.CreatedAt })
             .ToListAsync();
 
         return new GetListResponse(items.ToArray(), items.Count);

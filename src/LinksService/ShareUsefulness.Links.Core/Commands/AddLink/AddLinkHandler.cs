@@ -1,10 +1,11 @@
 using ShareUsefulness.Infrastructure.Command;
+using ShareUsefulness.Infrastructure.Exceptions;
 using ShareUsefulness.Links.Core.Data;
 using ShareUsefulness.Links.Core.Entities;
 
 namespace ShareUsefulness.Links.Core.Commands.AddLink;
 
-public class AddLinkHandler : ICommandHandler<AddLinkRequest, CommandResponse>
+public class AddLinkHandler : CommandHandler<AddLinkRequest, string>
 {
     private readonly ILinkContext _linkContext;
 
@@ -13,10 +14,23 @@ public class AddLinkHandler : ICommandHandler<AddLinkRequest, CommandResponse>
         _linkContext = linkContext;
     }
 
-    public async Task<CommandResponse> Handle(AddLinkRequest request)
+    protected override async Task<string> HandleInternal(AddLinkRequest request)
     {
-        await _linkContext.Links.InsertOneAsync(new Link { Title = request.Title });
+        var errors = request.Validate().ToArray();
+        if (errors.Any())
+        {
+            throw new RequestValidationException(errors);
+        }
 
-        return new CommandResponse();
+        await _linkContext.Links.InsertOneAsync(new Link
+        {
+            Title = request.Title,
+            Type = request.Type,
+            Url = request.Url,
+            Tags = request.Tags,
+            CreatedAt = DateTime.UtcNow,
+        });
+
+        return "Successfully added link";
     }
 }

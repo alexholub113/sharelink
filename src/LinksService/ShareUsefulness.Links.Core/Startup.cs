@@ -12,11 +12,11 @@ public class Startup
     {
         services.AddSingleton<ILinkContext, LinkContext>(_ => {
             var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
-            var databaseName = Environment.GetEnvironmentVariable("MONGO_LINKS_DB_NAME");
+            var databaseName = Environment.GetEnvironmentVariable("MONGO_DATABASE_NAME");
             return new LinkContext(connectionString, databaseName);
         });
 
         services.AddTransient<ICommandHandler<GetListRequest, GetListResponse>, GetListHandler>();
-        services.AddTransient<ICommandHandler<AddLinkRequest, CommandResponse>, AddLinkHandler>();
+        services.AddTransient<ICommandHandler<AddLinkRequest, string>, AddLinkHandler>();
     }
 }

@@ -1,8 +1,6 @@
-using ShareUsefulness.Infrastructure.Command;
-
 namespace ShareUsefulness.Links.Core.Commands.GetList;
 
-public class GetListResponse : ICommandResponse
+public class GetListResponse
 {
     public GetListResponse(GetListResponseItem[] items, int total)
     {

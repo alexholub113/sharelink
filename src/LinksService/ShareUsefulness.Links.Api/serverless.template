@@ -35,8 +35,10 @@
         },
         "Environment": {
           "Variables": {
+            "POWERTOOLS_SERVICE_NAME": "powertools-dotnet-logging-sample",
+            "POWERTOOLS_LOG_LEVEL": "Debug",
             "MONGO_CONNECTION_STRING": "mongodb+srv://saj113:saj113@shareusefulnesscluster.r9yyidf.mongodb.net/?retryWrites=true&w=majority",
-            "MONGO_LINKS_DB_NAME": "LinksDb"
+            "MONGO_DATABASE_NAME": "LinksDb"
           }
         }
       }
@@ -69,6 +71,14 @@
               "Path": "/add",
               "Method": "POST"
             }
+          }
+        },
+        "Environment": {
+          "Variables": {
+            "POWERTOOLS_SERVICE_NAME": "powertools-dotnet-logging-sample",
+            "POWERTOOLS_LOG_LEVEL": "Debug",
+            "MONGO_CONNECTION_STRING": "mongodb+srv://saj113:saj113@shareusefulnesscluster.r9yyidf.mongodb.net/?retryWrites=true&w=majority",
+            "MONGO_DATABASE_NAME": "LinksDb"
           }
         }
       }

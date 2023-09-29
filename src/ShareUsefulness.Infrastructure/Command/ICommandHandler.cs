@@ -1,8 +1,8 @@
 namespace ShareUsefulness.Infrastructure.Command;
 
-public interface ICommandHandler<in TRequest, TResponse>
+public interface ICommandHandler<in TRequest, TData>
     where TRequest : ICommandRequest
-    where TResponse : ICommandResponse
+    where TData : class
 {
-    Task<TResponse> Handle(TRequest request);
+    Task<CommandResponse<TData>> Handle(TRequest request);
 }
