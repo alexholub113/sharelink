@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkService.Common", "LinkS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkService.AddLinkHandler", "LinkService.AddLinkHandler\LinkService.AddLinkHandler.csproj", "{396C44FE-152E-411E-AB42-10AF08423014}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handlers", "Handlers", "{CD93E50A-A529-443F-9D74-70C7952AE5DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,9 @@ Global
 		{396C44FE-152E-411E-AB42-10AF08423014}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{396C44FE-152E-411E-AB42-10AF08423014}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{396C44FE-152E-411E-AB42-10AF08423014}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E520A9A-A051-4FC0-9685-6E34AF9D71F1} = {CD93E50A-A529-443F-9D74-70C7952AE5DA}
+		{396C44FE-152E-411E-AB42-10AF08423014} = {CD93E50A-A529-443F-9D74-70C7952AE5DA}
 	EndGlobalSection
 EndGlobal
