@@ -3,6 +3,7 @@ using System.Text.Json;
 using Amazon.Lambda.APIGatewayEvents;
 using ShareUsefulness.Lambda.Infrastructure.Models;
 using ShareUsefulness.Links.Core.Commands.GetList;
+using ShareUsefulness.Links.Core.Models;
 
 namespace ShareUsefulness.Lambda.Infrastructure;
 
@@ -26,6 +27,16 @@ public static class ApiGatewayResponseBuilder
             Body = JsonSerializer.Serialize(
                 new SuccessApiResponse<GetListResponse>(getListResponse),
                 HttpApiJsonSerializerContext.Default.SuccessApiResponseGetListResponse),
+            StatusCode = (int)HttpStatusCode.OK,
+            Headers = Headers
+        };
+
+    public static APIGatewayHttpApiV2ProxyResponse Build(Link link) =>
+        new()
+        {
+            Body = JsonSerializer.Serialize(
+                new SuccessApiResponse<Link>(link),
+                HttpApiJsonSerializerContext.Default.SuccessApiResponseLink),
             StatusCode = (int)HttpStatusCode.OK,
             Headers = Headers
         };

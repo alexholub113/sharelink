@@ -1,10 +1,10 @@
 version = 0.1
 [default.deploy.parameters]
-stack_name = "anothersamapp"
+stack_name = "samapp1"
 resolve_s3 = true
-s3_prefix = "anothersamapp"
+s3_prefix = "samapp1"
 region = "us-west-1"
-confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
+disable_rollback = true
 parameter_overrides = "LambdaArchitecture=\"x86_64\""
-image_repositories = ["GetListFunction=147407883976.dkr.ecr.us-west-1.amazonaws.com/anothersamapp5a4ea555/getlistfunctionc957eda2repo"]
+image_repositories = ["GetListFunction=147407883976.dkr.ecr.us-west-1.amazonaws.com/samapp1bd5fe610/getlistfunctionc957eda2repo", "AddLinkFunction=147407883976.dkr.ecr.us-west-1.amazonaws.com/samapp1bd5fe610/addlinkfunction7febb2a1repo"]

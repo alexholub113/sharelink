@@ -43,6 +43,29 @@ Resources:
       Dockerfile: ./ShareUsefulness.Links.Functions/Dockerfile
       DockerBuildArgs:
         SAM_BUILD_MODE: run
+        
+  AddLinkFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /add
+            Method: POST
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action: dynamodb:PutItem
+              Resource: !GetAtt Table.Arn
+    Metadata:
+      DockerTag: dotnet7aot-v1
+      DockerContext: ./
+      Dockerfile: ./ShareUsefulness.Links.Functions/Dockerfile
+      DockerBuildArgs:
+        SAM_BUILD_MODE: run
 
   Table:
     Type: AWS::DynamoDB::Table

@@ -2,5 +2,6 @@
 
 public enum LinkType
 {
-    Youtube
+    Youtube,
+    Udemy
 }

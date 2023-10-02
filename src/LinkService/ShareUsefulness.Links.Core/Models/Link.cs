@@ -10,7 +10,7 @@ public class Link
     
     public string Url { get; set; }
     
-    public string[] Tags { get; set; }
+    public List<string> Tags { get; set; }
     
     public int Likes { get; set; }
     

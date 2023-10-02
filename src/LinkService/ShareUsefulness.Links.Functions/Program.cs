@@ -15,7 +15,7 @@ public class Program
 
     private static async Task Main()
     {
-        Func<APIGatewayHttpApiV2ProxyRequest, ILambdaContext, Task<APIGatewayHttpApiV2ProxyResponse>> handler = FunctionHandler;
+        var handler = FunctionHandler;
         await LambdaBootstrapBuilder.Create(handler, new SourceGeneratorLambdaJsonSerializer<HttpApiJsonSerializerContext>(options => {
                 options.PropertyNameCaseInsensitive = true;
             }))
@@ -41,6 +41,8 @@ public class Program
             {
                 case "/list":
                     return await Functions.GetList(request, context);
+                case "/add":
+                    return await Functions.AddLink(request, context);
             }
         }
         catch (Exception e)

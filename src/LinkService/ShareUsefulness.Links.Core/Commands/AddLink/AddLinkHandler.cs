@@ -20,6 +20,18 @@ public class AddLinkHandler
             throw new InvalidOperationException("Request is invalid. Errors: " + string.Join(", ", errors));
         }
 
-        throw new NotImplementedException();
+        var link = new Link
+        {
+            Id = request.Type.ToString().ToLower() + ":" + Guid.NewGuid(),
+            Title = request.Title,
+            Type = Enum.Parse<LinkType>(request.Type),
+            Url = request.Url,
+            Tags = request.Tags,
+            Likes = 0,
+            CreatedAt = DateTime.UtcNow
+        };
+        await _dbContext.Client.PutItemAsync(_dbContext.TableName, LinkMapper.ToDynamoDb(link));
+
+        return link;
     }
 }

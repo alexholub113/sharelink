@@ -6,11 +6,11 @@ public class AddLinkRequest
 {
     public string Title { get; set; } = null!;
 
-    public string Type { get; set; }
+    public string Type { get; set; } = null!;
 
     public string Url { get; set; } = null!;
 
-    public string[] Tags { get; set; } = Array.Empty<string>();
+    public List<string> Tags { get; set; } = null!;
 
     public IEnumerable<string> Validate()
     {
@@ -18,18 +18,18 @@ public class AddLinkRequest
         {
             yield return $"{nameof(Title)} is required";
         }
-        
-        if (Type == null)
+
+        if (string.IsNullOrEmpty(Type))
         {
             yield return $"{nameof(Type)} is required";
         }
-        
+
         if (string.IsNullOrEmpty(Url))
         {
             yield return $"{nameof(Url)} is required";
         }
 
-        if (Tags.Length == 0 || Tags.Any(string.IsNullOrEmpty))
+        if (Tags == null || Tags.Count == 0 || Tags.Any(string.IsNullOrEmpty))
         {
             yield return $"{nameof(Tags)} is required";
         }
