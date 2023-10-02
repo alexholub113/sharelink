@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Amazon.Lambda.APIGatewayEvents;
+using LinkService.Common.DataAccess;
 using LinkService.Common.Dto;
-using LinkService.GetListHandler.Dto;
 
 namespace LinkService.GetListHandler;
 

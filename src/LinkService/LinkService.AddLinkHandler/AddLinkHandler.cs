@@ -15,15 +15,16 @@ namespace LinkService.AddLinkHandler;
 
 public class AddLinkHandler
 {
-    private readonly ILinkDynamoDbContext _dbContext;
-    public AddLinkHandler(ILinkDynamoDbContext dbContext)
+    private readonly ILinkRepository _linkRepository;
+
+    public AddLinkHandler(ILinkRepository linkRepository)
     {
-        _dbContext = dbContext;
+        _linkRepository = linkRepository;
     }
-    
+
     private static async Task Main()
     {
-        var handler = new AddLinkHandler(new LinkDynamoDbContext()).Handle;
+        var handler = new AddLinkHandler(new LinkRepository()).Handle;
         await LambdaBootstrapBuilder.Create(handler, new SourceGeneratorLambdaJsonSerializer<AddLinkJsonSerializerContext>(options => {
                 options.PropertyNameCaseInsensitive = true;
             }))
@@ -52,7 +53,7 @@ public class AddLinkHandler
             Likes = 0,
             CreatedAt = DateTime.UtcNow
         };
-        await _dbContext.Client.PutItemAsync(_dbContext.TableName, LinkMapper.ToDynamoDb(link));
+        await _linkRepository.Put(link);
 
         return ApiGatewayResponseBuilder.Success(
             new SuccessApiResponse<Link>(link), AddLinkJsonSerializerContext.Default.SuccessApiResponseLink);

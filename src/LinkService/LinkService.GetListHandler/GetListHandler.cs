@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2.Model;
 using Amazon.Lambda.APIGatewayEvents;
@@ -8,21 +7,22 @@ using Amazon.Lambda.Serialization.SystemTextJson;
 using LinkService.Common;
 using LinkService.Common.DataAccess;
 using LinkService.Common.Dto;
-using LinkService.GetListHandler.Dto;
+using LinkService.Common.Extensions;
 
 namespace LinkService.GetListHandler;
 
 public class GetListHandler
 {
-    private readonly ILinkDynamoDbContext _dbContext;
-    public GetListHandler(ILinkDynamoDbContext dbContext)
+    private readonly ILinkRepository _linkRepository;
+
+    public GetListHandler(ILinkRepository linkRepository)
     {
-        _dbContext = dbContext;
+        _linkRepository = linkRepository;
     }
-    
+
     private static async Task Main()
     {
-        var handler = new GetListHandler(new LinkDynamoDbContext()).Handle;
+        var handler = new GetListHandler(new LinkRepository()).Handle;
         await LambdaBootstrapBuilder.Create(handler, new SourceGeneratorLambdaJsonSerializer<GetListJsonSerializerContext>(options => {
                 options.PropertyNameCaseInsensitive = true;
             }))
@@ -33,15 +33,12 @@ public class GetListHandler
     public async Task<APIGatewayHttpApiV2ProxyResponse> Handle(
         APIGatewayHttpApiV2ProxyRequest apiV2ProxyRequest, ILambdaContext context)
     {
-        var data = await _dbContext.Client.ScanAsync(new ScanRequest()
-        {
-            TableName = _dbContext.TableName,
-            Limit = 20
-        });
-        
-        var links = data.Items.Select(LinkMapper.FromDynamoDb).ToList();
-        var result = new SuccessApiResponse<GetListResponse>(new GetListResponse(links, links.Count));
+        var request = apiV2ProxyRequest.Body.Deserialize(GetListJsonSerializerContext.Default.GetListRequest);
+
+        var response = await _linkRepository.GetList(request);
+
         return ApiGatewayResponseBuilder.Success(
-            result, GetListJsonSerializerContext.Default.SuccessApiResponseGetListResponse);
+            new SuccessApiResponse<GetListResponse>(response),
+            GetListJsonSerializerContext.Default.SuccessApiResponseGetListResponse);
     }
 }
