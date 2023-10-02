@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <AWSProjectType>Lambda</AWSProjectType>
+        <PublishAot>true</PublishAot>
+        <EventSourceSupport>false</EventSourceSupport>
+        <UseSystemResourceKeys>true</UseSystemResourceKeys>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <StripSymbols>true</StripSymbols>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
+        <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.5.0" />
+        <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.8.2" />
+        <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\LinkService.Common\LinkService.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <TrimmerRootAssembly Include="AWSSDK.Core" />
+        <TrimmerRootAssembly Include="Amazon.Lambda.APIGatewayEvents" />
+        <TrimmerRootAssembly Include="LinkService.Common" />
+        <TrimmerRootAssembly Include="LinkService.AddLinkHandler" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <RdXmlFile Include="rd.xml" />
+    </ItemGroup>
+</Project>

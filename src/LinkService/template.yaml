@@ -40,7 +40,7 @@ Resources:
     Metadata:
       DockerTag: dotnet7aot-v1
       DockerContext: ./
-      Dockerfile: ./ShareUsefulness.Links.Functions/Dockerfile
+      Dockerfile: ./LinkService.GetListHandler/Dockerfile
       DockerBuildArgs:
         SAM_BUILD_MODE: run
         
@@ -63,7 +63,7 @@ Resources:
     Metadata:
       DockerTag: dotnet7aot-v1
       DockerContext: ./
-      Dockerfile: ./ShareUsefulness.Links.Functions/Dockerfile
+      Dockerfile: ./LinkService.AddLinkHandler/Dockerfile
       DockerBuildArgs:
         SAM_BUILD_MODE: run
 
