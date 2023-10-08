@@ -1,11 +1,12 @@
+import './App.css'
+import LinkList from './screens/LinkList/LinkList.tsx';
 import {StoreProvider} from './contexts/StoreContext.tsx';
-import SampleRadix from './components/SampleRadix.tsx';
 
 function App() {
 
   return (
     <StoreProvider>
-        <SampleRadix />
+        <LinkList />
     </StoreProvider>
   )
 }
