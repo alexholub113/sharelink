@@ -1,6 +1,6 @@
 import LinkStore from '../../stores/LinkStore.ts';
-import {useStore} from '../../contexts/StoreContext.tsx';
 import { observer } from "mobx-react-lite"
+import { useStore } from '../../contexts/AppContext.tsx';
 
 const LinkList = observer(() => {
     const { state: { links } } = useStore<LinkStore>(LinkStore);

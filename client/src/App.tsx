@@ -1,13 +1,12 @@
-import './App.css'
-import LinkList from './screens/LinkList/LinkList.tsx';
-import {StoreProvider} from './contexts/StoreContext.tsx';
+import Layout from './components/Layout.tsx';
+import { AppContextProvider } from './contexts/AppContext.tsx';
 
 function App() {
 
   return (
-    <StoreProvider>
-        <LinkList />
-    </StoreProvider>
+    <AppContextProvider>
+        <Layout />
+    </AppContextProvider>
   )
 }
 
