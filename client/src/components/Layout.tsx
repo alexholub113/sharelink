@@ -1,16 +1,12 @@
 import React, { PropsWithChildren } from 'react';
-import Toolbar from './Toolbar.tsx';
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     return (
-        <>
-            <div className="container mx-auto flex flex-col h-screen p-6">
-                <Toolbar />
-                <div>
-                    {children}
-                </div>
+        <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center max-w-[60rem]">
+                {children}
             </div>
-        </>
+        </div>
     );
 };
 
