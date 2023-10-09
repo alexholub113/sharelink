@@ -4,6 +4,8 @@ type Link = {
     id: string;
     url: string;
     title: string;
+    user: string;
+    createdAt: string;
     type: LinkType;
 };
 

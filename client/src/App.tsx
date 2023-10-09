@@ -1,7 +1,7 @@
 import Layout from './components/Layout.tsx';
 import { AppContextProvider } from './contexts/AppContext.tsx';
-import LinkList from './screens/LinkList/LinkList.tsx';
 import Toolbar from './components/Toolbar.tsx';
+import LinkListScreen from './screens/LinkListScreen/LinkListScreen.tsx';
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
         <div className="bg-gray-900/40 min-h-screen">
             <Toolbar />
             <Layout>
-                <LinkList />
+                <LinkListScreen />
             </Layout>
         </div>
     </AppContextProvider>
