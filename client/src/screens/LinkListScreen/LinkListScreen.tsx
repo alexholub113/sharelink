@@ -7,7 +7,9 @@ const LinkListScreen = observer(() => {
     const [section, setSection] = useState<'list' | 'addLink'>('list');
     return (
         <>
-            <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
+            <div className="mb-6">
+                <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
+            </div>
             { section === 'list' && <LinkList /> }
         </>
     );

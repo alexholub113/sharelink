@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import SignUpModalContent from '../SignUpButton/SignUpModalContent.tsx';
 import useSignInForm from './useSignInForm.ts';
-import {Button} from 'flowbite-react';
+import SubmitButton from '../SubmitButton.tsx';
 
 const SignInModalContent = () => {
     const { onSubmit, register, errors } = useSignInForm();
@@ -37,7 +37,9 @@ const SignInModalContent = () => {
                             </div>
                             <a href="#" className="text-cyan-700 hover:underline dark:text-cyan-500">Lost Password?</a>
                         </div>
-                        <Button className="w-full" type="submit">Log in to your account</Button>
+                        <SubmitButton type="submit" className="w-full">
+                            Log in to your account
+                        </SubmitButton>
                     </form>
                     <div className="flex justify-between text-gray-500 dark:text-gray-300 mt-6">
                         <span>Not registered?</span>

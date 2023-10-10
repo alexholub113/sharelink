@@ -1,5 +1,5 @@
 import useSignUpForm from './useSignUpForm.ts';
-import {Button} from 'flowbite-react';
+import SubmitButton from '../SubmitButton.tsx';
 
 const SignUpModalContent = () => {
    const { onSubmit, register, errors } = useSignUpForm();
@@ -28,7 +28,7 @@ const SignUpModalContent = () => {
                     <input type="password" {...register('confirmPassword')} placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                     { errors.confirmPassword && (<span className="text-red-500 text-sm">{errors.confirmPassword.message}</span>) }
                 </div>
-                <Button className="w-full" type="submit">Create account</Button>
+                <SubmitButton className="w-full" type="submit">Create account</SubmitButton>
             </form>
         </>
     );

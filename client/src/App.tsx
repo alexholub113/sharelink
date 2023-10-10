@@ -7,7 +7,7 @@ function App() {
 
   return (
     <AppContextProvider>
-        <div className="bg-gray-900/40 min-h-screen">
+        <div className="bg-zinc-800 min-h-screen">
             <Toolbar />
             <Layout>
                 <LinkListScreen />
