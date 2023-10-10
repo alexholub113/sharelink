@@ -1,7 +1,7 @@
 import {makeObservable, observable, runInAction} from 'mobx'
-import Link from '../services/ShareUsefulnessService/interfaces/Link.ts';
-import ShareUsefulnessService from '../services/ShareUsefulnessService/ShareUsefulnessService.ts';
-import IShareUsefulnessService from '../services/ShareUsefulnessService/interfaces/IShareUsefulnessService.ts';
+import ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
+import LinkService from '../services/LinkService/LinkService.ts';
+import Link from '../services/LinkService/interfaces/Link.ts';
 
 type LinkStoreState = {
     isLoading: boolean;
@@ -10,7 +10,7 @@ type LinkStoreState = {
 
 class LinkStore {
 
-    private readonly shareUsefulnessService: IShareUsefulnessService = new ShareUsefulnessService();
+    private readonly linkService: ILinkService = new LinkService();
     constructor() {
         makeObservable(this, {
             state: observable
@@ -25,7 +25,7 @@ class LinkStore {
     };
 
     private init: () => Promise<void> = async () => {
-        const response = await this.shareUsefulnessService.GetList();
+        const response = await this.linkService.GetList();
         runInAction(() => {
             this.state.links = response.items;
             console.log('this.state.links', this.state.links);
