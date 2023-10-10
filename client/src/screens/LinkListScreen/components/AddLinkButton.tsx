@@ -7,15 +7,15 @@ type AddLinkButtonProps = {
 const AddLinkButton: React.FC<AddLinkButtonProps> = ({ showAddLink, onClick }) => {
     const buttonColor = showAddLink ? 'cyan' : 'teal';
     return (
-        <button onClick={onClick} className={`text-white bg-gradient-to-r from-${buttonColor}-400 via-${buttonColor}-500 to-${buttonColor}-600 hover:bg-gradient-to-br focus:outline-none focus:ring-${buttonColor}-300 dark:focus:ring-${buttonColor}-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2`}>
+        <button onClick={onClick} className={`text-white bg-gradient-to-r from-${buttonColor}-400 via-${buttonColor}-500 to-${buttonColor}-600 hover:bg-gradient-to-br focus:outline-none focus:ring-${buttonColor}-300 dark:focus:ring-${buttonColor}-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-95 transition`}>
             { showAddLink && (
                 <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                 </svg>
             )}
             { !showAddLink && (
-                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                 </svg>
             )}
         </button>
