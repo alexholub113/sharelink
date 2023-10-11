@@ -1,13 +1,9 @@
 import Link from './Link.ts';
-
-type GetListTag = {
-    title: string;
-    count: number;
-};
+import Tag from './Tag.ts';
 
 export type GetListResponse = {
     items: Link[];
-    tags: GetListTag[]
+    tags: Tag[]
 }
 
 export type PreviewYoutubeVideoResponse = {
@@ -22,10 +18,11 @@ export type AddYoutubeVideoResponse = {
 };
 
 interface ILinkService {
-    GetList(): Promise<GetListResponse>;
-    PreviewYoutubeVideo(videoId: string): Promise<PreviewYoutubeVideoResponse>;
-    AddYoutubeVideo(videoId: string): Promise<AddYoutubeVideoResponse>;
-    Like(linkId: string): Promise<void>;
+    getList(): Promise<GetListResponse>;
+    previewYoutubeVideo(videoId: string): Promise<PreviewYoutubeVideoResponse>;
+    addYoutubeVideo(videoId: string): Promise<AddYoutubeVideoResponse>;
+    like(linkId: string): Promise<void>;
+    save(linkId: string): Promise<void>;
 }
 
 export default ILinkService;

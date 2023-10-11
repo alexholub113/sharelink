@@ -9,7 +9,7 @@ import {
 } from './fakeData.ts';
 
 class LinkService implements ILinkService {
-    async GetList(): Promise<GetListResponse> {
+    async getList(): Promise<GetListResponse> {
         return Promise.resolve(getFakeGetListResponse());
         // return new Promise((resolve) => {
         //     setTimeout(() => {
@@ -18,7 +18,7 @@ class LinkService implements ILinkService {
         // });
     }
 
-    AddYoutubeVideo(videoId: string): Promise<AddYoutubeVideoResponse> {
+    addYoutubeVideo(videoId: string): Promise<AddYoutubeVideoResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(getFakeAddYoutubeVideoResponse(videoId));
@@ -26,7 +26,7 @@ class LinkService implements ILinkService {
         });
     }
 
-    PreviewYoutubeVideo(videoId: string): Promise<PreviewYoutubeVideoResponse> {
+    previewYoutubeVideo(videoId: string): Promise<PreviewYoutubeVideoResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(getFakePreviewYoutubeVideoResponse(videoId));
@@ -35,7 +35,16 @@ class LinkService implements ILinkService {
     }
 
     // @ts-ignore
-    Like(linkId: string): Promise<void> {
+    like(linkId: string): Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+            }, 1000);
+        });
+    }
+
+    // @ts-ignore
+    save(linkId: string): Promise<void> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve();

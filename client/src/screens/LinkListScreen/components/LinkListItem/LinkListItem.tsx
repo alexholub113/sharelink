@@ -1,13 +1,12 @@
 import Link from '../../../../services/LinkService/interfaces/Link.ts';
-import LinkType from '../../../../services/LinkService/interfaces/LinkType.ts';
-import YoutubeItem from './SpecificItems/YoutubeItem.tsx';
+import LinkContent from './LinkContent/LinkContent.tsx';
 
 const LinkListItem = ({ link }: { link: Link }) => {
-    if (link.type === LinkType.youtube) {
-        return (<YoutubeItem link={link} />);
-    }
-
-    return null;
+    return (
+        <div className="w-full mb-3 p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-zinc-700 dark:border-gray-700">
+            <LinkContent link={link} />
+        </div>
+    );
 };
 
 export default LinkListItem;

@@ -6,21 +6,36 @@ import {
 
 export const getFakeGetListResponse = (): GetListResponse => ({
     tags: [{
-        title: 'tag1',
-        count: 2
+        title: '.NET',
+        count: 242
     }, {
-        title: 'tag2',
-        count: 1
+        title: 'react',
+        count: 5443
+    }, {
+        title: 'c#',
+        count: 543
+    }, {
+        title: 'typescript',
+        count: 44
+    }, {
+        title: 'dynamic programming',
+        count: 12
+    }, {
+        title: 'clean architecture',
+        count: 32
+    }, {
+        title: 'tailwind css',
+        count: 5
     }],
     items: [{
         id: '1',
         youtube: {
-            id: '2lEYMtW7L6g',
-            title: '57 секунд — Русский трейлер (2023)',
+            id: '4YBS1uXanDE',
+            title: 'They Dropped THIS And Thought Nobody Would Notice',
             publishedAt: '2018-01-01T00:00:00',
         },
         liked: false,
-        likes: 5,
+        likes: 53123,
         user: 'user1',
         type: 0,
         createdAt: '2021-01-01T00:00:00',
