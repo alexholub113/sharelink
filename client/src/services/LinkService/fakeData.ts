@@ -26,6 +26,36 @@ export const getFakeGetListResponse = (): GetListResponse => ({
     }, {
         title: 'tailwind css',
         count: 5
+    }, {
+        title: 'aws',
+        count: 2
+    }, {
+        title: 'aws lambda',
+        count: 5
+    }, {
+        title: 'ruby',
+        count: 512
+    }, {
+        title: 'java',
+        count: 5122
+    }, {
+        title: 'mongodb',
+        count: 51
+    }, {
+        title: 'postgres',
+        count: 512
+    }, {
+        title: 'ms sql',
+        count: 5
+    }, {
+        title: 'my sql',
+        count: 4
+    }, {
+        title: 'best practices',
+        count: 312
+    }, {
+        title: 'architecture',
+        count: 5
     }],
     items: [{
         id: '1',

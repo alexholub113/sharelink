@@ -2,6 +2,7 @@ import {useStore} from '../../../../../contexts/AppContext.tsx';
 import LinkStore from '../../../../../stores/LinkStore.ts';
 import {observer} from 'mobx-react-lite';
 
+const MaxTagsShown = 12;
 const formatTitle = (title: string) => {
     const words = title.split(' ');
     return words.map((word) => {
@@ -17,11 +18,11 @@ const TagFilter = observer(() => {
     const { state: { tags, filter: { tags: appliedTags } }, applyTagFilter, removeTagFilter } = useStore<LinkStore>(LinkStore);
     
     return (
-        <div className="flex flex-row flex-wrap justify-center items-center">
+        <div className="flex flex-row flex-wrap justify-center gap-2 items-center">
             { appliedTags.map((tag) => (
                 <button>
                     <div key={tag.title} onClick={() => removeTagFilter(tag)} className="
-                                    flex flex-row items-center justify-center mb-2 mr-3 
+                                    flex flex-row items-center justify-center mb-2
                                     text-sm font-semibold text-gray-700 cursor-pointer dark:text-gray-300
                                     dark:bg-zinc-700 bg-gray-100 rounded-full px-3 py-1">
                         <span className="mr-2">{formatTitle(tag.title)}</span>
@@ -31,8 +32,8 @@ const TagFilter = observer(() => {
                     </div>
                 </button>
             ))}
-            { tags.filter(x => !appliedTags.some(e => e.title === x.title)).slice(0, 10).map((tag) => (
-                <div key={tag.title} onClick={() => applyTagFilter(tag)} className="flex flex-row items-center justify-center mb-2 mr-3 text-sm font-medium text-gray-700 cursor-pointer dark:text-gray-300">
+            { tags.filter(x => !appliedTags.some(e => e.title === x.title)).slice(0, MaxTagsShown).map((tag) => (
+                <div key={tag.title} onClick={() => applyTagFilter(tag)} className="flex flex-row items-center justify-center mb-2 text-sm font-medium text-gray-700 cursor-pointer dark:text-gray-300">
                     <span className="mr-1">{formatTitle(tag.title)}</span>
                     <span className="text-xs font-normal text-gray-500 dark:text-gray-400 dark:bg-zinc-700 bg-gray-100 rounded-full px-2">{tag.count}</span>
                 </div>

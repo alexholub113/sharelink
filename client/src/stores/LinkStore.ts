@@ -24,6 +24,7 @@ class LinkStore {
             state: observable,
             applyTagFilter: action,
             removeTagFilter: action,
+            setQuery: action
         });
 
         this.init();
@@ -45,6 +46,10 @@ class LinkStore {
 
     public removeTagFilter = (tag: Tag) => {
         this.state.filter.tags = this.state.filter.tags.filter(t => t.title !== tag.title);
+    };
+    
+    public setQuery = (query: string) => {
+        this.state.filter.query = query;
     };
 
     private init = async () => {
