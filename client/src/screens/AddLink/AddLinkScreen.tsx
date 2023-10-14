@@ -1,11 +1,10 @@
-import FloatingInput from '../../components/FloatingInput.tsx';
-import {useState} from 'react';
+import SetLinkInput from './components/SetLinkInput.tsx';
 
 const AddLinkScreen = () => {
-    const [linkUrl, setLinkUrl] = useState('');
+    
     return (
         <div className="mt-14 w-full md:max-w-screen-md">
-            <FloatingInput value={linkUrl} onChange={(value) => setLinkUrl(value)} placeholder="Put your URL here" />
+            <SetLinkInput />
         </div>
     );
 };

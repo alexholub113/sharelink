@@ -7,7 +7,7 @@ type AddLinkButtonProps = {
 const AddLinkButton: React.FC<AddLinkButtonProps> = ({ showAddLink, onClick }) => {
     const buttonColor = showAddLink ? 'cyan' : 'teal';
     return (
-        <button onClick={onClick} className={`text-white bg-gradient-to-r from-${buttonColor}-400 via-${buttonColor}-500 to-${buttonColor}-600 hover:bg-gradient-to-br focus:outline-none focus:ring-${buttonColor}-300 dark:focus:ring-${buttonColor}-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 active:scale-95 transition`}>
+        <button onClick={onClick} className={`text-white bg-gradient-to-r from-${buttonColor}-400 via-${buttonColor}-500 to-${buttonColor}-600 hover:bg-gradient-to-br focus:outline-none focus:ring-${buttonColor}-300 dark:focus:ring-${buttonColor}-800 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 button-animation`}>
             <div className="flex flex-row justify-center items-center font-bold text-lg">
                 { showAddLink && (
                     <>

@@ -19,3 +19,15 @@
 .card-dark {
   @apply dark:bg-zinc-700;
 }
+
+.input-border-blue {
+  @apply focus:ring-cyan-500 focus:border-cyan-500 dark:focus:border-cyan-500 dark:focus:ring-cyan-500;
+}
+
+.button-animation {
+  @apply transition active:scale-95;
+}
+
+.secondary-text-color {
+    @apply dark:text-zinc-300;
+}

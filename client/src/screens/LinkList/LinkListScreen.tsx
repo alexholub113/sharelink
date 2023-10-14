@@ -9,11 +9,11 @@ const LinkListScreen = observer(() => {
 
     return (
         <>
-            <div className="mb-6">
+            <div className="md:mb-16 mb-8">
                 <LinkListToolbar />
             </div>
             
-            <div className="flex flex-col w-full items-center justify-center gap-7">
+            <div className="flex flex-wrap w-full items-center justify-center gap-4">
                 { links.map((link) => (
                     <LinkListItem key={link.id} link={link} />
                 )) }

@@ -1,7 +1,6 @@
 import {
-    AddYoutubeVideoResponse,
-    GetListResponse,
-    PreviewYoutubeVideoResponse
+    AddLinkResponse,
+    GetListResponse, PreviewLinkResponse
 } from './interfaces/ILinkService.ts';
 
 export const getFakeGetListResponse = (): GetListResponse => ({
@@ -59,26 +58,52 @@ export const getFakeGetListResponse = (): GetListResponse => ({
     }],
     items: [{
         id: '1',
+        title: 'They Dropped THIS And Thought Nobody Would Noticedasdasdasdasdasdadad  sdasdadas',
         youtube: {
             id: '4YBS1uXanDE',
-            title: 'They Dropped THIS And Thought Nobody Would Notice',
-            publishedAt: '2018-01-01T00:00:00',
         },
         liked: false,
-        likes: 53123,
+        likes: 3123,
+        saved: false,
         user: 'user1',
         type: 0,
         createdAt: '2021-01-01T00:00:00',
-        tags: ['tag1', 'tag2']
+        tags: ['clean architecture', 'python', 'java', 'typescript', 'aws']
     }, {
         id: '2',
+        title: '57 секунд — Русский трейлер (2023)',
         youtube: {
             id: 'aHKSaP4Qr8U',
-            title: '57 секунд — Русский трейлер (2023)',
-            publishedAt: '2018-01-01T00:00:00',
+        },
+        liked: true,
+        likes: 213,
+        saved: true,
+        user: 'user2',
+        type: 0,
+        createdAt: '2021-01-01T00:00:00',
+        tags: ['tag1']
+    }, {
+        id: '3',
+        title: 'They Dropped THIS And Thought Nobody Would Notice',
+        youtube: {
+            id: '4YBS1uXanDE',
+        },
+        liked: false,
+        likes: 53123,
+        saved: false,
+        user: 'user1',
+        type: 0,
+        createdAt: '2021-01-01T00:00:00',
+        tags: ['react', 'c#', 'asp.net']
+    }, {
+        id: '4',
+        title: '57 секунд — Русский трейлер (2023)',
+        youtube: {
+            id: 'TRNSyg43c4E',
         },
         liked: true,
         likes: 2,
+        saved: true,
         user: 'user2',
         type: 0,
         createdAt: '2021-01-01T00:00:00',
@@ -86,23 +111,23 @@ export const getFakeGetListResponse = (): GetListResponse => ({
     }]
 });
 
-export const getFakePreviewYoutubeVideoResponse = (videoId: string): PreviewYoutubeVideoResponse => ({
+export const getFakePreviewYoutubeVideoResponse = (videoId: string): PreviewLinkResponse => ({
     id: videoId,
     title: 'Preview video title',
-    publishedAt: '2018-01-01T00:00:00',
+    type: 0,
     tags: ['typescript', 'react', 'mobx']
 });
 
-export const getFakeAddYoutubeVideoResponse = (videoId: string): AddYoutubeVideoResponse => ({
+export const getFakeAddYoutubeVideoResponse = (videoId: string): AddLinkResponse => ({
     link: {
         id: '432',
+        title: 'Some new video title',
         youtube: {
             id: videoId,
-            title: 'Some new video title',
-            publishedAt: '2018-01-01T00:00:00',
         },
         liked: false,
         likes: 0,
+        saved: false,
         user: 'user2',
         type: 0,
         createdAt: '2021-01-01T00:00:00',

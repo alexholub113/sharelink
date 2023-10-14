@@ -1,5 +1,5 @@
 import TagFilter from './TagFilter/TagFilter.tsx';
-import SearchBar from './Search/SearchBar.tsx';
+import SearchInput from './Search/SearchInput.tsx';
 
 const LinkListToolbar = () => {
     return (
@@ -7,7 +7,7 @@ const LinkListToolbar = () => {
             <div className="flex mb-3">
                 <TagFilter />
             </div>
-            <SearchBar />
+            <SearchInput />
         </div>
     );
 };

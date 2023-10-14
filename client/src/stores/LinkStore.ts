@@ -9,11 +9,16 @@ type Filter = {
     query: string;
 };
 
+type Preview = {
+    url: string;
+};
+
 type LinkStoreState = {
     isLoading: boolean;
     links: Link[];
     tags: Tag[];
     filter: Filter;
+    preview: Preview;
 };
 
 class LinkStore {
@@ -24,7 +29,10 @@ class LinkStore {
             state: observable,
             applyTagFilter: action,
             removeTagFilter: action,
-            setQuery: action
+            setQuery: action,
+            previewLink: action,
+            likeLink: action,
+            saveLink: action,
         });
 
         this.init();
@@ -38,6 +46,9 @@ class LinkStore {
             tags: [],
             query: ''
         },
+        preview: {
+            url: ''
+        }
     };
     
     public applyTagFilter = (tag: Tag) => {
@@ -47,9 +58,42 @@ class LinkStore {
     public removeTagFilter = (tag: Tag) => {
         this.state.filter.tags = this.state.filter.tags.filter(t => t.title !== tag.title);
     };
+
+    public previewLink = (url: string) => {
+        console.log('previewLink: ', url);
+        this.state.preview.url = url;
+    };
     
     public setQuery = (query: string) => {
         this.state.filter.query = query;
+    };
+    
+    public likeLink = async (id: string) => {
+        const link = this.state.links.find(link => link.id === id);
+        if (!link) {
+            throw new Error('Link not found');
+        }
+        
+        const index = this.state.links.findIndex(link => link.id === id);
+        this.state.links[index] = {
+            ...link,
+            liked: !link.liked,
+            likes: link.liked ? link.likes - 1 : link.likes + 1
+        };
+        await this.linkService.like(id);
+    };
+    
+    public saveLink = async (id: string) => {
+        const link = this.state.links.find(link => link.id === id);
+        if (!link) {
+            throw new Error('Link not found');
+        }
+
+        const index = this.state.links.findIndex(link => link.id === id);
+        this.state.links[index] = {
+            ...link,
+            saved: !link.saved
+        };
     };
 
     private init = async () => {
