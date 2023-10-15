@@ -14,7 +14,7 @@ type Preview = {
 };
 
 type LinkStoreState = {
-    isLoading: boolean;
+    isListLoading: boolean;
     links: Link[];
     tags: Tag[];
     filter: Filter;
@@ -39,7 +39,7 @@ class LinkStore {
     }
     
     state: LinkStoreState = {
-        isLoading: true,
+        isListLoading: true,
         links: [],
         tags: [],
         filter: {
@@ -105,7 +105,7 @@ class LinkStore {
         runInAction(() => {
             this.state.links = response.items;
             this.state.tags = [...new Set<Tag>(response.tags)];
-            this.state.isLoading = false;
+            this.state.isListLoading = false;
         });
     }
 }

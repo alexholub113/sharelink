@@ -10,12 +10,11 @@ import {
 
 class LinkService implements ILinkService {
     async getList(): Promise<GetListResponse> {
-        return Promise.resolve(getFakeGetListResponse());
-        // return new Promise((resolve) => {
-        //     setTimeout(() => {
-        //         resolve(getFakeGetListResponse());
-        //     }, 1000);
-        // });
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(getFakeGetListResponse());
+            }, 1000);
+        });
     }
 
     addLink(url: string): Promise<AddLinkResponse> {
