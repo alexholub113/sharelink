@@ -1,6 +1,6 @@
 import ILinkService, {
     AddLinkResponse,
-    GetListResponse, PreviewLinkResponse
+    GetListResponse
 } from './interfaces/ILinkService.ts';
 import {
     getFakeAddYoutubeVideoResponse,
@@ -25,10 +25,12 @@ class LinkService implements ILinkService {
         });
     }
 
-    previewLink(url: string): Promise<PreviewLinkResponse> {
+    
+    // @ts-ignore
+    previewLink(url: string): Promise<PreviewLink> {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(getFakePreviewYoutubeVideoResponse(url));
+                resolve(getFakePreviewYoutubeVideoResponse());
             }, 1000);
         });
     }
@@ -49,6 +51,11 @@ class LinkService implements ILinkService {
                 resolve();
             }, 1000);
         });
+    }
+
+    // @ts-ignore
+    remove(linkId: string): Promise<void> {
+        return Promise.resolve();
     }
 }
 

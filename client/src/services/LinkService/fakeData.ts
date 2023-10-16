@@ -1,7 +1,6 @@
-import {
-    AddLinkResponse,
-    GetListResponse, PreviewLinkResponse
-} from './interfaces/ILinkService.ts';
+import {AddLinkResponse, GetListResponse} from './interfaces/ILinkService.ts';
+import PreviewLink from './interfaces/PreviewLink.ts';
+import LinkType from './interfaces/LinkType.ts';
 
 export const getFakeGetListResponse = (): GetListResponse => ({
     tags: [{
@@ -111,11 +110,13 @@ export const getFakeGetListResponse = (): GetListResponse => ({
     }]
 });
 
-export const getFakePreviewYoutubeVideoResponse = (videoId: string): PreviewLinkResponse => ({
-    id: videoId,
+export const getFakePreviewYoutubeVideoResponse = (): PreviewLink => ({
     title: 'Preview video title',
-    type: 0,
-    tags: ['typescript', 'react', 'mobx']
+    type: LinkType.youtube,
+    tags: ['typescript', 'react', 'mobx'],
+    youtube: {
+        id: '9WBD4NVODVs',
+    }
 });
 
 export const getFakeAddYoutubeVideoResponse = (videoId: string): AddLinkResponse => ({

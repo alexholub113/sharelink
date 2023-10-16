@@ -5,7 +5,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 
 const schema = z.object({
-    nickname: z.string().min(3),
+    nickname: z.string().min(3).max(20),
     email: z.string().email(),
     password: z.string().min(8),
     confirmPassword: z.string().min(8),

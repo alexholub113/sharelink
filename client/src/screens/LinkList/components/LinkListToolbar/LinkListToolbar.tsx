@@ -1,5 +1,5 @@
-import TagFilter from './TagFilter/TagFilter.tsx';
-import SearchInput from './Search/SearchInput.tsx';
+import TagFilter from './TagFilter.tsx';
+import SearchInput from './SearchInput.tsx';
 
 const LinkListToolbar = () => {
     return (

@@ -13,7 +13,7 @@ const LinkListItem = ({ link }: { link: Link }) => {
             <LinkListItemTitle title={link.title} />
             <LinkListItemTags tags={link.tags} />
             <LinkListItemAuthor {...link} />
-            <LinkListItemContent link={link} />
+            <LinkListItemContent {...link} />
             <LinkListItemLikeBar {...link} />
         </LinkListItemWrapper>
     );

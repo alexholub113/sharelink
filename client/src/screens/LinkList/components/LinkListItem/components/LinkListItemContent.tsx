@@ -2,9 +2,9 @@ import Link from '../../../../../services/LinkService/interfaces/Link.ts';
 import LinkType from '../../../../../services/LinkService/interfaces/LinkType.ts';
 import YoutubeVideoContent from './Contents/YoutubeVideoContent.tsx';
 
-const LinkListItemContent = ({ link }: { link: Link }) => {
-    if (link.type === LinkType.youtube) {
-        return (<YoutubeVideoContent {...link.youtube} />);
+const LinkListItemContent = ({ type, youtube }: Pick<Link, 'type' | 'youtube'>) => {
+    if (type === LinkType.youtube) {
+        return (<YoutubeVideoContent {...youtube} />);
     }
 
     return null;

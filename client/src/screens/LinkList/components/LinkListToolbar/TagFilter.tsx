@@ -1,9 +1,9 @@
-import {useStore} from '../../../../../contexts/AppContext.tsx';
-import LinkStore from '../../../../../stores/LinkStore.ts';
+import {useStore} from '../../../../contexts/AppContext.tsx';
+import LinkStore from '../../../../stores/LinkStore.ts';
 import {observer} from 'mobx-react-lite';
-import TagBadge from '../../../../../components/TagBadge.tsx';
-import {formatTagTitle} from '../../../../../utils/format.ts';
-import Skeleton from '../../../../../components/Skeleton.tsx';
+import TagBadge from '../../../../components/TagBadge.tsx';
+import {formatTagTitle} from '../../../../utils/format.ts';
+import Skeleton from '../../../../components/Skeleton.tsx';
 
 const MaxTagsShown = 12;
 

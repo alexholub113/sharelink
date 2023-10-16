@@ -1,6 +1,6 @@
 ﻿import { useState } from 'react';
-import FloatingInput from '../../../../../components/FloatingInput.tsx';
-import FloatingInputWrapper from '../../../../../components/FloatingInputWrapper.tsx';
+import FloatingInput from '../../../../components/FloatingInput.tsx';
+import FloatingInputWrapper from '../../../../components/FloatingInputWrapper.tsx';
 
 const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');

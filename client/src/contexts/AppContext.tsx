@@ -7,6 +7,7 @@ import UserStore from '../stores/UserStore.ts';
 export const useStore = <T extends object>(store: object): T => React.useContext(AppContext).stores.get(store) as T;
 
 export const useLinkStore = (): LinkStore => useStore<LinkStore>(LinkStore);
+export const useUserStore = (): UserStore => useStore<UserStore>(UserStore);
 
 export const useService = <T extends object>(store: object): T => React.useContext(AppContext).services.get(store) as T;
 

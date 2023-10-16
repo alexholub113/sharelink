@@ -3,6 +3,7 @@ import ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
 import LinkService from '../services/LinkService/LinkService.ts';
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
+import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 
 type Filter = {
     tags: Tag[];
@@ -10,7 +11,8 @@ type Filter = {
 };
 
 type Preview = {
-    url: string;
+    url?: string;
+    link?: PreviewLink;
 };
 
 type LinkStoreState = {
@@ -33,6 +35,7 @@ class LinkStore {
             previewLink: action,
             likeLink: action,
             saveLink: action,
+            setPreviewLinkTags: action,
         });
 
         this.init();
@@ -47,7 +50,6 @@ class LinkStore {
             query: ''
         },
         preview: {
-            url: ''
         }
     };
     
@@ -59,9 +61,18 @@ class LinkStore {
         this.state.filter.tags = this.state.filter.tags.filter(t => t.title !== tag.title);
     };
 
-    public previewLink = (url: string) => {
-        console.log('previewLink: ', url);
-        this.state.preview.url = url;
+    public previewLink = async (url: string) => {
+        this.state.preview = {
+            url
+        };
+        
+        const previewLink = await this.linkService.previewLink(url);
+        runInAction(() => {
+            this.state.preview = {
+                ...this.state.preview,
+                link: previewLink
+            };
+        });
     };
     
     public setQuery = (query: string) => {
@@ -93,6 +104,17 @@ class LinkStore {
         this.state.links[index] = {
             ...link,
             saved: !link.saved
+        };
+    };
+    
+    public setPreviewLinkTags = (tags: string[]) => {
+        if (!this.state.preview.link) {
+            throw new Error('Preview Link not found');
+        }
+
+        this.state.preview.link = {
+            ...this.state.preview.link,
+            tags,
         };
     };
 
