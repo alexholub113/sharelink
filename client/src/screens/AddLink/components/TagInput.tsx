@@ -1,0 +1,60 @@
+import {ChangeEvent, useState} from 'react';
+import TagBadge from '../../../components/TagBadge.tsx';
+import {MaxTagLength} from '../../../constants/preferences.ts';
+
+const InitialInputWidth = 11;
+
+type TagInputProps = {
+    onAdd: (tag: string) => void;
+};
+const TagInput = ({ onAdd }: TagInputProps) => {
+    const [isInputVisible, setInputVisible] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+    const [inputWidth, setInputWidth] = useState(InitialInputWidth);
+
+    const handleAddTag = () => {
+        if (inputValue.trim()) {
+            onAdd(inputValue);
+            setInputValue('');
+            setInputWidth(InitialInputWidth);
+        }
+        setInputVisible(false);
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        if (inputValue.length > MaxTagLength) return;
+        setInputValue(inputValue);
+
+        // Update width based on input length (e.g., 50 + 10 * inputValue.length)
+        setInputWidth(InitialInputWidth + 7 * inputValue.length);
+    };
+
+    return (
+        <>
+            {isInputVisible ? (
+                <TagBadge title="">
+                    <input
+                        autoFocus
+                        type="text"
+                        value={inputValue}
+                        onBlur={handleAddTag}
+                        style={{ width: `${inputWidth}px` }}
+                        onChange={handleChange}
+                        className="flex dark:bg-transparent p-0 m-0 text-sm font-semibold cursor-pointer secondary-text-color
+                                 bg-transparent border-none appearance-none focus:ring-0"
+                    />
+                </TagBadge>
+            ) : (
+                <div onClick={() => setInputVisible(true)} className="flex items-center justify-center dark:bg-transparent 
+                rounded-full p-0 b-0 cursor-pointer dark:bg-zinc-700 bg-gray-100 px-2 py-2 hover:scale-105">
+                    <svg className="w-4 h-4 font-bold secondary-text-color" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
+                    </svg>
+                </div>
+            )}
+        </>
+    );
+}
+
+export default TagInput;

@@ -12,7 +12,9 @@ const LinkListItem = ({ link }: { link: Link }) => {
         <LinkListItemWrapper>
             <LinkListItemTitle title={link.title} />
             <LinkListItemTags tags={link.tags} />
-            <LinkListItemAuthor {...link} />
+            <div className="mt-4">
+                <LinkListItemAuthor {...link} />
+            </div>
             <LinkListItemContent {...link} />
             <LinkListItemLikeBar {...link} />
         </LinkListItemWrapper>

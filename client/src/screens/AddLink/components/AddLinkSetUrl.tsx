@@ -3,7 +3,7 @@ import {observer} from 'mobx-react-lite';
 import LinkStore from '../../../stores/LinkStore.ts';
 import {useStore} from '../../../contexts/AppContext.tsx';
 import {validateUrl} from '../../../utils/urlValidator.ts';
-import SupportedLinksInfoAlert from './SupportedLinksInfoAlert.tsx';
+import AddLinkInfoAlert from './AddLinkInfoAlert.tsx';
 import ErrorAlert from '../../../components/ErrorAlert.tsx';
 
 const AddLinkSetUrl = observer(() => {
@@ -40,7 +40,7 @@ const AddLinkSetUrl = observer(() => {
                 </button>
             </div>
             { errorMessage && <ErrorAlert message={errorMessage} onClose={() => setErrorMessage(undefined)} /> }
-            <SupportedLinksInfoAlert />
+            <AddLinkInfoAlert />
         </div>
     );
 });

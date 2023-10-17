@@ -25,9 +25,9 @@ const TagFilter = observer(() => {
                     </button>
                 ))}
                 { tags.filter(x => !appliedTags.some(e => e.title === x.title)).slice(0, MaxTagsShown).map((tag) => (
-                    <div key={tag.title} onClick={() => applyTagFilter(tag)} className="flex flex-row items-center justify-center mb-2 text-sm font-medium cursor-pointer secondary-text-color">
+                    <div key={tag.title} onClick={() => applyTagFilter(tag)} className="flex flex-row items-center justify-center py-1 text-sm mr-2 font-medium cursor-pointer secondary-text-color">
                         <span className="mr-1">{formatTagTitle(tag.title)}</span>
-                        <span className="text-xs font-normal text-gray-500 dark:text-gray-400 dark:bg-zinc-700 bg-gray-100 rounded-full px-2">{tag.count}</span>
+                        <span className="text-xs font-normal text-gray-500 dark:text-gray-400 dark:bg-zinc-700 bg-gray-100 rounded-full px-1">{tag.count}</span>
                     </div>
                 )) }
             </div>}
