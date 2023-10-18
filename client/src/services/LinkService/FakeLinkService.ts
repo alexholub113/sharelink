@@ -1,12 +1,13 @@
 import ILinkService, {
     AddLinkResponse,
-    GetListResponse
+    GetListResponse, PreviewLinkResponse
 } from './interfaces/ILinkService.ts';
 import {
     getFakeAddYoutubeVideoResponse,
     getFakeGetListResponse,
     getFakePreviewYoutubeVideoResponse
 } from './fakeData.ts';
+import PreviewLink from './interfaces/PreviewLink.ts';
 
 class FakeLinkService implements ILinkService {
     async getList(): Promise<GetListResponse> {
@@ -17,16 +18,16 @@ class FakeLinkService implements ILinkService {
         });
     }
 
-    addLink(url: string): Promise<AddLinkResponse> {
+    addLink(previewLink: PreviewLink): Promise<AddLinkResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(getFakeAddYoutubeVideoResponse(url));
+                resolve(getFakeAddYoutubeVideoResponse(previewLink));
             }, 1000);
         });
     }
 
     // @ts-ignore
-    previewLink(url: string): Promise<PreviewLink> {
+    previewLink(url: string): Promise<PreviewLinkResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(getFakePreviewYoutubeVideoResponse());

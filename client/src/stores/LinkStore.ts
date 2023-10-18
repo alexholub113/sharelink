@@ -4,6 +4,7 @@ import FakeLinkService from '../services/LinkService/FakeLinkService.ts';
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
+import {validateUrl} from '../utils/urlValidator.ts';
 
 type Filter = {
     tags: Tag[];
@@ -36,6 +37,7 @@ class LinkStore {
             likeLink: action,
             saveLink: action,
             updatePreviewLink: action,
+            submitLink: action,
         });
 
         this.init();
@@ -93,19 +95,37 @@ class LinkStore {
         };
     };
 
-    public previewLink = async (url: string) => {
+    public previewLink = async (url: string): Promise<{errorMessage?: string }> => {
         this.state.preview = {
-            url,
+            url: undefined,
             link: undefined,
         };
+        const { valid, error } = validateUrl(url);
+        if (!valid) {
+            return {
+                errorMessage: error === 'invalid-url' ?
+                    'Your URL is invalid. Try fix it.' :
+                    'This kind of URL is not supported.'
+            };
+        }
 
-        const previewLink = await this.linkService.previewLink(url);
+        this.state.preview.url = url;
+
+        const { success, data } = await this.linkService.previewLink(url);
+        if (!success) {
+            return {
+                errorMessage: 'Server failed to process the request'
+            };
+        }
+
         runInAction(() => {
             this.state.preview = {
                 ...this.state.preview,
-                link: previewLink
+                link: data
             };
         });
+        
+        return {};
     };
     
     public updatePreviewLink = (updates: Partial<PreviewLink>) => {
@@ -116,6 +136,49 @@ class LinkStore {
         this.state.preview.link = {
             ...this.state.preview.link,
             ...updates,
+        };
+    };
+    
+    public submitLink = async (): Promise<{ errorMessage?: string }> => {
+        if (!this.state.preview.link) {
+            throw new Error('Preview Link not found');
+        }
+        
+        if (this.state.preview.link.title.length === 0) {
+            return {
+                errorMessage: "Title is required"
+            };
+        }
+        
+        if (this.state.preview.link.tags.length === 0) {
+            return {
+                errorMessage: "At least one tag is required"
+            };
+        }
+        
+        let link: Link;
+        try {
+            const response = await this.linkService.addLink(this.state.preview.link);
+            if (!response.success) {
+                return {
+                    errorMessage: "Server failed to process the request"
+                };
+            }
+
+            link = response.data;
+        } catch (e) {
+            return {
+                errorMessage: "Server failed to process the request"
+            };
+        }
+        
+        runInAction(() => {
+            this.state.links = [link, ...this.state.links];
+            this.state.preview = {};
+        });
+        
+        return {
+            errorMessage: undefined
         };
     };
 

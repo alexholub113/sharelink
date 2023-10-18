@@ -1,4 +1,4 @@
-import {AddLinkResponse, GetListResponse} from './interfaces/ILinkService.ts';
+import {AddLinkResponse, GetListResponse, PreviewLinkResponse} from './interfaces/ILinkService.ts';
 import PreviewLink from './interfaces/PreviewLink.ts';
 import LinkType from './interfaces/LinkType.ts';
 
@@ -110,28 +110,27 @@ export const getFakeGetListResponse = (): GetListResponse => ({
     }]
 });
 
-export const getFakePreviewYoutubeVideoResponse = (): PreviewLink => ({
-    title: 'Preview video title',
-    type: LinkType.youtube,
-    tags: ['typescript', 'react', 'mobx'],
-    youtube: {
-        id: '9WBD4NVODVs',
+export const getFakePreviewYoutubeVideoResponse = (): PreviewLinkResponse => ({
+    success: true,
+    data: {
+        title: 'Preview video title',
+        type: LinkType.youtube,
+        tags: ['typescript', 'react', 'mobx'],
+        youtube: {
+            id: '9WBD4NVODVs',
+        }
     }
 });
 
-export const getFakeAddYoutubeVideoResponse = (videoId: string): AddLinkResponse => ({
-    link: {
+export const getFakeAddYoutubeVideoResponse = (previewLink: PreviewLink): AddLinkResponse => ({
+    success: true,
+    data: {
+        ...previewLink,
         id: '432',
-        title: 'Some new video title',
-        youtube: {
-            id: videoId,
-        },
         liked: false,
         likes: 0,
         saved: false,
         user: 'user2',
-        type: 0,
         createdAt: '2021-01-01T00:00:00',
-        tags: ['.net', 'c#', 'asp.net']
     }
 });

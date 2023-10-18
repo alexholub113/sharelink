@@ -16,7 +16,7 @@ function App() {
                         <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
                     </div>
                     { section === 'list' && <LinkListScreen /> }
-                    { section === 'addLink' && <AddLinkScreen /> }
+                    { section === 'addLink' && <AddLinkScreen onSuccess={() => setSection('list')} /> }
                 </>
             </Layout>
         </div>

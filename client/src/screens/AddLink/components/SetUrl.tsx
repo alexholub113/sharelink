@@ -2,29 +2,27 @@ import {useState} from 'react';
 import {observer} from 'mobx-react-lite';
 import LinkStore from '../../../stores/LinkStore.ts';
 import {useStore} from '../../../contexts/AppContext.tsx';
-import {validateUrl} from '../../../utils/urlValidator.ts';
 import AddLinkInfoAlert from './AddLinkInfoAlert.tsx';
 import ErrorAlert from '../../../components/ErrorAlert.tsx';
 
-const AddLinkSetUrl = observer(() => {
+const SetUrl = observer(() => {
     const { state: { preview: { url }}, previewLink } = useStore<LinkStore>(LinkStore);
     const [linkUrl, setLinkUrl] = useState<string | undefined>(url);
-    const [errorMessage, setErrorMessage] = useState<string | undefined>();
+    const [previewErrorMessage, setPreviewErrorMessage] = useState<string | undefined>();
     
-    const handleSubmit = () => {
-        if (linkUrl === url) return;
-        const { valid, error } = validateUrl(linkUrl);
-        if (!valid) {
-            setErrorMessage(
-                error === 'invalid-url' ?
-                    'Your URL is invalid. Try fix it.' :
-                    'This kind of URL is not supported.'
-            );
+    const handleSubmit = async () => {
+        if (linkUrl === url) {
+            if (!url) {
+                setPreviewErrorMessage('Please enter a link');
+            }
             return;
         }
 
-        setErrorMessage(undefined);
-        previewLink(linkUrl!);
+        setPreviewErrorMessage(undefined);
+        const { errorMessage } = await previewLink(linkUrl!);
+        if (errorMessage) {
+            setPreviewErrorMessage(errorMessage);
+        }
     }
     return (
         <div className="flex flex-col gap-4">
@@ -39,10 +37,10 @@ const AddLinkSetUrl = observer(() => {
                     </svg>
                 </button>
             </div>
-            { errorMessage && <ErrorAlert message={errorMessage} onClose={() => setErrorMessage(undefined)} /> }
-            { (!url || errorMessage) && <AddLinkInfoAlert /> }
+            { previewErrorMessage && <ErrorAlert message={previewErrorMessage} onClose={() => setPreviewErrorMessage(undefined)} /> }
+            { (!url || previewErrorMessage) && <AddLinkInfoAlert /> }
         </div>
     );
 });
 
-export default AddLinkSetUrl;
+export default SetUrl;
