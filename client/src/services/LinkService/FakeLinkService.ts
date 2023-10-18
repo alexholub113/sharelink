@@ -8,7 +8,7 @@ import {
     getFakePreviewYoutubeVideoResponse
 } from './fakeData.ts';
 
-class LinkService implements ILinkService {
+class FakeLinkService implements ILinkService {
     async getList(): Promise<GetListResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -25,7 +25,6 @@ class LinkService implements ILinkService {
         });
     }
 
-    
     // @ts-ignore
     previewLink(url: string): Promise<PreviewLink> {
         return new Promise((resolve) => {
@@ -59,4 +58,4 @@ class LinkService implements ILinkService {
     }
 }
 
-export default LinkService;
+export default FakeLinkService;

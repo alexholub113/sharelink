@@ -1,6 +1,6 @@
 import {action, makeObservable, observable, runInAction} from 'mobx'
 import ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
-import LinkService from '../services/LinkService/LinkService.ts';
+import FakeLinkService from '../services/LinkService/FakeLinkService.ts';
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
@@ -25,7 +25,7 @@ type LinkStoreState = {
 
 class LinkStore {
 
-    private readonly linkService: ILinkService = new LinkService();
+    private readonly linkService: ILinkService = new FakeLinkService();
     constructor() {
         makeObservable(this, {
             state: observable,

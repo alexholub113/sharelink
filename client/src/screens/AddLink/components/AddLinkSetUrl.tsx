@@ -40,7 +40,7 @@ const AddLinkSetUrl = observer(() => {
                 </button>
             </div>
             { errorMessage && <ErrorAlert message={errorMessage} onClose={() => setErrorMessage(undefined)} /> }
-            <AddLinkInfoAlert />
+            { (!url || errorMessage) && <AddLinkInfoAlert /> }
         </div>
     );
 });
