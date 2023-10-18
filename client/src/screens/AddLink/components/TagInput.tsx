@@ -2,21 +2,17 @@ import {ChangeEvent, useState} from 'react';
 import TagBadge from '../../../components/TagBadge.tsx';
 import {MaxTagLength} from '../../../constants/preferences.ts';
 
-const InitialInputWidth = 11;
-
 type TagInputProps = {
     onAdd: (tag: string) => void;
 };
 const TagInput = ({ onAdd }: TagInputProps) => {
     const [isInputVisible, setInputVisible] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const [inputWidth, setInputWidth] = useState(InitialInputWidth);
 
     const handleAddTag = () => {
         if (inputValue.trim()) {
             onAdd(inputValue);
             setInputValue('');
-            setInputWidth(InitialInputWidth);
         }
         setInputVisible(false);
     }
@@ -25,9 +21,6 @@ const TagInput = ({ onAdd }: TagInputProps) => {
         const inputValue = e.target.value;
         if (inputValue.length > MaxTagLength) return;
         setInputValue(inputValue);
-
-        // Update width based on input length (e.g., 50 + 10 * inputValue.length)
-        setInputWidth(InitialInputWidth + 7 * inputValue.length);
     };
 
     return (
@@ -39,9 +32,8 @@ const TagInput = ({ onAdd }: TagInputProps) => {
                         type="text"
                         value={inputValue}
                         onBlur={handleAddTag}
-                        style={{ width: `${inputWidth}px` }}
                         onChange={handleChange}
-                        className="flex dark:bg-transparent p-0 m-0 text-sm font-semibold cursor-pointer secondary-text-color
+                        className="flex w-[10rem] dark:bg-transparent p-0 m-0 text-sm font-semibold cursor-pointer secondary-text-color
                                  bg-transparent border-none appearance-none focus:ring-0"
                     />
                 </TagBadge>
