@@ -35,7 +35,7 @@ class LinkStore {
             previewLink: action,
             likeLink: action,
             saveLink: action,
-            setPreviewLinkTags: action,
+            updatePreviewLink: action,
         });
 
         this.init();
@@ -59,20 +59,6 @@ class LinkStore {
 
     public removeTagFilter = (tag: Tag) => {
         this.state.filter.tags = this.state.filter.tags.filter(t => t.title !== tag.title);
-    };
-
-    public previewLink = async (url: string) => {
-        this.state.preview = {
-            url
-        };
-        
-        const previewLink = await this.linkService.previewLink(url);
-        runInAction(() => {
-            this.state.preview = {
-                ...this.state.preview,
-                link: previewLink
-            };
-        });
     };
     
     public setQuery = (query: string) => {
@@ -106,15 +92,30 @@ class LinkStore {
             saved: !link.saved
         };
     };
+
+    public previewLink = async (url: string) => {
+        this.state.preview = {
+            url,
+            link: undefined,
+        };
+
+        const previewLink = await this.linkService.previewLink(url);
+        runInAction(() => {
+            this.state.preview = {
+                ...this.state.preview,
+                link: previewLink
+            };
+        });
+    };
     
-    public setPreviewLinkTags = (tags: string[]) => {
+    public updatePreviewLink = (updates: Partial<PreviewLink>) => {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
         }
 
         this.state.preview.link = {
             ...this.state.preview.link,
-            tags,
+            ...updates,
         };
     };
 
