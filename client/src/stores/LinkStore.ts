@@ -143,20 +143,7 @@ class LinkStore {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
         }
-        
-        if (this.state.preview.link.title.length === 0) {
-            return {
-                errorMessage: "Title is required"
-            };
-        }
-        
-        if (this.state.preview.link.tags.length === 0) {
-            return {
-                errorMessage: "At least one tag is required"
-            };
-        }
-        
-        let link: Link;
+
         try {
             const response = await this.linkService.addLink(this.state.preview.link);
             if (!response.success) {
@@ -165,21 +152,19 @@ class LinkStore {
                 };
             }
 
-            link = response.data;
+            runInAction(() => {
+                this.state.links = [response.data, ...this.state.links];
+                this.state.preview = {};
+            });
+
+            return {
+                errorMessage: undefined
+            };
         } catch (e) {
             return {
                 errorMessage: "Server failed to process the request"
             };
         }
-        
-        runInAction(() => {
-            this.state.links = [link, ...this.state.links];
-            this.state.preview = {};
-        });
-        
-        return {
-            errorMessage: undefined
-        };
     };
 
     private init = async () => {
