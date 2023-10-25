@@ -1,0 +1,11 @@
+version: '3.0'
+services:
+  postgres:
+    ports:
+      - 5432:5432
+    networks:
+      - postgres
+
+networks:
+    postgres:
+        driver: bridge

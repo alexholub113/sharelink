@@ -1,0 +1,6 @@
+@ShareLink.Api_HostAddress = http://localhost:5160
+
+GET {{ShareLink.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

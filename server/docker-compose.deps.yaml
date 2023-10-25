@@ -1,0 +1,7 @@
+version: '3.0'
+services:
+  postgres:
+    image: postgres:12.5
+    environment:
+        - POSTGRES_USER=testuser
+        - POSTGRES_PASSWORD=testuser
