@@ -6,10 +6,10 @@ run `docker compose -f docker-compose.deps.yaml -f docker-compose.deps.local.yam
 additionally with database pgAdmin will be deployed.
 
 ### EF
-- To update db `dotnet ef database update -- "../ShareLink.Web/appsettings.json" "shareLinkDb"` from `src\ShareLink.Dal`
-- To add migration `dotnet ef migrations add {migrationName} -- "../ShareLink.Web/appsettings.json" "shareLinkDb"` from from `src\ShareLink.Dal`
-- To rollback last migration `dotnet ef database update {previousMigrationName} -- "../ShareLink.Web/appsettings.json" "shareLinkDb"` from from `src\ShareLink.Dal`
-- To remove the last migration `dotnet ef migrations remove -- "../ShareLink.Web/appsettings.json" "shareLinkDb"` from from `src\ShareLink.Dal`
+- To update db `dotnet ef database update -- "../ShareLink.Web/appsettings.json" "ShareLink"` from `src\ShareLink.Dal`
+- To add migration `dotnet ef migrations add {migrationName} -- "../ShareLink.Web/appsettings.json" "ShareLink"` from from `src\ShareLink.Dal`
+- To rollback last migration `dotnet ef database update {previousMigrationName} -- "../ShareLink.Web/appsettings.json" "ShareLink"` from from `src\ShareLink.Dal`
+- To remove the last migration `dotnet ef migrations remove -- "../ShareLink.Web/appsettings.json" "ShareLink"` from from `src\ShareLink.Dal`
 
 ### PG Admin
 PG Admin can be reached at http://localhost:5050/. Use password `postgres`.

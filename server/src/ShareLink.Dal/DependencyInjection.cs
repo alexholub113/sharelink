@@ -8,13 +8,11 @@ namespace ShareLink.Dal;
 
 public static class DependencyInjection
 {
-    private const string DbName = "shareLinkDb";
-
     public static IServiceCollection AddInfrastructureServices(
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var domainListConnectionString = configuration.GetConnectionString(DbName);
+        var domainListConnectionString = configuration.GetConnectionString("ShareLink");
         var dbOptionsAction = new Action<DbContextOptionsBuilder>(
             x => x.UseNpgsql(domainListConnectionString)
         );

@@ -19,17 +19,18 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration)
     .AddApplicationServices(builder.Configuration);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true); 
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
 
 app.UseSwagger();
+app.UseSwaggerUI();
+await app.InitialiseDatabaseAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerUI();
-    await app.InitialiseDatabaseAsync();
+    // app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
