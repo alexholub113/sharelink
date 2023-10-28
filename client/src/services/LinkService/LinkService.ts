@@ -9,7 +9,7 @@ import {
 } from './fakeData.ts';
 import PreviewLink from './interfaces/PreviewLink.ts';
 
-class FakeLinkService implements ILinkService {
+class LinkService implements ILinkService {
     async getList(): Promise<GetListResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -59,4 +59,4 @@ class FakeLinkService implements ILinkService {
     }
 }
 
-export default FakeLinkService;
+export default LinkService;

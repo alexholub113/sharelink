@@ -1,6 +1,5 @@
 import {action, makeObservable, observable, runInAction} from 'mobx'
-import ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
-import FakeLinkService from '../services/LinkService/FakeLinkService.ts';
+import type ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
@@ -25,9 +24,7 @@ type LinkStoreState = {
 };
 
 class LinkStore {
-
-    private readonly linkService: ILinkService = new FakeLinkService();
-    constructor() {
+    constructor(private readonly linkService: ILinkService) {
         makeObservable(this, {
             state: observable,
             applyTagFilter: action,
@@ -42,7 +39,7 @@ class LinkStore {
 
         this.init();
     }
-    
+
     state: LinkStoreState = {
         isListLoading: true,
         links: [],
@@ -54,7 +51,7 @@ class LinkStore {
         preview: {
         }
     };
-    
+
     public applyTagFilter = (tag: Tag) => {
         this.state.filter.tags = [...this.state.filter.tags, tag];
     };
@@ -62,17 +59,17 @@ class LinkStore {
     public removeTagFilter = (tag: Tag) => {
         this.state.filter.tags = this.state.filter.tags.filter(t => t.title !== tag.title);
     };
-    
+
     public setQuery = (query: string) => {
         this.state.filter.query = query;
     };
-    
+
     public likeLink = async (id: string) => {
         const link = this.state.links.find(link => link.id === id);
         if (!link) {
             throw new Error('Link not found');
         }
-        
+
         const index = this.state.links.findIndex(link => link.id === id);
         this.state.links[index] = {
             ...link,
@@ -81,7 +78,7 @@ class LinkStore {
         };
         await this.linkService.like(id);
     };
-    
+
     public saveLink = async (id: string) => {
         const link = this.state.links.find(link => link.id === id);
         if (!link) {
@@ -124,10 +121,10 @@ class LinkStore {
                 link: data
             };
         });
-        
+
         return {};
     };
-    
+
     public updatePreviewLink = (updates: Partial<PreviewLink>) => {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
@@ -138,7 +135,7 @@ class LinkStore {
             ...updates,
         };
     };
-    
+
     public submitLink = async (): Promise<{ errorMessage?: string }> => {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
@@ -170,7 +167,7 @@ class LinkStore {
     private init = async () => {
         await this.getList();
     };
-    
+
     private getList = async () => {
         const response = await this.linkService.getList();
         runInAction(() => {
