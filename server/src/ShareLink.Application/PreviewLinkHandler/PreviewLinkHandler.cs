@@ -18,7 +18,7 @@ public class PreviewLinkResponse
 
     public LinkType Type { get; set; }
 
-    public YoutubeDataDto YoutubeDataDto { get; set; } = null!;
+    public YoutubeDataDto Youtube { get; set; } = null!;
 
     public string[] Tags { get; set; } = Array.Empty<string>();
 }
@@ -35,7 +35,7 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
             _ => throw new NotSupportedException($"Link type {linkType} is not supported.")
         };
     }
-    
+
     private async Task<PreviewLinkResponse> HandleYoutube(string id)
     {
         var videoInfo = await googleApiService.GetYoutubeVideoInfo(id);
@@ -47,7 +47,7 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
         {
             Title = title,
             Type = LinkType.Youtube,
-            YoutubeDataDto = new YoutubeDataDto
+            Youtube = new YoutubeDataDto
             {
                 VideoId = videoInfo.Id
             },

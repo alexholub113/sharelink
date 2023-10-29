@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ShareLink.Application.Common.Exceptions;
+using ShareLink.Web.Errors;
 
 namespace ShareLink.Web.Infrastructure;
 
@@ -28,9 +29,9 @@ public class CustomExceptionHandler : IExceptionHandler
     {
         var exceptionType = exception.GetType();
 
-        if (_exceptionHandlers.ContainsKey(exceptionType))
+        if (_exceptionHandlers.TryGetValue(exceptionType, out var handler))
         {
-            await _exceptionHandlers[exceptionType].Invoke(httpContext, exception);
+            await handler.Invoke(httpContext, exception);
             return true;
         }
 
@@ -79,20 +80,13 @@ public class CustomExceptionHandler : IExceptionHandler
                 Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
             });
     }
-    
+
     private async Task HandleBusinessException(HttpContext httpContext, Exception ex)
     {
         var exception = (BusinessException)ex;
 
         httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-        await httpContext.Response.WriteAsJsonAsync(
-            new ProblemDetails()
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                Title = "Business exception",
-                Detail = exception.Message
-            });
+        await httpContext.Response.WriteAsJsonAsync(new BusinessError(exception.Message));
     }
 }

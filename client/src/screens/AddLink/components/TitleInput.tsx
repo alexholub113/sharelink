@@ -1,4 +1,5 @@
 ﻿import { ChangeEvent, useState } from 'react';
+import { MaxTitleLength } from '../../../constants/preferences.ts';
 
 type TitleInputProps = {
     initialTitle: string;
@@ -38,7 +39,7 @@ const TitleInput = ({ initialTitle, onUpdate }: TitleInputProps) => {
             className="text-lg font-semibold secondary-text-color cursor-pointer"
             onClick={handleEditStart}
         >
-            { title.length > 55 ? `${title.slice(0, 65)}...` : title }
+            { title.length > MaxTitleLength ? `${title.slice(0, MaxTitleLength)}...` : title }
         </h5>
     );
 }

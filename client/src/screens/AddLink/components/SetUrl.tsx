@@ -10,7 +10,7 @@ const SetUrl = observer(() => {
     const [linkUrl, setLinkUrl] = useState<string | undefined>(url);
     const [previewErrorMessage, setPreviewErrorMessage] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    
+
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
@@ -34,7 +34,7 @@ const SetUrl = observer(() => {
         <div className="flex flex-col gap-4">
             <div className="relative">
                 <input type="text" onChange={(event) => setLinkUrl(event.target.value)} className="
-                        block w-full p-4 pl-10 border rounded-full input-border-blue dark:bg-zinc-600 
+                        block w-full p-4 pr-12 pl-10 border rounded-full input-border-blue dark:bg-zinc-600
                         dark:border-zinc-500 dark:placeholder-zinc-400 dark:text-white text-sm"
                        placeholder="https://www.youtube.com/watch?v=some-video-id" />
                 <button disabled={ isLoading} onClick={handleSubmit} className="absolute right-2.5 p-2 transition bottom-2.5 text-cyan-600 rounded-full cursor-pointer dark:text-cyan-500 active:scale-95 dark:hover:bg-cyan-700">

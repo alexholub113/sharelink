@@ -1,110 +1,114 @@
-import {AddLinkResponse, GetListResponse, PreviewLinkResponse} from './interfaces/ILinkService.ts';
+import {
+    AddLinkResponse,
+    GetListResponse,
+    PreviewLinkResponse
+} from './interfaces/ILinkService.ts';
 import PreviewLink from './interfaces/PreviewLink.ts';
 import LinkType from './interfaces/LinkType.ts';
 
 export const getFakeGetListResponse = (): GetListResponse => ({
     tags: [{
-        title: '.NET',
+        name: '.NET',
         count: 242
     }, {
-        title: 'react',
+        name: 'react',
         count: 5443
     }, {
-        title: 'c#',
+        name: 'c#',
         count: 543
     }, {
-        title: 'typescript',
+        name: 'typescript',
         count: 44
     }, {
-        title: 'dynamic programming',
+        name: 'dynamic programming',
         count: 12
     }, {
-        title: 'clean architecture',
+        name: 'clean architecture',
         count: 32
     }, {
-        title: 'tailwind css',
+        name: 'tailwind css',
         count: 5
     }, {
-        title: 'aws',
+        name: 'aws',
         count: 2
     }, {
-        title: 'aws lambda',
+        name: 'aws lambda',
         count: 5
     }, {
-        title: 'ruby',
+        name: 'ruby',
         count: 512
     }, {
-        title: 'java',
+        name: 'java',
         count: 5122
     }, {
-        title: 'mongodb',
+        name: 'mongodb',
         count: 51
     }, {
-        title: 'postgres',
+        name: 'postgres',
         count: 512
     }, {
-        title: 'ms sql',
+        name: 'ms sql',
         count: 5
     }, {
-        title: 'my sql',
+        name: 'my sql',
         count: 4
     }, {
-        title: 'best practices',
+        name: 'best practices',
         count: 312
     }, {
-        title: 'architecture',
+        name: 'architecture',
         count: 5
     }],
     items: [{
         id: '1',
         title: 'They Dropped THIS And Thought Nobody Would Noticedasdasdasdasdasdadad  sdasdadas',
         youtube: {
-            id: '4YBS1uXanDE',
+            videoId: '4YBS1uXanDE',
         },
         liked: false,
         likes: 3123,
         saved: false,
         user: 'user1',
-        type: 0,
+        type: LinkType.Youtube,
         createdAt: '2021-01-01T00:00:00',
         tags: ['clean architecture', 'python', 'java', 'typescript', 'aws']
     }, {
         id: '2',
         title: '57 секунд — Русский трейлер (2023)',
         youtube: {
-            id: 'aHKSaP4Qr8U',
+            videoId: 'aHKSaP4Qr8U',
         },
         liked: true,
         likes: 213,
         saved: true,
         user: 'user2',
-        type: 0,
+        type: LinkType.Youtube,
         createdAt: '2021-01-01T00:00:00',
         tags: ['tag1']
     }, {
         id: '3',
         title: 'They Dropped THIS And Thought Nobody Would Notice',
         youtube: {
-            id: '4YBS1uXanDE',
+            videoId: '4YBS1uXanDE',
         },
         liked: false,
         likes: 53123,
         saved: false,
         user: 'user1',
-        type: 0,
+        type: LinkType.Youtube,
         createdAt: '2021-01-01T00:00:00',
         tags: ['react', 'c#', 'asp.net']
     }, {
         id: '4',
         title: '57 секунд — Русский трейлер (2023)',
         youtube: {
-            id: 'TRNSyg43c4E',
+            videoId: 'TRNSyg43c4E',
         },
         liked: true,
         likes: 2,
         saved: true,
         user: 'user2',
-        type: 0,
+        type: LinkType.Youtube,
         createdAt: '2021-01-01T00:00:00',
         tags: ['tag1']
     }]
@@ -114,10 +118,10 @@ export const getFakePreviewYoutubeVideoResponse = (): PreviewLinkResponse => ({
     success: true,
     data: {
         title: 'Preview video title',
-        type: LinkType.youtube,
+        type: LinkType.Youtube,
         tags: ['typescript', 'react', 'mobx'],
         youtube: {
-            id: '9WBD4NVODVs',
+            videoId: '9WBD4NVODVs',
         }
     }
 });

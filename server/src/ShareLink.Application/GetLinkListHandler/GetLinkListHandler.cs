@@ -25,7 +25,8 @@ public class GetLinkListHandler(ILinkDbContext context, IMapper mapper)
 {
     public async Task<GetLinkListResponse> Handle(GetLinkListRequest request, CancellationToken cancellationToken)
     {
-        var links = await context.Links.OrderBy(x => x.CreatedAt)
+        var links = await context.Links
+            .OrderByDescending(x => x.CreatedAt)
             .ProjectTo<LinkDto>(mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);;
         var tags = await context.Tags

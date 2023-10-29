@@ -1,19 +1,11 @@
 ﻿namespace ShareLink.Application.Common.Dto;
 
-public class PaginatedList<T>
+public class PaginatedList<T>(IReadOnlyCollection<T> items, int totalCount, int pageNumber, int totalPages)
 {
-    public PaginatedList(IReadOnlyCollection<T> items, int totalCount, int pageNumber, int totalPages)
-    {
-        Items = items;
-        TotalCount = totalCount;
-        PageNumber = pageNumber;
-        TotalPages = totalPages;
-    }
-
-    public IReadOnlyCollection<T> Items { get; }
-    public int PageNumber { get; }
-    public int TotalPages { get; }
-    public int TotalCount { get; }
+    public IReadOnlyCollection<T> Items { get; } = items;
+    public int PageNumber { get; } = pageNumber;
+    public int TotalPages { get; } = totalPages;
+    public int TotalCount { get; } = totalCount;
 
     public bool HasPreviousPage => PageNumber > 1;
 

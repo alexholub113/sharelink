@@ -11,7 +11,6 @@ export const validateUrl = (url?: string): { valid: boolean, error?: 'invalid-ur
 
         const urlObj = new URL(url);
 
-        console.log(urlObj.origin)
         if (!supportedWebsites.includes(urlObj.origin)) {
             return {
                 valid: false,

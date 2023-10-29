@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Dto;
+using ShareLink.Application.Common.Exceptions;
 using ShareLink.Application.Common.Services;
 using ShareLink.Domain.Enums;
 using ShareLink.Domain.Models;
 
 namespace ShareLink.Application.CreateLinkHandler;
 
-public class CreateLinkResponse
-{
-    public LinkDto Link { get; set; } = null!;
-}
-
-public class CreateLinkRequest : IRequest<CreateLinkResponse>
+public class CreateLinkRequest : IRequest<LinkDto>
 {
     public string Title { get; set; } = null!;
 
@@ -23,14 +20,21 @@ public class CreateLinkRequest : IRequest<CreateLinkResponse>
 }
 
 public class CreateLinkHandler(ILinkDbContext context, IMapper mapper, IUrlParser urlParser, IGoogleApiService googleApiService)
-    : IRequestHandler<CreateLinkRequest, CreateLinkResponse>
+    : IRequestHandler<CreateLinkRequest, LinkDto>
 {
-    public async Task<CreateLinkResponse> Handle(CreateLinkRequest request, CancellationToken cancellationToken)
+    public async Task<LinkDto> Handle(CreateLinkRequest request, CancellationToken cancellationToken)
     {
         var (linkType, urlId) = urlParser.ParseUrl(request.Url);
+        var linkId = GetId(linkType, urlId);
+        var isLinkExist = await context.Links.AnyAsync(x => x.Id == linkId, cancellationToken);
+        if (isLinkExist)
+        {
+            throw new BusinessException("Link already exists.");
+        }
+
         var link = new Link
         {
-            Id = GetId(linkType, urlId),
+            Id = linkId,
             Title = request.Title,
             Type = linkType,
             Youtube = linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
@@ -41,11 +45,8 @@ public class CreateLinkHandler(ILinkDbContext context, IMapper mapper, IUrlParse
         };
         context.Links.Add(link);
         await context.SaveChangesAsync(cancellationToken);
-        
-        return new CreateLinkResponse
-        {
-            Link = mapper.Map<LinkDto>(link)
-        };
+
+        return mapper.Map<LinkDto>(link);
     }
 
     private async Task<YoutubeData> GetYoutubeData(string id)
@@ -59,7 +60,7 @@ public class CreateLinkHandler(ILinkDbContext context, IMapper mapper, IUrlParse
         var type = linkType.ToString().ToLower();
         return linkType switch
         {
-            LinkType.Youtube => type + ":" + contentId,
+            LinkType.Youtube => type + "-" + contentId,
             _ => throw new NotSupportedException()
         };
     }

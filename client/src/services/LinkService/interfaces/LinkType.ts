@@ -1,6 +1,5 @@
 enum LinkType {
-    youtube = 0,
-    udemy = 1,
+    Youtube = 'Youtube',
 }
 
 export default LinkType;

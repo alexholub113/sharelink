@@ -1,5 +1,5 @@
 type Tag = {
-    title: string;
+    name: string;
     count: number;
 };
 

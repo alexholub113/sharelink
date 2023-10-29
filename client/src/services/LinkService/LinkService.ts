@@ -1,38 +1,35 @@
 import ILinkService, {
-    AddLinkResponse,
-    GetListResponse, PreviewLinkResponse
+    AddLinkRequest,
+    GetListResponse, PreviewLinkRequest, PreviewLinkResponse
 } from './interfaces/ILinkService.ts';
-import {
-    getFakeAddYoutubeVideoResponse,
-    getFakeGetListResponse,
-    getFakePreviewYoutubeVideoResponse
-} from './fakeData.ts';
-import PreviewLink from './interfaces/PreviewLink.ts';
+import HttpClient from '../HttpClient/HttpClient.ts';
+import Link from './interfaces/Link.ts';
 
 class LinkService implements ILinkService {
+
+    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/api/links`;
+
+    constructor(private readonly httpClient: HttpClient) {
+    }
+
     async getList(): Promise<GetListResponse> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(getFakeGetListResponse());
-            }, 1000);
-        });
+        const response = await this.httpClient.get<GetListResponse>(`${this.baseUrl}/list`);
+
+        return response.data;
     }
 
-    addLink(previewLink: PreviewLink): Promise<AddLinkResponse> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(getFakeAddYoutubeVideoResponse(previewLink));
-            }, 1000);
-        });
+    async addLink(request: AddLinkRequest): Promise<Link> {
+        const response = await this.httpClient.post<Link, AddLinkRequest>(
+            `${this.baseUrl}/create`, { ...request });
+
+        return response.data;
     }
 
-    // @ts-ignore
-    previewLink(url: string): Promise<PreviewLinkResponse> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(getFakePreviewYoutubeVideoResponse());
-            }, 1000);
-        });
+    async previewLink(request: PreviewLinkRequest): Promise<PreviewLinkResponse> {
+        const response = await this.httpClient.post<PreviewLinkResponse, PreviewLinkRequest>(
+            `${this.baseUrl}/preview`, { ...request });
+
+        return response.data;
     }
 
     // @ts-ignore

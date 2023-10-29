@@ -1,7 +1,7 @@
 import LinkType from './LinkType.ts';
 
 export type YoutubeVideo = {
-    id: string;
+    videoId: string;
 };
 
 type Link = {

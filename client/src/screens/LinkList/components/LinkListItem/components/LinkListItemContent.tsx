@@ -3,7 +3,7 @@ import LinkType from '../../../../../services/LinkService/interfaces/LinkType.ts
 import YoutubeVideoContent from './Contents/YoutubeVideoContent.tsx';
 
 const LinkListItemContent = ({ type, youtube }: Pick<Link, 'type' | 'youtube'>) => {
-    if (type === LinkType.youtube) {
+    if (type === LinkType.Youtube) {
         return (<YoutubeVideoContent {...youtube} />);
     }
 

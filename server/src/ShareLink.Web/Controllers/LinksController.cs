@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ShareLink.Application.Common.Dto;
 using ShareLink.Application.CreateLinkHandler;
 using ShareLink.Application.GetLinkListHandler;
 using ShareLink.Application.PreviewLinkHandler;
@@ -7,7 +8,7 @@ using ShareLink.Application.PreviewLinkHandler;
 namespace ShareLink.Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class LinksController(ISender sender) : ControllerBase
 {
     [HttpGet("list")]
@@ -15,13 +16,13 @@ public class LinksController(ISender sender) : ControllerBase
     {
         return await sender.Send(request);
     }
-    
+
     [HttpPost("create")]
-    public async Task<CreateLinkResponse> CreateLink([FromBody] CreateLinkRequest request)
+    public async Task<LinkDto> CreateLink([FromBody] CreateLinkRequest request)
     {
         return await sender.Send(request);
     }
-    
+
     [HttpPost("preview")]
     public async Task<PreviewLinkResponse> PreviewLink([FromBody] PreviewLinkRequest request)
     {

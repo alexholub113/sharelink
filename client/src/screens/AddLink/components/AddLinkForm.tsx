@@ -11,6 +11,7 @@ import SubmitButton from '../../../components/SubmitButton.tsx';
 import ErrorAlert from '../../../components/ErrorAlert.tsx';
 import LinkListItemSkeleton from '../../LinkList/components/LinkListItemSkeleton.tsx';
 import useSimpleReducer from '../../../hooks/useSimpleReducer.ts';
+import { useEffect } from 'react';
 
 type LocalState = {
     isSubmitting: boolean;
@@ -20,10 +21,13 @@ type LocalState = {
 };
 
 const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
-    const { updatePreviewLink, submitLink, state: { preview: { link }} } = useLinkStore();
+    const { updatePreviewLink, submitLink, state: { preview: { link, url }} } = useLinkStore();
     const { state: { userName }} = useUserStore();
     const { state, dispatch } = useSimpleReducer<LocalState>({ isSubmitting: false });
 
+    useEffect(() => {
+        dispatch({ isSubmitting: false, submitErrorMessage: undefined, titleError: undefined, tagsError: undefined });
+    }, [url])
     const submitHandler = async () => {
         if (!link) {
             throw new Error('Preview Link not found');
@@ -40,11 +44,11 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
             dispatch({ tagsError: 'At least one tag is required' });
             hasError = true;
         }
-        
+
          if (hasError) {
             return;
         }
-        
+
         dispatch({ isSubmitting: true });
         try {
             const { errorMessage } = await submitLink();
@@ -63,9 +67,9 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
     };
 
     const addTag = (tag: string) => {
-        updatePreviewLink({ tags: [...link!.tags, tag]});
+        updatePreviewLink({ tags: [...new Set([...link!.tags, tag])]});
     };
-    
+
     const updateTitle = (title: string) => {
         updatePreviewLink({ title });
     };
@@ -80,7 +84,7 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
                         { state.titleError && (<span className="text-red-500 text-sm">{state.titleError}</span>) }
                         <div className="flex flex-wrap gap-2 items-center">
                             {link.tags.map((tag) => (
-                                <div onClick={() => removeTag(tag)}>
+                                <div key={tag} onClick={() => removeTag(tag)}>
                                     <TagBadge title={tag} key={tag} removable />
                                 </div>
                             ))}
@@ -93,8 +97,8 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
                     <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-lg">
                         Submit
                     </SubmitButton>
-                    { state.submitErrorMessage && 
-                        <ErrorAlert className="mt-4" message={state.submitErrorMessage} 
+                    { state.submitErrorMessage &&
+                        <ErrorAlert className="mt-4" message={state.submitErrorMessage}
                                     onClose={() => dispatch({ submitErrorMessage: undefined })} /> }
                 </>
             )}

@@ -4,6 +4,7 @@ import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 import {validateUrl} from '../utils/urlValidator.ts';
+import FetchHttpResponseBusinessError from '../services/HttpClient/FetchHttpResponseBusinessError.ts';
 
 type Filter = {
     tags: Tag[];
@@ -57,7 +58,7 @@ class LinkStore {
     };
 
     public removeTagFilter = (tag: Tag) => {
-        this.state.filter.tags = this.state.filter.tags.filter(t => t.title !== tag.title);
+        this.state.filter.tags = this.state.filter.tags.filter(t => t.name !== tag.name);
     };
 
     public setQuery = (query: string) => {
@@ -108,17 +109,12 @@ class LinkStore {
 
         this.state.preview.url = url;
 
-        const { success, data } = await this.linkService.previewLink(url);
-        if (!success) {
-            return {
-                errorMessage: 'Server failed to process the request'
-            };
-        }
+        const previewLink = await this.linkService.previewLink({ url });
 
         runInAction(() => {
             this.state.preview = {
                 ...this.state.preview,
-                link: data
+                link: previewLink
             };
         });
 
@@ -142,15 +138,13 @@ class LinkStore {
         }
 
         try {
-            const response = await this.linkService.addLink(this.state.preview.link);
-            if (!response.success) {
-                return {
-                    errorMessage: "Server failed to process the request"
-                };
-            }
+            const link = await this.linkService.addLink({
+                url: this.state.preview.url!,
+                ...this.state.preview.link,
+            });
 
             runInAction(() => {
-                this.state.links = [response.data, ...this.state.links];
+                this.state.links = [link, ...this.state.links];
                 this.state.preview = {};
             });
 
@@ -158,6 +152,12 @@ class LinkStore {
                 errorMessage: undefined
             };
         } catch (e) {
+            if (e instanceof FetchHttpResponseBusinessError) {
+                return {
+                    errorMessage: e.message
+                };
+            }
+
             return {
                 errorMessage: "Server failed to process the request"
             };
