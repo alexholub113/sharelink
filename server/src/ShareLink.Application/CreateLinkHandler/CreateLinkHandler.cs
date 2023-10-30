@@ -29,7 +29,7 @@ public class CreateLinkHandler(ILinkDbContext context, IMapper mapper, IUrlParse
         var isLinkExist = await context.Links.AnyAsync(x => x.Id == linkId, cancellationToken);
         if (isLinkExist)
         {
-            throw new BusinessException("Link already exists.");
+            throw new BusinessException(ErrorCodes.LinkExists, "Link already exists.");
         }
 
         var link = new Link

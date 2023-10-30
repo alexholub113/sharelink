@@ -60,8 +60,8 @@ export default class HttpClient implements TransportInterface<RequestInit> {
 
         const responseBody = await response.text();
         const error = JSON.parse(responseBody);
-        if (error && error.code === 'business_error') {
-            throw new FetchHttpResponseBusinessError(error.message);
+        if (error && error.type === 'business_error') {
+            throw new FetchHttpResponseBusinessError(error.code, error.message);
         }
 
         throw new FetchHttpResponseError('Request error', response.status, JSON.parse(responseBody));

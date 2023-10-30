@@ -87,6 +87,6 @@ public class CustomExceptionHandler : IExceptionHandler
 
         httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-        await httpContext.Response.WriteAsJsonAsync(new BusinessError(exception.Message));
+        await httpContext.Response.WriteAsJsonAsync(new BusinessError(exception.Code, exception.Message));
     }
 }

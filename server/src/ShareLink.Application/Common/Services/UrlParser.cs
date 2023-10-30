@@ -36,23 +36,23 @@ public class UrlParser : IUrlParser
         var linkTypeSettings = _linkTypeSettings.FirstOrDefault(x => url.StartsWith(x.Website));
         if (linkTypeSettings is null)
         {
-            throw new BusinessException("Url is not supported.");
+            throw new BusinessException(ErrorCodes.UrlNotSupported, "This kind of URL isn't supported");
         }
 
         var match = Regex.Match(url, linkTypeSettings.IdRegexPatter);
         if (!match.Success)
         {
-            throw new BusinessException("Unable to parse url.");
+            throw new BusinessException(ErrorCodes.UnableToParseUrl, "Unable to parse URL");
         }
-        
+
         var urlId = match.Groups[1].Value;
         return (linkTypeSettings.LinkType, urlId);
     }
-    
+
     private class LinkTypeSettings(LinkType linkType, string website, string idRegexPatter)
     {
         public string IdRegexPatter { get; } = idRegexPatter;
-    
+
         public string Website { get; } = website;
 
         public LinkType LinkType { get; } = linkType;

@@ -1,9 +1,14 @@
 ﻿namespace ShareLink.Application.Common.Exceptions;
 
-public class BusinessException : Exception
+public static class ErrorCodes
 {
-    public BusinessException(string message)
-        : base(message)
-    {
-    }
+    public const string YoutubeVideoNotFound = "YoutubeVideoNotFound";
+    public const string UrlNotSupported = "UrlNotSupported";
+    public const string UnableToParseUrl = "UnableToParseUrl";
+    public const string LinkExists = "LinkExists";
+}
+
+public class BusinessException(string code, string? message = null) : Exception(message)
+{
+    public string Code { get; } = code;
 }

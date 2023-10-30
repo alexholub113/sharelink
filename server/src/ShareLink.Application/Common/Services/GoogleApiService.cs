@@ -28,7 +28,7 @@ public class GoogleApiService(IOptions<GoogleApiConfiguration> googleApiConfigur
         ApiKey = googleApiConfiguration.Value.ApiKey,
         ApplicationName = googleApiConfiguration.Value.ApplicationName
     });
-    
+
     public async Task<VideoInfo> GetYoutubeVideoInfo(string videoId)
     {
         var request = _youTubeService.Videos.List("snippet");
@@ -37,7 +37,7 @@ public class GoogleApiService(IOptions<GoogleApiConfiguration> googleApiConfigur
         var video = response.Items.FirstOrDefault();
         if (video is null)
         {
-            throw new BusinessException("Video not found.");
+            throw new BusinessException(ErrorCodes.YoutubeVideoNotFound, "Video not found.");
         }
 
         return new VideoInfo(videoId, video.Snippet.Title, video.Snippet.Tags?.ToArray() ?? Array.Empty<string>());
