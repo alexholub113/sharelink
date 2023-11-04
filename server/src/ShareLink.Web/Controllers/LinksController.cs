@@ -14,7 +14,6 @@ namespace ShareLink.Web.Controllers;
 [Route("api/[controller]")]
 public class LinksController(ISender sender, UserManager<ApplicationUser> userManager) : ControllerBase
 {
-    [Authorize]
     [HttpGet("list")]
     public async Task<GetLinkListResponse> GetLinksList([FromQuery] GetLinkListRequest request)
     {

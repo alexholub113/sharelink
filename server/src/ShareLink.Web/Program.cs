@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using ShareLink.Application;
 using ShareLink.Dal;
-using ShareLink.Dal.Migrations;
+using ShareLink.Migrations;
 using ShareLink.Identity;
 using ShareLink.Web.Infrastructure;
 

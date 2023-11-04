@@ -14,7 +14,7 @@ public static class DependencyInjection
     {
         var domainListConnectionString = configuration.GetConnectionString("ShareLink");
         var dbOptionsAction = new Action<DbContextOptionsBuilder>(
-            x => x.UseNpgsql(domainListConnectionString, builder => builder.MigrationsAssembly("ShareLink.Dal.Migrations"))
+            x => x.UseNpgsql(domainListConnectionString, builder => builder.MigrationsAssembly("ShareLink.Migrations"))
         );
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(dbOptionsAction);
         services.AddDbContext<ApplicationDbContext>(dbOptionsAction);

@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ShareLink.Identity;
 
-namespace ShareLink.Dal.Migrations.Initializers;
+namespace ShareLink.Migrations.Initializers;
 
-public class ApplicationDbContextInitializer(
-    ILogger<ApplicationDbContextInitializer> logger,
-    ApplicationDbContext context)
+public class IdentityDbContextInitializer(
+    ILogger<IdentityDbContext> logger,
+    IdentityDbContext context)
 {
     public async Task InitialiseAsync()
     {

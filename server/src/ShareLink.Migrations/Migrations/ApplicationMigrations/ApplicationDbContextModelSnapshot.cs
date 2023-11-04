@@ -4,11 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ShareLink.Dal;
 using ShareLink.Domain.Models;
 
 #nullable disable
 
-namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
+namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -56,7 +57,11 @@ namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("User")
+                    b.Property<string>("UserDisplayName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -73,7 +78,7 @@ namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
 
                     b.HasIndex("Type");
 
-                    b.HasIndex("User");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Links");
                 });

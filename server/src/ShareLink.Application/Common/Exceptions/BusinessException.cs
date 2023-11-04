@@ -6,6 +6,7 @@ public static class ErrorCodes
     public const string UrlNotSupported = "UrlNotSupported";
     public const string UnableToParseUrl = "UnableToParseUrl";
     public const string LinkExists = "LinkExists";
+    public const string Unauthorized = "Unauthorized";
 }
 
 public class BusinessException(string code, string? message = null) : Exception(message)

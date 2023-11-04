@@ -18,7 +18,7 @@ public static class DependencyInjection
 
         var identityConnectionString = configuration.GetConnectionString("Identity");
         var identityDbOptionsAction = new Action<DbContextOptionsBuilder>(
-            options => options.UseNpgsql(identityConnectionString, builder => builder.MigrationsAssembly("ShareLink.Dal.Migrations"))
+            options => options.UseNpgsql(identityConnectionString, builder => builder.MigrationsAssembly("ShareLink.Migrations"))
         );
 
         services.AddDbContext<IdentityDbContext>(identityDbOptionsAction);

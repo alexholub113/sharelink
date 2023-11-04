@@ -6,14 +6,14 @@ run `docker compose -f docker-compose.deps.yaml -f docker-compose.deps.local.yam
 additionally with database pgAdmin will be deployed.
 
 ### EF
-- To update db `dotnet ef database update --context ApplicationDbContext -- "../ShareLink.Web/appsettings.Development.json"` from `src\ShareLink.Dal.Migrations`
-- To add migration `dotnet ef migrations add {migrationName} --context ApplicationDbContext --output-dir Migrations/ApplicationMigrations -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Dal.Migrations`
-- To rollback last migration `dotnet ef database update {previousMigrationName} --context ApplicationDbContext -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Dal.Migrations`
-- To remove the last migration `dotnet ef migrations remove --context ApplicationDbContext -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Dal.Migrations`
+- To update db `dotnet ef database update --context ApplicationDbContext -- "../ShareLink.Web/appsettings.Development.json"` from `src\ShareLink.Migrations`
+- To add migration `dotnet ef migrations add {migrationName} --context ApplicationDbContext --output-dir Migrations/ApplicationMigrations -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Migrations`
+- To rollback last migration `dotnet ef database update {previousMigrationName} --context ApplicationDbContext -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Migrations`
+- To remove the last migration `dotnet ef migrations remove --context ApplicationDbContext -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Migrations`
 
 ### EF Identity
-- To update db `dotnet ef database update --context IdentityDbContext -- "../ShareLink.Web/appsettings.Development.json"` from `src\ShareLink.Dal.Migrations`
-- To add migration `dotnet ef migrations add {migrationName} --context IdentityDbContext --output-dir Migrations/IdentityMigrations -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Dal.Migrations`
+- To update db `dotnet ef database update --context IdentityDbContext -- "../ShareLink.Web/appsettings.Development.json"` from `src\ShareLink.Migrations`
+- To add migration `dotnet ef migrations add {migrationName} --context IdentityDbContext --output-dir Migrations/IdentityMigrations -- "../ShareLink.Web/appsettings.Development.json"` from from `src\ShareLink.Migrations`
 
 ### PG Admin
 PG Admin can be reached at http://localhost:5050/. Use password `postgres`.

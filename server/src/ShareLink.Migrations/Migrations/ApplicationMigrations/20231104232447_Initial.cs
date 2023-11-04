@@ -4,7 +4,7 @@ using ShareLink.Domain.Models;
 
 #nullable disable
 
-namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
+namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -21,7 +21,8 @@ namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     Youtube = table.Column<YoutubeData>(type: "jsonb", nullable: true, defaultValueSql: "'{}'::jsonb"),
                     Likes = table.Column<int>(type: "integer", nullable: false),
-                    User = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    UserDisplayName = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -80,9 +81,9 @@ namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
                 column: "Type");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Links_User",
+                name: "IX_Links_UserId",
                 table: "Links",
-                column: "User");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LinkTag_TagsName",

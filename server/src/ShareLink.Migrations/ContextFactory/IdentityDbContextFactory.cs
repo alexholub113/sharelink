@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace ShareLink.Dal.Migrations.ContextFactory
+namespace ShareLink.Migrations.ContextFactory
 {
     public class IdentityDbContextFactory : DbContextFactoryBase<IdentityDbContext>
     {

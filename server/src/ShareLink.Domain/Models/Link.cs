@@ -4,19 +4,21 @@ namespace ShareLink.Domain.Models;
 
 public class Link
 {
-    public string Id { get; set; } = null!;
-    
-    public string Title { get; set; } = null!;
-    
+    public required string Id { get; set; }
+
+    public required string Title { get; set; }
+
     public LinkType Type { get; set; }
-    
+
     public YoutubeData? Youtube { get; set; }
 
     public int Likes { get; set; }
 
-    public string User { get; set; } = null!;
+    public required string UserId { get; set; }
+
+    public required string UserDisplayName { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public IReadOnlyCollection<Tag> Tags { get; set; } = new List<Tag>();
+    public required IReadOnlyCollection<Tag> Tags { get; set; }
 }

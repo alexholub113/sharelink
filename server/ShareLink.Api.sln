@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Domain", "src\Sha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Dal", "src\ShareLink.Dal\ShareLink.Dal.csproj", "{AA8838BF-7173-42E7-AFF6-EDFE73F5597D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Dal.Migrations", "src\ShareLink.Dal.Migrations\ShareLink.Dal.Migrations.csproj", "{D18D2D8B-2FD6-4663-A58E-CAF963CEDE78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Migrations", "src\ShareLink.Migrations\ShareLink.Migrations.csproj", "{D18D2D8B-2FD6-4663-A58E-CAF963CEDE78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Identity", "src\ShareLink.Identity\ShareLink.Identity.csproj", "{6627F3DA-41DF-47AB-B8BD-8FD977B2CFEF}"
 EndProject

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ShareLink.Dal.Migrations.Initializers;
+namespace ShareLink.Migrations.Initializers;
 
 public static class InitializerExtensions
 {

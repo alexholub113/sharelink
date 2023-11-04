@@ -1,4 +1,6 @@
-namespace ShareLink.Dal.Migrations.ContextFactory
+using ShareLink.Dal;
+
+namespace ShareLink.Migrations.ContextFactory
 {
     public class ApplicationDbContextFactory : DbContextFactoryBase<ApplicationDbContext>
     {

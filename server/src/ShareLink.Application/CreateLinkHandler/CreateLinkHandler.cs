@@ -19,11 +19,21 @@ public class CreateLinkRequest : IRequest<LinkDto>
     public string[] Tags { get; set; } = null!;
 }
 
-public class CreateLinkHandler(IApplicationDbContext context, IMapper mapper, IUrlParser urlParser, IGoogleApiService googleApiService)
+public class CreateLinkHandler(
+        IApplicationDbContext context,
+        IMapper mapper,
+        IUrlParser urlParser,
+        IGoogleApiService googleApiService,
+        IIdentityContext identityContext)
     : IRequestHandler<CreateLinkRequest, LinkDto>
 {
     public async Task<LinkDto> Handle(CreateLinkRequest request, CancellationToken cancellationToken)
     {
+        if (identityContext.UserId is null)
+        {
+            throw new BusinessException(ErrorCodes.Unauthorized, "User is not authenticated.");
+        }
+
         var (linkType, urlId) = urlParser.ParseUrl(request.Url);
         var linkId = GetId(linkType, urlId);
         var isLinkExist = await context.Links.AnyAsync(x => x.Id == linkId, cancellationToken);
@@ -40,7 +50,8 @@ public class CreateLinkHandler(IApplicationDbContext context, IMapper mapper, IU
             Youtube = linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
             Tags = request.Tags.Select(x => new Tag { Name = x.ToLower() }).ToList(),
             Likes = 0,
-            User = "some user",
+            UserId = identityContext.UserId!,
+            UserDisplayName = identityContext.UserDisplayName!,
             CreatedAt = DateTime.UtcNow
         };
         context.Links.Add(link);

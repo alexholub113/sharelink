@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareLink.Dal.Migrations.Initializers;
+using ShareLink.Migrations.Initializers;
 
-namespace ShareLink.Dal.Migrations;
+namespace ShareLink.Migrations;
 
 public static class DependencyInjection
 {

@@ -5,14 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ShareLink.Dal;
 using ShareLink.Domain.Models;
 
 #nullable disable
 
-namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
+namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231104151213_Initial")]
+    [Migration("20231104232447_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -59,7 +60,11 @@ namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("User")
+                    b.Property<string>("UserDisplayName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -76,7 +81,7 @@ namespace ShareLink.Dal.Migrations.Migrations.ApplicationMigrations
 
                     b.HasIndex("Type");
 
-                    b.HasIndex("User");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Links");
                 });

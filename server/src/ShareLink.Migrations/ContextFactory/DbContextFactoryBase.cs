@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace ShareLink.Dal.Migrations.ContextFactory;
+namespace ShareLink.Migrations.ContextFactory;
 
 public abstract class DbContextFactoryBase<T> : IDesignTimeDbContextFactory<T>
     where T : DbContext
