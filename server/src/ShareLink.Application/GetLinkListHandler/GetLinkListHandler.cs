@@ -20,11 +20,12 @@ public class GetLinkListRequest : IRequest<GetLinkListResponse>
     public int PageSize { get; init; } = 10;
 }
 
-public class GetLinkListHandler(ILinkDbContext context, IMapper mapper)
+public class GetLinkListHandler(IApplicationDbContext context, IMapper mapper, IIdentityContext identityContext)
     : IRequestHandler<GetLinkListRequest, GetLinkListResponse>
 {
     public async Task<GetLinkListResponse> Handle(GetLinkListRequest request, CancellationToken cancellationToken)
     {
+        var displayName = identityContext.UserDisplayName;
         var links = await context.Links
             .OrderByDescending(x => x.CreatedAt)
             .ProjectTo<LinkDto>(mapper.ConfigurationProvider)

@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using ShareLink.Application;
 using ShareLink.Dal;
+using ShareLink.Dal.Migrations;
+using ShareLink.Identity;
 using ShareLink.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +15,14 @@ builder.Services.AddControllers()
         opts.JsonSerializerOptions.Converters.Add(enumConverter);
     });
 
-builder.Services
+builder
+    .Services
     .AddSwaggerGen()
     .AddLogging()
-    .AddInfrastructureServices(builder.Configuration)
-    .AddApplicationServices(builder.Configuration);
+    .AddApplicationServices(builder.Configuration)
+    .AddIdentityServices(builder.Configuration)
+    .AddDalServices(builder.Configuration)
+    .AddMigrationsServices(builder.Configuration);
 builder.Services.AddCors();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
@@ -30,7 +35,7 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader());
 
-await app.InitialiseDatabaseAsync();
+// app.MapGroup("/temp-identity").MapIdentityApi<ApplicationUser>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -45,5 +50,6 @@ app
     {
         endpoints.MapControllers();
     });
+
 
 app.Run();

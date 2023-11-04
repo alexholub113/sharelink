@@ -3,7 +3,7 @@ using ShareLink.Domain.Models;
 
 namespace ShareLink.Application.Common.Abstraction;
 
-public interface ILinkDbContext
+public interface IApplicationDbContext
 {
     DbSet<Link> Links { get; }
 

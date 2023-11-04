@@ -4,20 +4,20 @@ using ShareLink.Domain.Models;
 
 namespace ShareLink.Dal;
 
-public class LinkDbContext : DbContext, ILinkDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public LinkDbContext(DbContextOptions<LinkDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
     public DbSet<Link> Links => Set<Link>();
-    
+
     public DbSet<Tag> Tags => Set<Tag>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(LinkDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ShareLink.Dal.Migrations\ShareLink.Dal.Migrations.csproj" />
       <ProjectReference Include="..\ShareLink.Dal\ShareLink.Dal.csproj" />
     </ItemGroup>
 

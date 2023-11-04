@@ -1,0 +1,23 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using ShareLink.Identity.Dto;
+using ShareLink.Identity.Services;
+
+namespace ShareLink.Web.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class IdentityController(IIdentityService identityService) : ControllerBase
+{
+    [HttpPost("register")]
+    public async Task<Results<Ok, ValidationProblem>> Register([FromBody] RegisterRequest request)
+    {
+        return await identityService.Register(request);
+    }
+
+    [HttpPost("login")]
+    public async Task<Results<Ok, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest request)
+    {
+        return await identityService.Login(request);
+    }
+}

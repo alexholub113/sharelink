@@ -19,7 +19,7 @@ public class CreateLinkRequest : IRequest<LinkDto>
     public string[] Tags { get; set; } = null!;
 }
 
-public class CreateLinkHandler(ILinkDbContext context, IMapper mapper, IUrlParser urlParser, IGoogleApiService googleApiService)
+public class CreateLinkHandler(IApplicationDbContext context, IMapper mapper, IUrlParser urlParser, IGoogleApiService googleApiService)
     : IRequestHandler<CreateLinkRequest, LinkDto>
 {
     public async Task<LinkDto> Handle(CreateLinkRequest request, CancellationToken cancellationToken)
