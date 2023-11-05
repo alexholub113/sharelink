@@ -16,8 +16,14 @@ public class IdentityController(IIdentityService identityService) : ControllerBa
     }
 
     [HttpPost("login")]
-    public async Task<Results<Ok, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest request)
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest request)
     {
         return await identityService.Login(request);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<Results<Ok<AccessTokenResponse>, UnauthorizedHttpResult, SignInHttpResult, ChallengeHttpResult>> Refresh([FromBody] RefreshRequest request)
+    {
+        return await identityService.Refresh(request);
     }
 }

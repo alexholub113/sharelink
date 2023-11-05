@@ -1,8 +1,10 @@
 using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using ShareLink.Identity.Dto;
 
 namespace ShareLink.Identity.Services;
@@ -10,7 +12,9 @@ namespace ShareLink.Identity.Services;
 public class IdentityService(
     UserManager<ApplicationUser> userManager,
     IUserStore<ApplicationUser> userStore,
-    SignInManager<ApplicationUser> signInManager) : IIdentityService
+    SignInManager<ApplicationUser> signInManager,
+    IOptionsMonitor<BearerTokenOptions> bearerTokenOptions,
+    TimeProvider timeProvider) : IIdentityService
 {
     public async Task<Results<Ok, ValidationProblem>> Register(RegisterRequest request)
     {
@@ -30,7 +34,7 @@ public class IdentityService(
         return TypedResults.Ok();
     }
 
-    public async Task<Results<Ok, EmptyHttpResult, ProblemHttpResult>> Login(LoginRequest loginRequest)
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(LoginRequest loginRequest)
     {
         signInManager.PrimaryAuthenticationScheme = IdentityConstants.BearerScheme;
         var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, false, false);
@@ -41,6 +45,24 @@ public class IdentityService(
 
         // The signInManager already produced the needed response in the form of a cookie or bearer token.
         return TypedResults.Empty;
+    }
+
+    public async Task<Results<Ok<AccessTokenResponse>, UnauthorizedHttpResult, SignInHttpResult, ChallengeHttpResult>> Refresh(RefreshRequest request)
+    {
+        var refreshTokenProtector = bearerTokenOptions.Get(IdentityConstants.BearerScheme).RefreshTokenProtector;
+        var refreshTicket = refreshTokenProtector.Unprotect(request.RefreshToken);
+
+        // Reject the /refresh attempt with a 401 if the token expired or the security stamp validation fails
+        if (refreshTicket?.Properties?.ExpiresUtc is not { } expiresUtc ||
+            timeProvider.GetUtcNow() >= expiresUtc ||
+            await signInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not ApplicationUser user)
+
+        {
+            return TypedResults.Challenge();
+        }
+
+        var newPrincipal = await signInManager.CreateUserPrincipalAsync(user);
+        return TypedResults.SignIn(newPrincipal, authenticationScheme: IdentityConstants.BearerScheme);
     }
 
     private static ValidationProblem CreateValidationProblem(IdentityResult result)
