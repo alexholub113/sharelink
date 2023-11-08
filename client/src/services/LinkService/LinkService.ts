@@ -19,14 +19,14 @@ class LinkService implements ILinkService {
     }
 
     async addLink(request: AddLinkRequest): Promise<Link> {
-        const response = await this.httpClient.post<Link, AddLinkRequest>(
+        const response = await this.httpClient.post<AddLinkRequest, Link>(
             `${this.baseUrl}/create`, { ...request });
 
         return response.data;
     }
 
     async previewLink(request: PreviewLinkRequest): Promise<PreviewLinkResponse> {
-        const response = await this.httpClient.post<PreviewLinkResponse, PreviewLinkRequest>(
+        const response = await this.httpClient.post<PreviewLinkRequest, PreviewLinkResponse>(
             `${this.baseUrl}/preview`, { ...request });
 
         return response.data;

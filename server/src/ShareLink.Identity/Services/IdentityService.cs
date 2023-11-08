@@ -29,15 +29,14 @@ public class IdentityService(
             return CreateValidationProblem(result);
         }
 
-        await userManager.AddClaimAsync(user, new Claim(ClaimsNames.DisplayName, request.DisplayName));
+        await userManager.AddClaimAsync(user, new Claim(ClaimsNames.Nickname, request.Nickname));
 
         return TypedResults.Ok();
     }
 
     public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(LoginRequest loginRequest)
     {
-        signInManager.PrimaryAuthenticationScheme = IdentityConstants.BearerScheme;
-        var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, false, false);
+        var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, true, false);
         if (!result.Succeeded)
         {
             return TypedResults.Problem(result.ToString(), statusCode: StatusCodes.Status401Unauthorized);

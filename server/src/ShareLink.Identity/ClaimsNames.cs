@@ -2,5 +2,5 @@
 
 public static class ClaimsNames
 {
-    public const string DisplayName = "DisplayName";
+    public const string Nickname = "Nickname";
 }

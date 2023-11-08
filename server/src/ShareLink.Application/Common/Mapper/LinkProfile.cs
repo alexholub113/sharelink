@@ -11,6 +11,6 @@ public class LinkProfile : Profile
     {
         CreateMap<Link, LinkDto>()
             .ForMember(x => x.Tags, x => x.MapFrom(y => y.Tags.Select(z => z.Name)))
-            .ForMember(x => x.User, x => x.MapFrom(y => y.UserDisplayName));
+            .ForMember(x => x.User, x => x.MapFrom(y => y.UserNickname));
     }
 }

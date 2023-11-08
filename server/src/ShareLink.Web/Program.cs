@@ -30,16 +30,17 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseCors(x => x
-    .WithOrigins("http://127.0.0.1:5173")
-    .AllowAnyMethod()
-    .AllowAnyHeader());
 
 // app.MapGroup("/temp-identity").MapIdentityApi<ApplicationUser>();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerUI();
+    app.UseCors(x => x
+        .WithOrigins("http://127.0.0.1:5173", "http://localhost:5173")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
 }
 
 app.UseExceptionHandler(options => { });

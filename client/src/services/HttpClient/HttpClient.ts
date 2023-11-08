@@ -15,7 +15,7 @@ const responseInterceptors: ResponseInterceptor[] = [
 ];
 export default class HttpClient implements TransportInterface<RequestInit> {
 
-    public post<TResponse, TBody>(url: string, body: TBody): Promise<HttpResponse<TResponse>> {
+    public post<TRequestBody, TResponse>(url: string, body: TRequestBody): Promise<HttpResponse<TResponse>> {
         const headers = new Headers();
         headers.append('content-type', 'application/json');
         return this.request(url, { body: JSON.stringify(body), method: 'POST', headers });
@@ -45,7 +45,7 @@ export default class HttpClient implements TransportInterface<RequestInit> {
     }
 
     private async requestInternal<T = unknown>(url: string, config: RequestInit): Promise<HttpResponse<T>> {
-        const response = await fetch(url, config);
+        const response = await fetch(url, {...config, credentials: 'include' });
 
         await this.handleResponseErrorIfAny(response);
 

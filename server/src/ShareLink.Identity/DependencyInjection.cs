@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +26,19 @@ public static class DependencyInjection
         services.AddDbContext<IdentityDbContext>(identityDbOptionsAction);
 
         services.AddHttpContextAccessor();
-        services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+        services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
+            })
+            .AddBearerToken(IdentityConstants.BearerScheme)
+            .AddCookie(IdentityConstants.ApplicationScheme, options =>
+            {
+                options.Cookie.HttpOnly = true;
+                // options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Enforce HTTPS
+                options.Cookie.SameSite = SameSiteMode.Strict; // CSRF protection
+                options.SlidingExpiration = true; // Refresh the expiration time if a request is made and the cookie is nearing its expiry
+            });
         services.AddAuthorizationBuilder();
         services.AddIdentityCore<ApplicationUser>()
             .AddEntityFrameworkStores<IdentityDbContext>()

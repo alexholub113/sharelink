@@ -1,6 +1,5 @@
-import {useLinkStore, useUserStore} from '../../../contexts/AppContext.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
 import LinkListItemWrapper from '../../LinkList/components/LinkListItem/LinkListItemWrapper.tsx';
-import LinkListItemAuthor from '../../LinkList/components/LinkListItem/components/LinkListItemAuthor.tsx';
 import LinkListItemContent from '../../LinkList/components/LinkListItem/components/LinkListItemContent.tsx';
 import TagBadge from '../../../components/TagBadge.tsx';
 import {observer} from 'mobx-react-lite';
@@ -22,7 +21,6 @@ type LocalState = {
 
 const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
     const { updatePreviewLink, submitLink, state: { preview: { link, url }} } = useLinkStore();
-    const { state: { userName }} = useUserStore();
     const { state, dispatch } = useSimpleReducer<LocalState>({ isSubmitting: false });
 
     useEffect(() => {
@@ -91,7 +89,6 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
                             { link.tags.length < MaxTags && <TagInput onAdd={addTag} />}
                         </div>
                         { state.tagsError && (<span className="text-red-500 text-sm">{state.tagsError}</span>) }
-                        <LinkListItemAuthor user={userName} createdAt={new Date().toLocaleDateString()} />
                         <LinkListItemContent {...link} />
                     </LinkListItemWrapper>
                     <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-lg">

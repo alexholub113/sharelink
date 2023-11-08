@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
 import LinkStore from '../stores/LinkStore.ts';
-import AuthService from '../services/AuthService/AuthService.ts';
 import UserStore from '../stores/UserStore.ts';
 import {resolve} from '../container/dependencyResolver.ts';
 import Types from '../container/constants/Types.ts';
@@ -29,6 +28,5 @@ export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) =>
     stores.set(UserStore, resolve<UserStore>(Types.UserStore));
 
     const services = new Map();
-    services.set(AuthService, new AuthService());
     return <AppContext.Provider value={{stores, services}}>{children}</AppContext.Provider>;
 };

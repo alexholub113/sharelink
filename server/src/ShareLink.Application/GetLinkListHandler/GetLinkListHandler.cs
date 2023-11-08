@@ -25,7 +25,8 @@ public class GetLinkListHandler(IApplicationDbContext context, IMapper mapper, I
 {
     public async Task<GetLinkListResponse> Handle(GetLinkListRequest request, CancellationToken cancellationToken)
     {
-        var displayName = identityContext.UserDisplayName;
+        var displayName = identityContext.UserNickname;
+        Console.WriteLine($"User {displayName} is requesting links list");
         var links = await context.Links
             .OrderByDescending(x => x.CreatedAt)
             .ProjectTo<LinkDto>(mapper.ConfigurationProvider)

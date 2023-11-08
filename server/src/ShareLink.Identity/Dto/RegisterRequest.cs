@@ -14,5 +14,5 @@ public class RegisterRequest
     [Required]
     [MinLength(3)]
     [MaxLength(50)]
-    public required string DisplayName { get; init; }
+    public required string Nickname { get; init; }
 }

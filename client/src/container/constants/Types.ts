@@ -1,7 +1,7 @@
 const Types = {
     LinkStore: Symbol.for('LinkStore'),
     LinkService: Symbol.for('LinkService'),
-    AuthService: Symbol.for('AuthService'),
+    IdentityService: Symbol.for('IdentityService'),
     HttpClient: Symbol.for('HttpClient'),
     UserStore: Symbol.for('UserStore'),
 }

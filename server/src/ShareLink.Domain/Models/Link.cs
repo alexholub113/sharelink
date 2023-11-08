@@ -16,7 +16,7 @@ public class Link
 
     public required string UserId { get; set; }
 
-    public required string UserDisplayName { get; set; }
+    public required string UserNickname { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

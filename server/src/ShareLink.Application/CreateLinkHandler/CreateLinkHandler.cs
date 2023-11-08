@@ -51,7 +51,7 @@ public class CreateLinkHandler(
             Tags = request.Tags.Select(x => new Tag { Name = x.ToLower() }).ToList(),
             Likes = 0,
             UserId = identityContext.UserId!,
-            UserDisplayName = identityContext.UserDisplayName!,
+            UserNickname = identityContext.UserNickname!,
             CreatedAt = DateTime.UtcNow
         };
         context.Links.Add(link);

@@ -1,23 +1,24 @@
 import SignInModalContent from './SignInModalContent.tsx';
 import Modal from '../Modal.tsx';
-import {useState} from 'react';
+import { useUserStore } from '../../contexts/AppContext.tsx';
+import {observer} from 'mobx-react-lite';
 
-const SignInButton = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const SignInButton = observer(() => {
+    const { state: { showLoginModal }, showModal, closeModal } = useUserStore();
     return (
         <>
             <button className="bg-white rounded-full text-lg font-semibold text-black/70 py-2 px-8 outline-none
                         hover:text-black focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer"
-                    onClick={() => setIsOpen(true)}>
+                    onClick={showModal}>
                 Log in
             </button>
-            { isOpen && (
-                <Modal onClose={() => setIsOpen(false)}>
+            { showLoginModal && (
+                <Modal onClose={closeModal}>
                     <SignInModalContent />
                 </Modal>
             ) }
         </>
     );
-};
+});
 
 export default SignInButton;

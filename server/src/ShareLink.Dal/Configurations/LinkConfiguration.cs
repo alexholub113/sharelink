@@ -17,7 +17,7 @@ public class LinkConfiguration : IEntityTypeConfiguration<Link>
         builder.Property(x => x.Title).IsRequired();
         builder.Property(x => x.Type).IsRequired();
         builder.Property(x => x.UserId).IsRequired();
-        builder.Property(x => x.UserDisplayName).IsRequired();
+        builder.Property(x => x.UserNickname).IsRequired();
         builder.Property(x => x.CreatedAt).IsRequired();
 
         builder.Property(e => e.Type)

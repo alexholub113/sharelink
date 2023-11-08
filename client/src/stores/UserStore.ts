@@ -1,28 +1,60 @@
-import IAuthService from '../services/AuthService/interfaces/IAuthService.ts';
-import AuthService from '../services/AuthService/AuthService.ts';
+import { makeAutoObservable } from 'mobx';
+import Events from '../constants/events.ts';
+import IIdentityService from '../services/IdentityService/interfaces/IIdentityService.ts';
 
 type UserStoreState = {
-    userName: string;
+    isAuthenticated: boolean;
+    showLoginModal: boolean;
 };
 
 class UserStore {
-    private readonly authService: IAuthService;
-    
-    constructor(authService: IAuthService | null = null) {
-        this.authService = authService ?? new AuthService();
-    }
-    
-    state: UserStoreState = {
-        userName: 'Jack Richer'
-    };
-    
-    public async logIn(username: string, password: string): Promise<void> {
-        await this.authService.login(username, password);
+
+    constructor(private readonly identityService: IIdentityService) {
+        makeAutoObservable(this);
+
+        // Register event listener for unauthorized responses
+        window.addEventListener(Events.UnauthorizedResponseReceived, this.handleUnauthorizedResponse);
     }
 
-    public async register(nickname: string, username: string, password: string): Promise<void> {
-        await this.authService.register(nickname, username, password);
-    }
+    state: UserStoreState = {
+        showLoginModal: false,
+        isAuthenticated: false
+    };
+
+    handleUnauthorizedResponse = () => {
+        this.state = {
+            showLoginModal: true,
+            isAuthenticated: false
+        }
+    };
+
+    public logIn = async (email: string, password: string): Promise<void> => {
+        try {
+            await this.identityService.login({ email, password });
+
+            this.state = {
+                showLoginModal: false,
+                isAuthenticated: true
+            }
+
+        } catch (error) {
+            // Handle error scenario, possibly setting flags to show error messages
+        }
+    };
+
+    public showModal = () => {
+        this.state = {
+            ...this.state,
+            showLoginModal: true,
+        }
+    };
+
+    public closeModal = () => {
+        this.state = {
+            ...this.state,
+            showLoginModal: false,
+        }
+    };
 }
 
 export default UserStore;
