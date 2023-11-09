@@ -15,6 +15,17 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Tag> Tags => Set<Tag>();
 
+    public DbSet<User> Users => Set<User>();
+    public void Push<T>(T entity)
+    {
+        if (entity != null) Add(entity);
+    }
+
+    public void Delete<T>(T entity)
+    {
+        if (entity != null) Remove(entity);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);

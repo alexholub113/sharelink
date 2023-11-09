@@ -11,11 +11,15 @@ public class LinkDto
 
     public string Title { get; set; } = null!;
 
-    public YoutubeDataDto Youtube { get; set; } = null!;
+    public YoutubeDataDto? Youtube { get; set; }
 
     public string[] Tags { get; set; } = null!;
 
     public int Likes { get; set; }
+
+    public bool IsLiked { get; set; }
+
+    public bool BelongsToUser { get; set; }
 
     public string User { get; set; } = null!;
 

@@ -12,11 +12,11 @@ namespace ShareLink.Application.CreateLinkHandler;
 
 public class CreateLinkRequest : IRequest<LinkDto>
 {
-    public string Title { get; set; } = null!;
+    public required string Title { get; init; }
 
-    public string Url { get; set; } = null!;
+    public required string Url { get; init; }
 
-    public string[] Tags { get; set; } = null!;
+    public required string[] Tags { get; init; }
 }
 
 public class CreateLinkHandler(
@@ -31,7 +31,7 @@ public class CreateLinkHandler(
     {
         if (identityContext.UserId is null)
         {
-            throw new BusinessException(ErrorCodes.Unauthorized, "User is not authenticated.");
+            throw new UserUnauthorizedException();
         }
 
         var (linkType, urlId) = urlParser.ParseUrl(request.Url);
@@ -49,7 +49,6 @@ public class CreateLinkHandler(
             Type = linkType,
             Youtube = linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
             Tags = request.Tags.Select(x => new Tag { Name = x.ToLower() }).ToList(),
-            Likes = 0,
             UserId = identityContext.UserId!,
             UserNickname = identityContext.UserNickname!,
             CreatedAt = DateTime.UtcNow

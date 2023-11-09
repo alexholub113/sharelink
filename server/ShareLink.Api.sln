@@ -21,11 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Migrations", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareLink.Identity", "src\ShareLink.Identity\ShareLink.Identity.csproj", "{6627F3DA-41DF-47AB-B8BD-8FD977B2CFEF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{6EAA27ED-ADCC-46F3-B3DC-FF0830B1E8C0}"
-	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\sharelink.api.yml = ..\.github\workflows\sharelink.api.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -27,7 +27,7 @@ public class LinkConfiguration : IEntityTypeConfiguration<Link>
 
         builder.Property(x => x.Youtube)
             .HasColumnType("jsonb")
-            .HasDefaultValueSql("'{}'::jsonb");
+            .IsRequired(false);
 
         builder.HasMany(x => x.Tags)
             .WithMany(x => x.Links);

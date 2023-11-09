@@ -38,6 +38,36 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.ToTable("LinkTag");
                 });
 
+            modelBuilder.Entity("LinkUser", b =>
+                {
+                    b.Property<string>("LikedById")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LikedLinksId")
+                        .HasColumnType("text");
+
+                    b.HasKey("LikedById", "LikedLinksId");
+
+                    b.HasIndex("LikedLinksId");
+
+                    b.ToTable("UserLikedLinks", (string)null);
+                });
+
+            modelBuilder.Entity("LinkUser1", b =>
+                {
+                    b.Property<string>("SavedById")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SavedLinksId")
+                        .HasColumnType("text");
+
+                    b.HasKey("SavedById", "SavedLinksId");
+
+                    b.HasIndex("SavedLinksId");
+
+                    b.ToTable("UserSavedLinks", (string)null);
+                });
+
             modelBuilder.Entity("ShareLink.Domain.Models.Link", b =>
                 {
                     b.Property<string>("Id")
@@ -45,9 +75,6 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -66,9 +93,7 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         .HasColumnType("text");
 
                     b.Property<YoutubeData>("Youtube")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasDefaultValueSql("'{}'::jsonb");
+                        .HasColumnType("jsonb");
 
                     b.HasKey("Id");
 
@@ -93,6 +118,16 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.ToTable("Tags");
                 });
 
+            modelBuilder.Entity("ShareLink.Domain.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("LinkTag", b =>
                 {
                     b.HasOne("ShareLink.Domain.Models.Link", null)
@@ -104,6 +139,36 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.HasOne("ShareLink.Domain.Models.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LinkUser", b =>
+                {
+                    b.HasOne("ShareLink.Domain.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShareLink.Domain.Models.Link", null)
+                        .WithMany()
+                        .HasForeignKey("LikedLinksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LinkUser1", b =>
+                {
+                    b.HasOne("ShareLink.Domain.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("SavedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShareLink.Domain.Models.Link", null)
+                        .WithMany()
+                        .HasForeignKey("SavedLinksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

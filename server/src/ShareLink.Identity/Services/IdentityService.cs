@@ -36,6 +36,7 @@ public class IdentityService(
 
     public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(LoginRequest loginRequest)
     {
+        signInManager.PrimaryAuthenticationScheme = loginRequest.UseBearerScheme ? IdentityConstants.BearerScheme : IdentityConstants.ApplicationScheme;
         var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, true, false);
         if (!result.Succeeded)
         {

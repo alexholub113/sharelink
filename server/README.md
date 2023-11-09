@@ -17,11 +17,11 @@ additionally with database pgAdmin will be deployed.
 
 ### PG Admin
 PG Admin can be reached at http://localhost:5050/. Use password `postgres`.
+- name: `domainlist`
+- host: `postgres`
 
 To connect to server right click on `Servers`, select `Create` -> `Server...`
 Server props:
-- name: `domainlist`
-- host: `postgres`
 - port: `5432`
 - username: `testuser`
 - password: `testuser`

@@ -19,10 +19,9 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<string>(type: "text", nullable: false),
-                    Youtube = table.Column<YoutubeData>(type: "jsonb", nullable: true, defaultValueSql: "'{}'::jsonb"),
-                    Likes = table.Column<int>(type: "integer", nullable: false),
+                    Youtube = table.Column<YoutubeData>(type: "jsonb", nullable: true),
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    UserDisplayName = table.Column<string>(type: "text", nullable: false),
+                    UserNickname = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -39,6 +38,17 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,6 +72,54 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         column: x => x.TagsName,
                         principalTable: "Tags",
                         principalColumn: "Name",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLikedLinks",
+                columns: table => new
+                {
+                    LikedById = table.Column<string>(type: "text", nullable: false),
+                    LikedLinksId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLikedLinks", x => new { x.LikedById, x.LikedLinksId });
+                    table.ForeignKey(
+                        name: "FK_UserLikedLinks_Links_LikedLinksId",
+                        column: x => x.LikedLinksId,
+                        principalTable: "Links",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserLikedLinks_Users_LikedById",
+                        column: x => x.LikedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSavedLinks",
+                columns: table => new
+                {
+                    SavedById = table.Column<string>(type: "text", nullable: false),
+                    SavedLinksId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSavedLinks", x => new { x.SavedById, x.SavedLinksId });
+                    table.ForeignKey(
+                        name: "FK_UserSavedLinks_Links_SavedLinksId",
+                        column: x => x.SavedLinksId,
+                        principalTable: "Links",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserSavedLinks_Users_SavedById",
+                        column: x => x.SavedById,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -89,6 +147,16 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 name: "IX_LinkTag_TagsName",
                 table: "LinkTag",
                 column: "TagsName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLikedLinks_LikedLinksId",
+                table: "UserLikedLinks",
+                column: "LikedLinksId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserSavedLinks_SavedLinksId",
+                table: "UserSavedLinks",
+                column: "SavedLinksId");
         }
 
         /// <inheritdoc />
@@ -98,10 +166,19 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 name: "LinkTag");
 
             migrationBuilder.DropTable(
-                name: "Links");
+                name: "UserLikedLinks");
+
+            migrationBuilder.DropTable(
+                name: "UserSavedLinks");
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Links");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

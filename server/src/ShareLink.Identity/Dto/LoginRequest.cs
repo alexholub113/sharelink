@@ -10,4 +10,6 @@ public class LoginRequest
 
     [Required]
     public required string Password { get; init; }
+
+    public bool UseBearerScheme { get; init; }
 }

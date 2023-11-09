@@ -19,6 +19,7 @@ public class CustomExceptionHandler : IExceptionHandler
             { typeof(NotFoundException), HandleNotFoundException },
             { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
             { typeof(BusinessException), HandleBusinessException },
+            { typeof(UserUnauthorizedException), HandleUserUnauthorizedException },
         };
     }
 
@@ -32,10 +33,28 @@ public class CustomExceptionHandler : IExceptionHandler
         if (_exceptionHandlers.TryGetValue(exceptionType, out var handler))
         {
             await handler.Invoke(httpContext, exception);
-            return true;
+        }
+        else
+        {
+            await HandleInternalServerException(httpContext, exception);
         }
 
-        return false;
+        return true;
+    }
+
+    private async Task HandleInternalServerException(HttpContext httpContext, Exception ex)
+    {
+        httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+        await httpContext.Response.WriteAsJsonAsync(
+            new ProblemDetails
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Internal Server Error",
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                Detail = ex.Message,
+                Instance = httpContext.Request.Path
+            });
     }
 
     private async Task HandleValidationException(HttpContext httpContext, Exception ex)
@@ -88,5 +107,18 @@ public class CustomExceptionHandler : IExceptionHandler
         httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
         await httpContext.Response.WriteAsJsonAsync(new BusinessError(exception.Code, exception.Message));
+    }
+
+    private async Task HandleUserUnauthorizedException(HttpContext httpContext, Exception ex)
+    {
+        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+        await httpContext.Response.WriteAsJsonAsync(
+            new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Unauthorized",
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
+            });
     }
 }

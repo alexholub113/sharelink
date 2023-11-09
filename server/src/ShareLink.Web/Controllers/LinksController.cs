@@ -6,6 +6,8 @@ using ShareLink.Application.Common.Dto;
 using ShareLink.Application.CreateLinkHandler;
 using ShareLink.Application.GetLinkListHandler;
 using ShareLink.Application.PreviewLinkHandler;
+using ShareLink.Application.ToggleLinkLikeHandler;
+using ShareLink.Application.ToggleLinkSaveHandler;
 using ShareLink.Identity;
 
 namespace ShareLink.Web.Controllers;
@@ -21,6 +23,12 @@ public class LinksController(ISender sender, UserManager<ApplicationUser> userMa
         return await sender.Send(request);
     }
 
+    [HttpPost("preview")]
+    public async Task<PreviewLinkResponse> PreviewLink([FromBody] PreviewLinkRequest request)
+    {
+        return await sender.Send(request);
+    }
+
     [Authorize]
     [HttpPost("create")]
     public async Task<LinkDto> CreateLink([FromBody] CreateLinkRequest request)
@@ -28,9 +36,17 @@ public class LinksController(ISender sender, UserManager<ApplicationUser> userMa
         return await sender.Send(request);
     }
 
-    [HttpPost("preview")]
-    public async Task<PreviewLinkResponse> PreviewLink([FromBody] PreviewLinkRequest request)
+    [Authorize]
+    [HttpPost("like")]
+    public async Task LikeLink([FromBody] ToggleLinkLikeRequest request)
     {
-        return await sender.Send(request);
+        await sender.Send(request);
+    }
+
+    [Authorize]
+    [HttpPost("save")]
+    public async Task SaveLink([FromBody] ToggleLinkSaveRequest request)
+    {
+        await sender.Send(request);
     }
 }
