@@ -1,6 +1,6 @@
 import ILinkService, {
     AddLinkRequest,
-    GetListResponse, PreviewLinkRequest, PreviewLinkResponse
+    GetListResponse, LikeLinkRequest, PreviewLinkRequest, PreviewLinkResponse, SaveLinkRequest
 } from './interfaces/ILinkService.ts';
 import HttpClient from '../HttpClient/HttpClient.ts';
 import Link from './interfaces/Link.ts';
@@ -32,22 +32,12 @@ class LinkService implements ILinkService {
         return response.data;
     }
 
-    // @ts-ignore
-    like(linkId: string): Promise<void> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, 1000);
-        });
+    async like(request: LikeLinkRequest): Promise<void> {
+        await this.httpClient.post<LikeLinkRequest, {}>(`${this.baseUrl}/like`, { ...request });
     }
 
-    // @ts-ignore
-    save(linkId: string): Promise<void> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, 1000);
-        });
+    async save(request: SaveLinkRequest): Promise<void> {
+        await this.httpClient.post<SaveLinkRequest, {}>(`${this.baseUrl}/save`, { ...request });
     }
 
     // @ts-ignore

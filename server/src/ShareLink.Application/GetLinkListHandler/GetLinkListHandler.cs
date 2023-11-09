@@ -42,6 +42,7 @@ public class GetLinkListHandler(IApplicationDbContext context, IMapper mapper, I
                 Youtube = x.Youtube == null ? null : new YoutubeDataDto { VideoId = x.Youtube.VideoId },
                 Likes = x.LikedBy.Count,
                 IsLiked = x.LikedBy.Any(y => y.Id == userId),
+                IsSaved = x.SavedBy.Any(y => y.Id == userId),
                 User = x.UserNickname,
                 CreatedAt = x.CreatedAt,
                 Tags = x.Tags.Select(y => y.Name).ToArray(),

@@ -9,8 +9,9 @@ type Link = {
     title: string;
     youtube: YoutubeVideo,
     likes: number;
-    liked: boolean;
-    saved: boolean;
+    isLiked: boolean;
+    isSaved: boolean;
+    belongsToUser: boolean;
     user: string;
     createdAt: string;
     type: LinkType;

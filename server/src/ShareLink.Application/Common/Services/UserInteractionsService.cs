@@ -18,7 +18,7 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
         var user = await GetUser(cancellationToken);
         if (!state)
         {
-            var link = GetLink(user, linkId);
+            var link = GetLikedLink(user, linkId);
             user.LikedLinks.Remove(link);
         }
         else
@@ -36,7 +36,7 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
         var user = await GetUser(cancellationToken);
         if (!state)
         {
-            var link = GetLink(user, linkId);
+            var link = GetSavedLink(user, linkId);
             user.SavedLinks.Remove(link);
         }
         else
@@ -48,17 +48,6 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    private static Link GetLink(User user, string linkId)
-    {
-        var link = user.LikedLinks.SingleOrDefault(x => x.Id == linkId);
-        if (link == null)
-        {
-            throw new BusinessException(ErrorCodes.LinkNotFound);
-        }
-
-        return link;
-    }
-
     private async Task<User> GetUser(CancellationToken cancellationToken)
     {
         var userId = identityContext.UserId;
@@ -67,7 +56,7 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
             throw new UserUnauthorizedException();
         }
 
-        var user = await context.Users.Include(x => x.LikedLinks).SingleOrDefaultAsync(x => x.Id == userId, cancellationToken);
+        var user = await context.Users.Include(x => x.LikedLinks).Include(x => x.SavedLinks).SingleOrDefaultAsync(x => x.Id == userId, cancellationToken);
         if (user == null)
         {
             user = new User
@@ -83,6 +72,28 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
     private async Task<Link> GetLink(string linkId, CancellationToken cancellationToken)
     {
         var link = await context.Links.SingleOrDefaultAsync(x => x.Id == linkId, cancellationToken);
+        if (link == null)
+        {
+            throw new BusinessException(ErrorCodes.LinkNotFound);
+        }
+
+        return link;
+    }
+
+    private static Link GetLikedLink(User user, string linkId)
+    {
+        var link = user.LikedLinks.SingleOrDefault(x => x.Id == linkId);
+        if (link == null)
+        {
+            throw new BusinessException(ErrorCodes.LinkNotFound);
+        }
+
+        return link;
+    }
+
+    private static Link GetSavedLink(User user, string linkId)
+    {
+        var link = user.SavedLinks.SingleOrDefault(x => x.Id == linkId);
         if (link == null)
         {
             throw new BusinessException(ErrorCodes.LinkNotFound);

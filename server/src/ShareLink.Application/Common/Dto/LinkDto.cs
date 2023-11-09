@@ -19,6 +19,8 @@ public class LinkDto
 
     public bool IsLiked { get; set; }
 
+    public bool IsSaved { get; set; }
+
     public bool BelongsToUser { get; set; }
 
     public string User { get; set; } = null!;

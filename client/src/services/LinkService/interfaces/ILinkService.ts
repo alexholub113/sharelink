@@ -21,14 +21,24 @@ export type PreviewLinkRequest = {
     url: string;
 }
 
+export type LikeLinkRequest = {
+    linkId: string;
+    state: boolean;
+}
+
+export type SaveLinkRequest = {
+    linkId: string;
+    state: boolean;
+}
+
 export type PreviewLinkResponse = Pick<Link, 'type' | 'title' | 'youtube' | 'tags'>;
 
 interface ILinkService {
     getList(): Promise<GetListResponse>;
     previewLink(request: PreviewLinkRequest): Promise<PreviewLinkResponse>;
     addLink(request: AddLinkRequest): Promise<Link>;
-    like(linkId: string): Promise<void>;
-    save(linkId: string): Promise<void>;
+    like(request: LikeLinkRequest): Promise<void>;
+    save(request: SaveLinkRequest): Promise<void>;
     remove(linkId: string): Promise<void>;
 }
 

@@ -14,6 +14,6 @@ public class ToggleLinkSaveHandler(IUserInteractionsService userInteractionsServ
 {
     public async Task Handle(ToggleLinkSaveRequest request, CancellationToken cancellationToken)
     {
-        await userInteractionsService.ToggleLinkLike(request.LinkId, request.State, cancellationToken);
+        await userInteractionsService.ToggleLinkSave(request.LinkId, request.State, cancellationToken);
     }
 }

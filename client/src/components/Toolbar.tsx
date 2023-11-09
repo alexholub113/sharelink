@@ -1,11 +1,17 @@
 import SignInButton from './SignInButton/SignInButton.tsx';
 import SignUpButton from './SignUpButton/SignUpButton.tsx';
+import {useUserStore} from '../contexts/AppContext.tsx';
 
 const Toolbar = () => {
+    const { state: { isAuthenticated } } = useUserStore();
     return (
         <div className="flex flex-row justify-end items-center mb-16 mx-auto p-6">
-            <SignUpButton />
-            <SignInButton />
+            { !isAuthenticated && (
+                <>
+                    <SignUpButton />
+                    <SignInButton />
+                </>
+            ) }
         </div>
     );
 };
