@@ -29,7 +29,7 @@ const useSignUpForm = () => {
         const { nickname, email, password } = data;
         register(nickname, email, password);
     });
-    
+
     return { onSubmit, register: registerFormInput, errors };
 }
 

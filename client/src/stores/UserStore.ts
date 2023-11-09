@@ -42,14 +42,27 @@ class UserStore {
         }
     };
 
-    public showModal = () => {
+    public register = async (nickname: string, email: string, password: string): Promise<void> => {
+        try {
+            await this.identityService.register({ nickname, email, password });
+            await this.identityService.login({ email, password });
+            this.state = {
+                showLoginModal: false,
+                isAuthenticated: true
+            }
+        } catch (error) {
+            // Handle error scenario, possibly setting flags to show error messages
+        }
+    };
+
+    public showSignInModal = () => {
         this.state = {
             ...this.state,
             showLoginModal: true,
         }
     };
 
-    public closeModal = () => {
+    public closeSignInModal = () => {
         this.state = {
             ...this.state,
             showLoginModal: false,

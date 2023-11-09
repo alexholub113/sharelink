@@ -16,11 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ShareLink.Dal\ShareLink.Dal.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ShareLink.Identity\ShareLink.Identity.csproj" />
-      <ProjectReference Include="..\ShareLink.Infrastructure\ShareLink.Infrastructure.csproj" />
+        <ProjectReference Include="..\ShareLink.Identity\ShareLink.Identity.csproj" />
     </ItemGroup>
 
     <ItemGroup>

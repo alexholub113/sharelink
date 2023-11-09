@@ -47,6 +47,8 @@ app.UseExceptionHandler(options => { });
 
 app
     .UseRouting()
+    .UseAuthentication()
+    .UseAuthorization()
     .UseEndpoints(endpoints =>
     {
         endpoints.MapControllers();
