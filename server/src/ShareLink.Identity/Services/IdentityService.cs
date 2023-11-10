@@ -65,6 +65,22 @@ public class IdentityService(
         return TypedResults.SignIn(newPrincipal, authenticationScheme: IdentityConstants.BearerScheme);
     }
 
+    public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()
+    {
+        var user = signInManager.Context.User;
+        if (user is not { Identity: { IsAuthenticated: true } })
+        {
+            return TypedResults.Empty;
+        }
+
+        var userInfo = new UserInfo
+        {
+            Nickname = user.FindFirstValue(ClaimsNames.Nickname)
+        };
+
+        return TypedResults.Ok(userInfo);
+    }
+
     private static ValidationProblem CreateValidationProblem(IdentityResult result)
     {
         // We expect a single error code and description in the normal case.

@@ -27,4 +27,10 @@ public class IdentityController(IIdentityService identityService) : ControllerBa
     {
         return await identityService.Refresh(request);
     }
+
+    [HttpGet("userinfo")]
+    public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()
+    {
+        return identityService.GetUserInfo();
+    }
 }

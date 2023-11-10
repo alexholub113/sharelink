@@ -1,12 +1,20 @@
 import Layout from './components/Layout.tsx';
 import Toolbar from './components/Toolbar.tsx';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import LinkListScreen from './screens/LinkList/LinkListScreen.tsx';
 import AddLinkButton from './components/AddLinkButton.tsx';
 import AddLinkScreen from './screens/AddLink/AddLinkScreen.tsx';
+import {useUserStore} from './contexts/AppContext.tsx';
+import {observer} from 'mobx-react-lite';
 
-function App() {
+const App = observer(() => {
     const [section, setSection] = useState<'list' | 'addLink'>('list');
+    const { init } = useUserStore();
+
+    useEffect(() => {
+        init();
+    }, [init]);
+
     return (
         <div className="bg-zinc-800 min-h-screen">
             <Toolbar />
@@ -21,6 +29,6 @@ function App() {
             </Layout>
         </div>
     )
-}
+});
 
 export default App

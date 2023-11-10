@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
 import Events from '../constants/events.ts';
 import IIdentityService from '../services/IdentityService/interfaces/IIdentityService.ts';
 
@@ -8,7 +8,6 @@ type UserStoreState = {
 };
 
 class UserStore {
-
     constructor(private readonly identityService: IIdentityService) {
         makeAutoObservable(this);
 
@@ -28,15 +27,29 @@ class UserStore {
         }
     };
 
+    public init = async (): Promise<void> => {
+        const userInfo = await this.identityService.userInfo();
+
+        runInAction(() => {
+            this.state = {
+                ...this.state,
+                isAuthenticated: !!userInfo
+            };
+        });
+    }
+
     public logIn = async (email: string, password: string): Promise<void> => {
         try {
             await this.identityService.login({ email, password });
 
-            this.state = {
-                showLoginModal: false,
-                isAuthenticated: true
-            }
+            runInAction(() => {
+                this.state = {
+                    ...this.state,
+                    showLoginModal: false
+                }
+            });
 
+            await this.init();
         } catch (error) {
             // Handle error scenario, possibly setting flags to show error messages
         }
@@ -45,11 +58,7 @@ class UserStore {
     public register = async (nickname: string, email: string, password: string): Promise<void> => {
         try {
             await this.identityService.register({ nickname, email, password });
-            await this.identityService.login({ email, password });
-            this.state = {
-                showLoginModal: false,
-                isAuthenticated: true
-            }
+            await this.logIn(email, password);
         } catch (error) {
             // Handle error scenario, possibly setting flags to show error messages
         }

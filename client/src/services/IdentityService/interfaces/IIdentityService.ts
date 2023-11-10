@@ -1,3 +1,5 @@
+import UserInfo from './UserInfo.ts';
+
 export type AccessTokenResponse = {
     tokenType: string;
     accessToken: string;
@@ -24,6 +26,7 @@ interface IIdentityService {
     register(request: RegisterRequest): Promise<void>;
     login(request: LoginRequest): Promise<AccessTokenResponse>;
     refresh(request: RefreshRequest): Promise<AccessTokenResponse>;
+    userInfo(): Promise<UserInfo | null>;
 }
 
 export default IIdentityService;

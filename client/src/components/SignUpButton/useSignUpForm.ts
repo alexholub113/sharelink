@@ -1,5 +1,4 @@
-import {useStore} from '../../contexts/AppContext.tsx';
-import UserStore from '../../stores/UserStore.ts';
+import {useUserStore} from '../../contexts/AppContext.tsx';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
@@ -22,7 +21,7 @@ type FormValues = {
 };
 
 const useSignUpForm = () => {
-    const { register } = useStore<UserStore>(UserStore);
+    const { register } = useUserStore();
     const { register: registerFormInput, handleSubmit, formState } = useForm<FormValues>({ resolver: zodResolver(schema) });
     const { errors } = formState;
     const onSubmit = handleSubmit((data) => {

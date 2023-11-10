@@ -1,5 +1,4 @@
-import {useStore} from '../../contexts/AppContext.tsx';
-import UserStore from '../../stores/UserStore.ts';
+import {useUserStore} from '../../contexts/AppContext.tsx';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
@@ -15,7 +14,7 @@ type FormValues = {
 };
 
 const useSignInForm = () => {
-    const { logIn } = useStore<UserStore>(UserStore);
+    const { logIn } = useUserStore();
     const { register, handleSubmit, formState } = useForm<FormValues>({ resolver: zodResolver(schema) });
     const { errors } = formState;
     const onSubmit = handleSubmit((data) => {

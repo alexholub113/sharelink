@@ -12,4 +12,6 @@ public interface IIdentityService
 
     Task<Results<Ok<AccessTokenResponse>, UnauthorizedHttpResult, SignInHttpResult, ChallengeHttpResult>> Refresh(
         RefreshRequest request);
+
+    Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo();
 }
