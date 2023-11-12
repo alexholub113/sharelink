@@ -38,6 +38,32 @@ public static class DependencyInjection
                 // options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Enforce HTTPS
                 options.Cookie.SameSite = SameSiteMode.Strict; // CSRF protection
                 options.SlidingExpiration = true; // Refresh the expiration time if a request is made and the cookie is nearing its expiry
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = context =>
+                    {
+                        if (context.Request.Path.StartsWithSegments("/api") && context.Response.StatusCode == 200)
+                        {
+                            context.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        }
+
+                        context.Response.Redirect(context.RedirectUri);
+                        return Task.CompletedTask;
+                    },
+                    OnRedirectToAccessDenied = context =>
+                    {
+                        if (context.Request.Path.StartsWithSegments("/api") && context.Response.StatusCode == 200)
+                        {
+                            context.Response.StatusCode = 403;
+                            return Task.CompletedTask;
+                        }
+
+                        context.Response.Redirect(context.RedirectUri);
+                        return Task.CompletedTask;
+                    }
+                    // You can handle other redirects if necessary
+                };
             });
         services.AddAuthorizationBuilder();
         services.AddIdentityCore<ApplicationUser>()

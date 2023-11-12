@@ -1,13 +1,14 @@
 ﻿import TransportInterface from './interfaces/Transport.interface.ts';
 import { HttpResponse } from './interfaces/HttpResponse.ts';
-import FetchHttpResponseError from './FetchHttpResponseError.ts';
+import FetchHttpResponseError from './errors/FetchHttpResponseError.ts';
 import FetchHttpResponse from './FetchHttpResponse.ts';
 import { ResponseInterceptor } from './Interceptors';
 import BrowserUnauthorizedResponseInterceptor
     from './Interceptors/BrowserUnauthorizedResponseInterceptor.ts';
 import BrowserCleanAuthSessionInterceptor
     from './Interceptors/BrowserCleanAuthSessionInterceptor.ts';
-import FetchHttpResponseBusinessError from './FetchHttpResponseBusinessError.ts';
+import FetchHttpResponseBusinessError from './errors/FetchHttpResponseBusinessError.ts';
+import FetchHttpResponseValidationError from './errors/FetchHttpResponseValidationError.ts';
 
 const responseInterceptors: ResponseInterceptor[] = [
     new BrowserCleanAuthSessionInterceptor(),
@@ -37,7 +38,7 @@ export default class HttpClient implements TransportInterface<RequestInit> {
             } catch (error) {
                 if (error instanceof Error && responseInterceptor.rejected) {
                     const result = await responseInterceptor.rejected(error);
-                    (error as any).isHandled = result.handled;
+                    (error as FetchHttpResponseError).handled = result.handled;
                 }
                 throw (error);
             }
@@ -59,11 +60,24 @@ export default class HttpClient implements TransportInterface<RequestInit> {
         }
 
         const responseBody = await response.text();
-        const error = JSON.parse(responseBody);
-        if (error && error.type === 'business_error') {
-            throw new FetchHttpResponseBusinessError(error.code, error.message);
+
+        if (responseBody) {
+            let error = null;
+            try {
+                error = JSON.parse(responseBody)
+            } catch (e: any) {
+            }
+
+            if (error && error.status === 400) {
+                switch (error.type) {
+                    case 'validation_error':
+                        throw new FetchHttpResponseValidationError(error.errors);
+                    case 'business_error':
+                        throw new FetchHttpResponseBusinessError(error.code, error.message);
+                }
+            }
         }
 
-        throw new FetchHttpResponseError('Request error', response.status, JSON.parse(responseBody));
+        throw new FetchHttpResponseError('Request error', response.status);
     }
 }

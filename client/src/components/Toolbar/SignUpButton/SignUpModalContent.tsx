@@ -1,6 +1,6 @@
 import useSignUpForm from './useSignUpForm.ts';
-import SubmitButton from '../SubmitButton.tsx';
-import Input from '../Input.tsx';
+import SubmitButton from '../../SubmitButton.tsx';
+import Input from '../../Input.tsx';
 
 const SignUpModalContent = () => {
    const { onSubmit, register, errors } = useSignUpForm();

@@ -1,5 +1,5 @@
 ﻿import { ChangeEvent, useState } from 'react';
-import { MaxTitleLength } from '../../../constants/preferences.ts';
+import {MaxTitleLength} from '../../../constants/preferences.ts';
 
 type TitleInputProps = {
     initialTitle: string;

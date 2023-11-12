@@ -1,30 +1,9 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren } from 'react';
 import FadeDiv from './Animations/FadeDiv.tsx';
+import useClickOutsideHandler from '../hooks/useClickOutsideHandler.ts';
 
 const Modal: React.FC<PropsWithChildren & { onClose: () => void }> = ({ children, onClose }) => {
-    const modalRef = React.createRef<HTMLDivElement>();
-
-    const handleClickOutside = (event: MouseEvent) => {
-        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-            onClose();
-        }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-            onClose();
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
+    const modalRef = useClickOutsideHandler(onClose);
 
     return (
         <>

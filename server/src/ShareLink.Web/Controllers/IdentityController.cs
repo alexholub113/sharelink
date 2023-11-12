@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ShareLink.Identity.Dto;
@@ -10,16 +11,23 @@ namespace ShareLink.Web.Controllers;
 [Route("[controller]")]
 public class IdentityController(IIdentityService identityService) : ControllerBase
 {
-    [HttpPost("register")]
-    public async Task<Results<Ok, ValidationProblem>> Register([FromBody] RegisterRequest request)
+    [HttpPost("signup")]
+    public async Task<Results<Ok, ValidationProblem>> Register([FromBody] SignUpRequest request)
     {
-        return await identityService.Register(request);
+        return await identityService.SignUp(request);
     }
 
-    [HttpPost("login")]
-    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest request)
+    [HttpPost("signin")]
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] SignInRequest request)
     {
-        return await identityService.Login(request);
+        return await identityService.SignIn(request);
+    }
+
+    [Authorize]
+    [HttpPost("signout")]
+    public async Task<Ok> SignOur()
+    {
+        return await identityService.SignOut();
     }
 
     [HttpPost("refresh")]

@@ -3,12 +3,11 @@
 
     public readonly code: string;
 
-    public readonly details: object;
+    public handled = false;
 
-    constructor(message: string, status: number, details: object) {
+    constructor(message: string, status: number, code?: string) {
         super(message);
         this.status = status;
-        this.details = details;
-        this.code = this.constructor.name;
+        this.code = code ?? this.constructor.name;
     }
 }

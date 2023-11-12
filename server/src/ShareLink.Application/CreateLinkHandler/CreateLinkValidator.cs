@@ -12,19 +12,13 @@ public class CreateLinkValidator : AbstractValidator<CreateLinkRequest>
     {
         RuleFor(v => v.Title)
             .NotEmpty()
-            .Must(title => title.Trim().Length >= Constants.MinLinkTitleLength || title.Trim().Length <= Constants.MaxLinkTitleLength)
-            .WithMessage($"Title must be between {Constants.MinLinkTitleLength} and {Constants.MaxLinkTitleLength} characters long.");
+            .Must(title => title.Trim().Length >= ValidationRules.LinkTitle.MinLength || title.Trim().Length <= ValidationRules.LinkTitle.MaxLength)
+            .WithMessage($"Title must be at least {ValidationRules.LinkTitle.MinLength} and at most {ValidationRules.LinkTitle.MaxLength} characters long");
         RuleFor(v => v.Url).Must(urlParser.IsUrlSupported);
-        RuleFor(v => v.Tags).NotEmpty().Must(BeValidTags);
-    }
-
-    private bool BeValidTags(string[] tags)
-    {
-        if (tags.Length is < 1 or > 5)
-        {
-            return false;
-        }
-        
-        return tags.All(tag => tag.Length is >= 2 and <= 30);
+        RuleFor(v => v.Tags).NotEmpty()
+            .Must(x => x.Length is >= ValidationRules.Tag.MinTagsCount and <= ValidationRules.Tag.MaxTagsCount)
+            .WithMessage($"Tags count must be at least {ValidationRules.Tag.MinTagsCount} and at most {ValidationRules.Tag.MaxTagsCount}")
+            .Must(x => x.All(tag => tag.Length is >= ValidationRules.Tag.MinTagLength and <= ValidationRules.Tag.MaxTagLength))
+            .WithMessage($"Tag length must be at least {ValidationRules.Tag.MinTagLength} and at most {ValidationRules.Tag.MaxTagLength} characters long");
     }
 }

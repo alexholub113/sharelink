@@ -1,6 +1,6 @@
 ﻿import { ResponseInterceptor } from './ResponseInterceptor';
 import Events from '../../../constants/events';
-import FetchHttpResponseError from '../FetchHttpResponseError.ts';
+import FetchHttpResponseError from '../errors/FetchHttpResponseError.ts';
 
 export default class BrowserUnauthorizedResponseInterceptor implements ResponseInterceptor {
     public rejected = (error: Error) => {

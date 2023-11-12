@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import SignUpModalContent from '../SignUpButton/SignUpModalContent.tsx';
 import useSignInForm from './useSignInForm.ts';
-import SubmitButton from '../SubmitButton.tsx';
-import Input from '../Input.tsx';
+import SubmitButton from '../../SubmitButton.tsx';
+import Input from '../../Input.tsx';
 
 const SignInModalContent = () => {
     const { onSubmit, register, errors } = useSignInForm();

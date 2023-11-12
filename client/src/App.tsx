@@ -1,5 +1,5 @@
 import Layout from './components/Layout.tsx';
-import Toolbar from './components/Toolbar.tsx';
+import Toolbar from './components/Toolbar/Toolbar.tsx';
 import {useEffect, useState} from 'react';
 import LinkListScreen from './screens/LinkList/LinkListScreen.tsx';
 import AddLinkButton from './components/AddLinkButton.tsx';

@@ -16,7 +16,7 @@ public class IdentityService(
     IOptionsMonitor<BearerTokenOptions> bearerTokenOptions,
     TimeProvider timeProvider) : IIdentityService
 {
-    public async Task<Results<Ok, ValidationProblem>> Register(RegisterRequest request)
+    public async Task<Results<Ok, ValidationProblem>> SignUp(SignUpRequest request)
     {
         var emailStore = (IUserEmailStore<ApplicationUser>)userStore;
         var user = new ApplicationUser();
@@ -34,10 +34,10 @@ public class IdentityService(
         return TypedResults.Ok();
     }
 
-    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(LoginRequest loginRequest)
+    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> SignIn(SignInRequest signInRequest)
     {
-        signInManager.AuthenticationScheme = loginRequest.UseBearerScheme ? IdentityConstants.BearerScheme : IdentityConstants.ApplicationScheme;
-        var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, true, false);
+        signInManager.AuthenticationScheme = signInRequest.UseBearerScheme ? IdentityConstants.BearerScheme : IdentityConstants.ApplicationScheme;
+        var result = await signInManager.PasswordSignInAsync(signInRequest.Email, signInRequest.Password, true, false);
         if (!result.Succeeded)
         {
             return TypedResults.Problem(result.ToString(), statusCode: StatusCodes.Status401Unauthorized);
@@ -63,6 +63,12 @@ public class IdentityService(
 
         var newPrincipal = await signInManager.CreateUserPrincipalAsync(user);
         return TypedResults.SignIn(newPrincipal, authenticationScheme: IdentityConstants.BearerScheme);
+    }
+
+    public async Task<Ok> SignOut()
+    {
+        await signInManager.SignOutAsync();
+        return TypedResults.Ok();
     }
 
     public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()

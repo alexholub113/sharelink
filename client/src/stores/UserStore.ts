@@ -1,9 +1,10 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import Events from '../constants/events.ts';
 import IIdentityService from '../services/IdentityService/interfaces/IIdentityService.ts';
+import UserInfo from '../services/IdentityService/interfaces/UserInfo.ts';
 
 type UserStoreState = {
-    isAuthenticated: boolean;
+    info?: UserInfo | undefined | null;
     showLoginModal: boolean;
 };
 
@@ -17,23 +18,39 @@ class UserStore {
 
     state: UserStoreState = {
         showLoginModal: false,
-        isAuthenticated: false
     };
+
+    get isAuthenticated(): boolean {
+        return !!this.state.info?.nickname;
+    }
 
     handleUnauthorizedResponse = () => {
         this.state = {
             showLoginModal: true,
-            isAuthenticated: false
+            info: undefined,
         }
     };
 
     public init = async (): Promise<void> => {
+        const userInfoFromStorage = localStorage.getItem('user');
+        if (userInfoFromStorage) {
+            runInAction(() => {
+                this.state = {
+                    ...this.state,
+                    info: JSON.parse(userInfoFromStorage),
+                };
+            });
+
+            return ;
+        }
+
         const userInfo = await this.identityService.userInfo();
+        localStorage.setItem('user', JSON.stringify(userInfo));
 
         runInAction(() => {
             this.state = {
                 ...this.state,
-                isAuthenticated: !!userInfo
+                info: userInfo
             };
         });
     }
@@ -50,6 +67,27 @@ class UserStore {
             });
 
             await this.init();
+        } catch (error) {
+            // Handle error scenario, possibly setting flags to show error messages
+        }
+    };
+
+    public signOut = async (): Promise<void> => {
+        try {
+            if (!this.isAuthenticated) {
+                return ;
+            }
+
+            await this.identityService.signOut();
+
+            runInAction(() => {
+                this.state = {
+                    info: undefined,
+                    showLoginModal: false
+                }
+            });
+
+            localStorage.removeItem('user');
         } catch (error) {
             // Handle error scenario, possibly setting flags to show error messages
         }

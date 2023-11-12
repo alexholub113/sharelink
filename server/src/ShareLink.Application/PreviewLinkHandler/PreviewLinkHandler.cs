@@ -39,9 +39,14 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
     private async Task<PreviewLinkResponse> HandleYoutube(string id)
     {
         var videoInfo = await googleApiService.GetYoutubeVideoInfo(id);
-        var tags = videoInfo.Tags.Select(tag => tag.Trim().ToLower()).Distinct().Take(3).ToArray();
-        var title = videoInfo.Title.Length > Constants.MaxLinkTitleLength
-            ? videoInfo.Title[..(Constants.MaxLinkTitleLength - 3)] + "..."
+        var tags = videoInfo.Tags
+            .Select(tag => tag.Trim().ToLower())
+            .Distinct()
+            .Where(x => x.Length is >= ValidationRules.Tag.MinTagLength and <= ValidationRules.Tag.MaxTagLength)
+            .Take(3)
+            .ToArray();
+        var title = videoInfo.Title.Length > ValidationRules.LinkTitle.MaxLength
+            ? videoInfo.Title[..(ValidationRules.LinkTitle.MaxLength - 3)] + "..."
             : videoInfo.Title;
         return new PreviewLinkResponse
         {

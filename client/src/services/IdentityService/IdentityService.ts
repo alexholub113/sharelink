@@ -13,11 +13,11 @@ class IdentityService implements IIdentityService {
     }
 
     async register(request: RegisterRequest): Promise<void> {
-        await this.httpClient.post<RegisterRequest, {}>(`${this.baseUrl}/register`, request);
+        await this.httpClient.post<RegisterRequest, {}>(`${this.baseUrl}/signup`, request);
     }
 
     async login(request: LoginRequest): Promise<AccessTokenResponse> {
-        const response = await this.httpClient.post<LoginRequest, AccessTokenResponse>(`${this.baseUrl}/login`, request);
+        const response = await this.httpClient.post<LoginRequest, AccessTokenResponse>(`${this.baseUrl}/signin`, request);
 
         return response.data;
     }
@@ -32,6 +32,10 @@ class IdentityService implements IIdentityService {
         const response = await this.httpClient.get<UserInfo | null>(`${this.baseUrl}/userInfo`);
 
         return response.data;
+    }
+
+    async signOut(): Promise<void> {
+        await this.httpClient.post(`${this.baseUrl}/signout`, {});
     }
 }
 

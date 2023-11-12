@@ -4,7 +4,7 @@ import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 import {validateUrl} from '../utils/urlValidator.ts';
-import FetchHttpResponseBusinessError from '../services/HttpClient/FetchHttpResponseBusinessError.ts';
+import {handleError} from '../utils/errors.ts';
 
 type Filter = {
     tags: Tag[];
@@ -133,7 +133,7 @@ class LinkStore {
         };
     };
 
-    public submitLink = async (): Promise<{ errorMessage?: string }> => {
+    public submitLink = async (): Promise<{ success: boolean, errorMessage?: string }> => {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
         }
@@ -150,18 +150,11 @@ class LinkStore {
             });
 
             return {
+                success: true,
                 errorMessage: undefined
             };
-        } catch (e) {
-            if (e instanceof FetchHttpResponseBusinessError) {
-                return {
-                    errorMessage: e.message
-                };
-            }
-
-            return {
-                errorMessage: "Server failed to process the request"
-            };
+        } catch (e: unknown) {
+            return { success: false, errorMessage: handleError(e).errorMessage };
         }
     };
 

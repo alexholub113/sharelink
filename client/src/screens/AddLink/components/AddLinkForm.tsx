@@ -49,10 +49,10 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
 
         dispatch({ isSubmitting: true });
         try {
-            const { errorMessage } = await submitLink();
-            if (!errorMessage) {
+            const { success, errorMessage } = await submitLink();
+            if (success) {
                 onSuccess();
-            } else {
+            } else if (errorMessage) {
                 dispatch({ submitErrorMessage: errorMessage });
             }
         } finally {

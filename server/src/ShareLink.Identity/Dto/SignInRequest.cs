@@ -1,8 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ShareLink.Identity.Dto;
 
-public class RegisterRequest
+public class SignInRequest
 {
     [Required]
     [EmailAddress]
@@ -11,8 +11,5 @@ public class RegisterRequest
     [Required]
     public required string Password { get; init; }
 
-    [Required]
-    [MinLength(3)]
-    [MaxLength(50)]
-    public required string Nickname { get; init; }
+    public bool UseBearerScheme { get; init; }
 }

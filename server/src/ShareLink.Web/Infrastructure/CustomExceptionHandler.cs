@@ -12,12 +12,12 @@ public class CustomExceptionHandler : IExceptionHandler
 
     public CustomExceptionHandler()
     {
-        // Register known exception types and handlers.
+        // SignUp known exception types and handlers.
         _exceptionHandlers = new()
         {
             { typeof(ValidationException), HandleValidationException },
             { typeof(NotFoundException), HandleNotFoundException },
-            { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
+            { typeof(UnauthorizedAccessException), HandleUserUnauthorizedException },
             { typeof(BusinessException), HandleBusinessException },
             { typeof(UserUnauthorizedException), HandleUserUnauthorizedException },
         };
@@ -63,12 +63,7 @@ public class CustomExceptionHandler : IExceptionHandler
 
         httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-        await httpContext.Response.WriteAsJsonAsync(
-            new ValidationProblemDetails(exception.Errors)
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
-            });
+        await httpContext.Response.WriteAsJsonAsync(new ValidationError(exception.Errors.Values.SelectMany(x => x).ToArray()));
     }
 
     private async Task HandleNotFoundException(HttpContext httpContext, Exception ex)
@@ -84,19 +79,6 @@ public class CustomExceptionHandler : IExceptionHandler
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
                 Title = "The specified resource was not found.",
                 Detail = exception.Message
-            });
-    }
-
-    private async Task HandleUnauthorizedAccessException(HttpContext httpContext, Exception ex)
-    {
-        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-
-        await httpContext.Response.WriteAsJsonAsync(
-            new ProblemDetails
-            {
-                Status = StatusCodes.Status401Unauthorized,
-                Title = "Unauthorized",
-                Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
             });
     }
 

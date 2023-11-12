@@ -38,7 +38,7 @@ const TagInput = ({ onAdd }: TagInputProps) => {
                     />
                 </TagBadge>
             ) : (
-                <div onClick={() => setInputVisible(true)} className="flex items-center justify-center dark:bg-transparent 
+                <div onClick={() => setInputVisible(true)} className="flex items-center justify-center dark:bg-transparent
                 rounded-full cursor-pointer dark:bg-zinc-700 bg-gray-100 p-2 hover:scale-105">
                     <svg className="w-4 h-4 font-bold secondary-text-color" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
