@@ -2,6 +2,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import Events from '../constants/events.ts';
 import IIdentityService from '../services/IdentityService/interfaces/IIdentityService.ts';
 import UserInfo from '../services/IdentityService/interfaces/UserInfo.ts';
+import safelyParseJson from '../utils/safelyParseJson.ts';
 
 type UserStoreState = {
     info?: UserInfo | undefined | null;
@@ -32,12 +33,14 @@ class UserStore {
     };
 
     public init = async (): Promise<void> => {
-        const userInfoFromStorage = localStorage.getItem('user');
-        if (userInfoFromStorage) {
+        const userStorageItem = safelyParseJson(localStorage.getItem('user'));
+        if (userStorageItem && userStorageItem.nickname) {
             runInAction(() => {
                 this.state = {
                     ...this.state,
-                    info: JSON.parse(userInfoFromStorage),
+                    info: {
+                        nickname: userStorageItem.nickname,
+                    },
                 };
             });
 

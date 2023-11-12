@@ -26,11 +26,6 @@ export default class FetchHttpResponse<T> implements HttpResponse<T> {
     }
 
     public json<T>(): Promise<T> {
-        // eslint-disable-next-line no-console
-        console.warn('[response.json()] is deprecated and is a subject to removal in a future major release. '
-            + 'Please use [response.data] property instead');
-        // eslint-enable-next-line no-console
-
         return (typeof this.data !== 'undefined') ? Promise.resolve(this.data) : this.fetchResponse.json();
     }
 
@@ -43,19 +38,12 @@ export default class FetchHttpResponse<T> implements HttpResponse<T> {
         const contentType = fetchResponse.headers.get('Content-Type');
 
         if (!contentType) {
-            // eslint-disable-next-line no-console
-            console.warn('Received Content-Type is empty');
-            // eslint-enable-next-line no-console
             return undefined as unknown as T;
         }
 
         if (contentType.toLowerCase().includes(ContentTypes.JSON)) {
             return fetchResponse.json();
         }
-
-        // eslint-disable-next-line no-console
-        console.warn(`Received unsupported Content-Type: "${contentType || ''}"`);
-        // eslint-enable-next-line no-console
 
         return undefined as unknown as T;
     }

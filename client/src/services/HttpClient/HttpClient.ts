@@ -9,6 +9,7 @@ import BrowserCleanAuthSessionInterceptor
     from './Interceptors/BrowserCleanAuthSessionInterceptor.ts';
 import FetchHttpResponseBusinessError from './errors/FetchHttpResponseBusinessError.ts';
 import FetchHttpResponseValidationError from './errors/FetchHttpResponseValidationError.ts';
+import safelyParseJson from '../../utils/safelyParseJson.ts';
 
 const responseInterceptors: ResponseInterceptor[] = [
     new BrowserCleanAuthSessionInterceptor(),
@@ -60,14 +61,8 @@ export default class HttpClient implements TransportInterface<RequestInit> {
         }
 
         const responseBody = await response.text();
-
         if (responseBody) {
-            let error = null;
-            try {
-                error = JSON.parse(responseBody)
-            } catch (e: any) {
-            }
-
+            const error = safelyParseJson(responseBody);
             if (error && error.status === 400) {
                 switch (error.type) {
                     case 'validation_error':

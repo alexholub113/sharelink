@@ -10,7 +10,7 @@ const UserMenu = observer(({ onClose }: UserMenuProps) => {
     const { state: { info }, signOut } = useUserStore();
     const refObject = useClickOutsideHandler(() => onClose());
     return (
-        <div ref={refObject} className="absolute right-10 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        <div ref={refObject} className="absolute right-10 z-10 bg-white divide-y rounded-lg shadow w-44 card-dark dark:divide-zinc-600">
             <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                 <div className="font-medium truncate">{info?.nickname}</div>
             </div>
