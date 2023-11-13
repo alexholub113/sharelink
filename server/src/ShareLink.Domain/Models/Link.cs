@@ -12,9 +12,9 @@ public class Link
 
     public YoutubeData? Youtube { get; init; }
 
-    public ICollection<User> LikedBy { get; } = new List<User>();
+    public ICollection<UserProfile> LikedBy { get; } = new List<UserProfile>();
 
-    public ICollection<User> SavedBy { get; } = new List<User>();
+    public ICollection<UserProfile> SavedBy { get; } = new List<UserProfile>();
 
     public required string UserId { get; init; }
 

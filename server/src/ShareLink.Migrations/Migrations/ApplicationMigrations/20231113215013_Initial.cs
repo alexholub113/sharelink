@@ -41,14 +41,14 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UserProfiles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_UserProfiles", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,12 +79,12 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 name: "UserLikedLinks",
                 columns: table => new
                 {
-                    LikedById = table.Column<string>(type: "text", nullable: false),
+                    LikedByUserId = table.Column<string>(type: "text", nullable: false),
                     LikedLinksId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserLikedLinks", x => new { x.LikedById, x.LikedLinksId });
+                    table.PrimaryKey("PK_UserLikedLinks", x => new { x.LikedByUserId, x.LikedLinksId });
                     table.ForeignKey(
                         name: "FK_UserLikedLinks_Links_LikedLinksId",
                         column: x => x.LikedLinksId,
@@ -92,10 +92,10 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserLikedLinks_Users_LikedById",
-                        column: x => x.LikedById,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        name: "FK_UserLikedLinks_UserProfiles_LikedByUserId",
+                        column: x => x.LikedByUserId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -103,12 +103,12 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 name: "UserSavedLinks",
                 columns: table => new
                 {
-                    SavedById = table.Column<string>(type: "text", nullable: false),
+                    SavedByUserId = table.Column<string>(type: "text", nullable: false),
                     SavedLinksId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserSavedLinks", x => new { x.SavedById, x.SavedLinksId });
+                    table.PrimaryKey("PK_UserSavedLinks", x => new { x.SavedByUserId, x.SavedLinksId });
                     table.ForeignKey(
                         name: "FK_UserSavedLinks_Links_SavedLinksId",
                         column: x => x.SavedLinksId,
@@ -116,10 +116,10 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserSavedLinks_Users_SavedById",
-                        column: x => x.SavedById,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        name: "FK_UserSavedLinks_UserProfiles_SavedByUserId",
+                        column: x => x.SavedByUserId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -178,7 +178,7 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 name: "Links");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserProfiles");
         }
     }
 }

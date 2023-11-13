@@ -9,7 +9,7 @@ public interface IApplicationDbContext
 
     DbSet<Tag> Tags { get; }
 
-    DbSet<User> Users { get; }
+    DbSet<UserProfile> UserProfiles { get; }
 
     void Push<T>(T entity);
 

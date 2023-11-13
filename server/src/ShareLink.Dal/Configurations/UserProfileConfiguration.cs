@@ -4,12 +4,12 @@ using ShareLink.Domain.Models;
 
 namespace ShareLink.Dal.Configurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
 {
 
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserProfile> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.UserId);
 
         builder.HasMany(u => u.LikedLinks)
             .WithMany(l => l.LikedBy)

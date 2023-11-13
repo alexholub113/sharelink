@@ -15,7 +15,7 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
 {
     public async Task ToggleLinkLike(string linkId, bool state, CancellationToken cancellationToken)
     {
-        var user = await GetUser(cancellationToken);
+        var user = await GetUserProfile(cancellationToken);
         if (!state)
         {
             var link = GetLikedLink(user, linkId);
@@ -33,22 +33,22 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
 
     public async Task ToggleLinkSave(string linkId, bool state, CancellationToken cancellationToken)
     {
-        var user = await GetUser(cancellationToken);
+        var userProfile = await GetUserProfile(cancellationToken);
         if (!state)
         {
-            var link = GetSavedLink(user, linkId);
-            user.SavedLinks.Remove(link);
+            var link = GetSavedLink(userProfile, linkId);
+            userProfile.SavedLinks.Remove(link);
         }
         else
         {
             var link = await GetLink(linkId, cancellationToken);
-            user.SavedLinks.Add(link);
+            userProfile.SavedLinks.Add(link);
         }
 
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    private async Task<User> GetUser(CancellationToken cancellationToken)
+    private async Task<UserProfile> GetUserProfile(CancellationToken cancellationToken)
     {
         var userId = identityContext.UserId;
         if (userId == null)
@@ -56,17 +56,17 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
             throw new UserUnauthorizedException();
         }
 
-        var user = await context.Users.Include(x => x.LikedLinks).Include(x => x.SavedLinks).SingleOrDefaultAsync(x => x.Id == userId, cancellationToken);
-        if (user == null)
+        var userProfile = await context.UserProfiles.Include(x => x.LikedLinks).Include(x => x.SavedLinks).SingleOrDefaultAsync(x => x.UserId == userId, cancellationToken);
+        if (userProfile == null)
         {
-            user = new User
+            userProfile = new UserProfile
             {
-                Id = userId
+                UserId = userId
             };
-            context.Push(user);
+            context.Push(userProfile);
         }
 
-        return user;
+        return userProfile;
     }
 
     private async Task<Link> GetLink(string linkId, CancellationToken cancellationToken)
@@ -80,9 +80,9 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
         return link;
     }
 
-    private static Link GetLikedLink(User user, string linkId)
+    private static Link GetLikedLink(UserProfile userProfile, string linkId)
     {
-        var link = user.LikedLinks.SingleOrDefault(x => x.Id == linkId);
+        var link = userProfile.LikedLinks.SingleOrDefault(x => x.Id == linkId);
         if (link == null)
         {
             throw new BusinessException(ErrorCodes.LinkNotFound);
@@ -91,9 +91,9 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
         return link;
     }
 
-    private static Link GetSavedLink(User user, string linkId)
+    private static Link GetSavedLink(UserProfile userProfile, string linkId)
     {
-        var link = user.SavedLinks.SingleOrDefault(x => x.Id == linkId);
+        var link = userProfile.SavedLinks.SingleOrDefault(x => x.Id == linkId);
         if (link == null)
         {
             throw new BusinessException(ErrorCodes.LinkNotFound);

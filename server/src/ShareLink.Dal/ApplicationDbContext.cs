@@ -15,7 +15,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     public DbSet<Tag> Tags => Set<Tag>();
 
-    public DbSet<User> Users => Set<User>();
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public void Push<T>(T entity)
     {
         if (entity != null) Add(entity);

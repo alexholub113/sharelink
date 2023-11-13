@@ -13,7 +13,7 @@ using ShareLink.Domain.Models;
 namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231109014217_Initial")]
+    [Migration("20231113215013_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -41,30 +41,30 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.ToTable("LinkTag");
                 });
 
-            modelBuilder.Entity("LinkUser", b =>
+            modelBuilder.Entity("LinkUserProfile", b =>
                 {
-                    b.Property<string>("LikedById")
+                    b.Property<string>("LikedByUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("LikedLinksId")
                         .HasColumnType("text");
 
-                    b.HasKey("LikedById", "LikedLinksId");
+                    b.HasKey("LikedByUserId", "LikedLinksId");
 
                     b.HasIndex("LikedLinksId");
 
                     b.ToTable("UserLikedLinks", (string)null);
                 });
 
-            modelBuilder.Entity("LinkUser1", b =>
+            modelBuilder.Entity("LinkUserProfile1", b =>
                 {
-                    b.Property<string>("SavedById")
+                    b.Property<string>("SavedByUserId")
                         .HasColumnType("text");
 
                     b.Property<string>("SavedLinksId")
                         .HasColumnType("text");
 
-                    b.HasKey("SavedById", "SavedLinksId");
+                    b.HasKey("SavedByUserId", "SavedLinksId");
 
                     b.HasIndex("SavedLinksId");
 
@@ -121,14 +121,14 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("ShareLink.Domain.Models.User", b =>
+            modelBuilder.Entity("ShareLink.Domain.Models.UserProfile", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("UserId")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("LinkTag", b =>
@@ -146,11 +146,11 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LinkUser", b =>
+            modelBuilder.Entity("LinkUserProfile", b =>
                 {
-                    b.HasOne("ShareLink.Domain.Models.User", null)
+                    b.HasOne("ShareLink.Domain.Models.UserProfile", null)
                         .WithMany()
-                        .HasForeignKey("LikedById")
+                        .HasForeignKey("LikedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -161,11 +161,11 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LinkUser1", b =>
+            modelBuilder.Entity("LinkUserProfile1", b =>
                 {
-                    b.HasOne("ShareLink.Domain.Models.User", null)
+                    b.HasOne("ShareLink.Domain.Models.UserProfile", null)
                         .WithMany()
-                        .HasForeignKey("SavedById")
+                        .HasForeignKey("SavedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

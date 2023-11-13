@@ -19,8 +19,4 @@
         <ProjectReference Include="..\ShareLink.Identity\ShareLink.Identity.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Migrations\ApplicationMigrations\" />
-    </ItemGroup>
-
 </Project>

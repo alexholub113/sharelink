@@ -6,7 +6,8 @@ namespace ShareLink.Identity.Services;
 
 public class IdentityContext(IHttpContextAccessor contextAccessor) : IIdentityContext
 {
-    public string? UserNickname => contextAccessor.HttpContext?.User.FindFirst(ClaimsNames.Nickname)?.Value;
+    public string? UserNickname => contextAccessor.HttpContext?.User.FindFirst(ClaimsNames.Nickname)?.Value ??
+                                   contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
 
     public string? UserId => contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 }

@@ -1,8 +1,8 @@
 namespace ShareLink.Domain.Models;
 
-public class User
+public class UserProfile
 {
-    public required string Id { get; init; }
+    public required string UserId { get; init; }
 
     public IList<Link> LikedLinks { get; init; } = new List<Link>();
 
