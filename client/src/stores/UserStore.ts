@@ -59,20 +59,17 @@ class UserStore {
     }
 
     public logIn = async (email: string, password: string): Promise<void> => {
-        try {
-            await this.identityService.login({ email, password });
+        await this.identityService.login({ email, password });
 
-            runInAction(() => {
-                this.state = {
-                    ...this.state,
-                    showLoginModal: false
-                }
-            });
+        runInAction(() => {
+            this.state = {
+                ...this.state,
+                showLoginModal: false
+            }
+        });
 
-            await this.init();
-        } catch (error) {
-            // Handle error scenario, possibly setting flags to show error messages
-        }
+        await this.init();
+
     };
 
     public signOut = async (): Promise<void> => {
