@@ -17,6 +17,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IIdentityContext, IdentityContext>();
         services.AddScoped<IIdentityService, IdentityService>();
+        services.AddTransient<IOAuthEventHandler, OAuthEventHandler>();
 
         var identityConnectionString = configuration.GetConnectionString("Identity");
         var identityDbOptionsAction = new Action<DbContextOptionsBuilder>(
@@ -30,6 +31,17 @@ public static class DependencyInjection
                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
+            })
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+                googleOptions.CallbackPath = new PathString("/signing-google");
+                // googleOptions.Events.OnCreatingTicket = async context =>
+                // {
+                //     var handler = context.HttpContext.RequestServices.GetRequiredService<IOAuthEventHandler>();
+                //     await handler.HandleOnCreating(context);
+                // };
             })
             .AddBearerToken(IdentityConstants.BearerScheme)
             .AddCookie(IdentityConstants.ApplicationScheme, options =>

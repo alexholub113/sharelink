@@ -37,6 +37,10 @@ class IdentityService implements IIdentityService {
     async signOut(): Promise<void> {
         await this.httpClient.post(`${this.baseUrl}/signout`, {});
     }
+
+    async loginWithGoogle(): Promise<void> {
+        await this.httpClient.get(`${this.baseUrl}/login-google`);
+    }
 }
 
 export default IdentityService;

@@ -28,6 +28,7 @@ interface IIdentityService {
     signOut(): Promise<void>;
     refresh(request: RefreshRequest): Promise<AccessTokenResponse>;
     userInfo(): Promise<UserInfo | null>;
+    loginWithGoogle(): Promise<void>;
 }
 
 export default IIdentityService;

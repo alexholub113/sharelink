@@ -81,7 +81,7 @@ public class IdentityService(
 
         var userInfo = new UserInfo
         {
-            Nickname = user.FindFirstValue(ClaimsNames.Nickname)
+            Nickname = user.FindFirstValue(ClaimsNames.Nickname) ?? user.FindFirstValue(ClaimTypes.Name)
         };
 
         return TypedResults.Ok(userInfo);
