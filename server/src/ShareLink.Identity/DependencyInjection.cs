@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Identity.Services;
 
@@ -13,8 +15,10 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddIdentityServices(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IWebHostEnvironment environment)
     {
+        services.Configure<AuthenticationConfiguration>(configuration.GetSection(AuthenticationConfiguration.SectionName));
         services.AddScoped<IIdentityContext, IdentityContext>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddTransient<IOAuthEventHandler, OAuthEventHandler>();
@@ -48,9 +52,12 @@ public static class DependencyInjection
             .AddCookie(IdentityConstants.ApplicationScheme, options =>
             {
                 options.Cookie.HttpOnly = true;
-                // options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Enforce HTTPS
-                options.Cookie.SameSite = SameSiteMode.Strict; // CSRF protection
-                options.SlidingExpiration = true; // Refresh the expiration time if a request is made and the cookie is nearing its expiry
+                if (!environment.IsDevelopment())
+                {
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                }
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.SlidingExpiration = true;
                 options.Events = new CookieAuthenticationEvents
                 {
                     OnRedirectToLogin = context =>

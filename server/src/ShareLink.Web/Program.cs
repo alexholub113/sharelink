@@ -20,7 +20,7 @@ builder
     .AddSwaggerGen()
     .AddLogging()
     .AddApplicationServices(builder.Configuration)
-    .AddIdentityServices(builder.Configuration)
+    .AddIdentityServices(builder.Configuration, builder.Environment)
     .AddDalServices(builder.Configuration)
     .AddMigrationsServices(builder.Configuration);
 builder.Services.AddCors();
@@ -31,16 +31,27 @@ var app = builder.Build();
 
 app.UseSwagger();
 
-// app.MapGroup("/temp-identity").MapIdentityApi<ApplicationUser>();
-
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerUI();
     app.UseCors(x => x
         .WithOrigins("http://127.0.0.1:5173", "http://localhost:5173")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials());
+    app.UseSwaggerUI();
+}
+else
+{
+    app.UseCors(x => x
+        .WithOrigins(builder.Configuration["Security:AllowedOrigins"]?.Split(",") ?? Array.Empty<string>())
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
+}
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();

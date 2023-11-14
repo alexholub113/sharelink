@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShareLink.Identity.Dto;
 using ShareLink.Identity.Services;
 
-namespace ShareLink.Web.Controllers;
+namespace ShareLink.Identity.Controllers;
 
 [ApiController]
 [Route("[controller]")]
