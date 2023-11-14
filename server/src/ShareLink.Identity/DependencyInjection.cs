@@ -37,11 +37,12 @@ public static class DependencyInjection
                 googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
                 googleOptions.CallbackPath = new PathString("/signing-google");
-                // googleOptions.Events.OnCreatingTicket = async context =>
-                // {
-                //     var handler = context.HttpContext.RequestServices.GetRequiredService<IOAuthEventHandler>();
-                //     await handler.HandleOnCreating(context);
-                // };
+            })
+            .AddGitHub(githubOptions =>
+            {
+                githubOptions.ClientId = configuration["Authentication:GitHub:ClientId"];
+                githubOptions.ClientSecret = configuration["Authentication:GitHub:ClientSecret"];
+                githubOptions.CallbackPath = new PathString("/signing-github");
             })
             .AddBearerToken(IdentityConstants.BearerScheme)
             .AddCookie(IdentityConstants.ApplicationScheme, options =>

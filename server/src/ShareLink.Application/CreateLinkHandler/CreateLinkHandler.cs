@@ -35,7 +35,7 @@ public class CreateLinkHandler(
         }
 
         var (linkType, urlId) = urlParser.ParseUrl(request.Url);
-        var linkId = GetId(linkType, urlId);
+        var linkId = CreateLinkId(linkType, urlId);
         var isLinkExist = await context.Links.AnyAsync(x => x.Id == linkId, cancellationToken);
         if (isLinkExist)
         {
@@ -65,7 +65,7 @@ public class CreateLinkHandler(
         return new YoutubeData { VideoId = videoInfo.Id };
     }
 
-    private static string GetId(LinkType linkType, string contentId)
+    private static string CreateLinkId(LinkType linkType, string contentId)
     {
         var type = linkType.ToString().ToLower();
         return linkType switch

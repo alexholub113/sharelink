@@ -43,6 +43,7 @@ if (app.Environment.IsDevelopment())
         .AllowCredentials());
 }
 
+app.UseHttpsRedirection();
 app.UseExceptionHandler(options => { });
 
 app

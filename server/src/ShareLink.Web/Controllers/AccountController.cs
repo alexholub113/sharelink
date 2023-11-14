@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.BearerToken;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +9,7 @@ namespace ShareLink.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class IdentityController(IIdentityService identityService) : ControllerBase
+public class AccountController(IIdentityService identityService) : ControllerBase
 {
     [HttpPost("signup")]
     public async Task<Results<Ok, ValidationProblem>> Register([FromBody] SignUpRequest request)
@@ -42,11 +40,5 @@ public class IdentityController(IIdentityService identityService) : ControllerBa
     public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()
     {
         return identityService.GetUserInfo();
-    }
-
-    [HttpGet("login-google")]
-    public ChallengeResult SignInGoogle()
-    {
-        return Challenge(new AuthenticationProperties { RedirectUri = "http://localhost:5173/" }, GoogleDefaults.AuthenticationScheme);
     }
 }

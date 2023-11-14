@@ -1,8 +1,8 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import Events from '../constants/events.ts';
-import IIdentityService from '../services/IdentityService/interfaces/IIdentityService.ts';
 import UserInfo from '../services/IdentityService/interfaces/UserInfo.ts';
 import safelyParseJson from '../utils/safelyParseJson.ts';
+import IAccountService from '../services/AccountService/interfaces/IAccountService.ts';
 
 type UserStoreState = {
     info?: UserInfo | undefined | null;
@@ -10,7 +10,7 @@ type UserStoreState = {
 };
 
 class UserStore {
-    constructor(private readonly identityService: IIdentityService) {
+    constructor(private readonly accountService: IAccountService) {
         makeAutoObservable(this);
 
         // Register event listener for unauthorized responses
@@ -47,7 +47,7 @@ class UserStore {
             return ;
         }
 
-        const userInfo = await this.identityService.userInfo();
+        const userInfo = await this.accountService.userInfo();
         localStorage.setItem('user', JSON.stringify(userInfo));
 
         runInAction(() => {
@@ -59,7 +59,7 @@ class UserStore {
     }
 
     public logIn = async (email: string, password: string): Promise<void> => {
-        await this.identityService.login({ email, password });
+        await this.accountService.login({ email, password });
 
         runInAction(() => {
             this.state = {
@@ -78,7 +78,7 @@ class UserStore {
                 return ;
             }
 
-            await this.identityService.signOut();
+            await this.accountService.signOut();
 
             runInAction(() => {
                 this.state = {
@@ -95,7 +95,7 @@ class UserStore {
 
     public register = async (nickname: string, email: string, password: string): Promise<void> => {
         try {
-            await this.identityService.register({ nickname, email, password });
+            await this.accountService.register({ nickname, email, password });
             await this.logIn(email, password);
         } catch (error) {
             // Handle error scenario, possibly setting flags to show error messages

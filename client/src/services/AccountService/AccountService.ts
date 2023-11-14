@@ -1,13 +1,16 @@
-import IIdentityService, {
-    AccessTokenResponse,
-    LoginRequest, RefreshRequest,
-    RegisterRequest
-} from './interfaces/IIdentityService.ts';
+
 import HttpClient from '../HttpClient/HttpClient.ts';
 import UserInfo from './interfaces/UserInfo.ts';
+import IAccountService, {
+    AccessTokenResponse,
+    LoginRequest,
+    RefreshRequest,
+    RegisterRequest
+} from './interfaces/IAccountService.ts';
 
-class IdentityService implements IIdentityService {
-    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/identity`;
+
+class AccountService implements IAccountService {
+    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/account`;
 
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -37,10 +40,6 @@ class IdentityService implements IIdentityService {
     async signOut(): Promise<void> {
         await this.httpClient.post(`${this.baseUrl}/signout`, {});
     }
-
-    async loginWithGoogle(): Promise<void> {
-        await this.httpClient.get(`${this.baseUrl}/login-google`);
-    }
 }
 
-export default IdentityService;
+export default AccountService;
