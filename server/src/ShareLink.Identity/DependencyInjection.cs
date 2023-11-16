@@ -28,7 +28,7 @@ public static class DependencyInjection
             options => options.UseNpgsql(identityConnectionString, builder => builder.MigrationsAssembly("ShareLink.Migrations"))
         );
 
-        services.AddDbContext<IdentityDbContext>(identityDbOptionsAction);
+        services.AddDbContext<AppIdentityDbContext>(identityDbOptionsAction);
 
         services.AddHttpContextAccessor();
         services.AddAuthentication(options => {
@@ -87,7 +87,7 @@ public static class DependencyInjection
             });
         services.AddAuthorizationBuilder();
         services.AddIdentityCore<ApplicationUser>()
-            .AddEntityFrameworkStores<IdentityDbContext>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddApiEndpoints();
 
         return services;

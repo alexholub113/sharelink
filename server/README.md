@@ -12,8 +12,8 @@ additionally with database pgAdmin will be deployed.
 - To remove the last migration `dotnet ef migrations remove --context ApplicationDbContext -- "../ShareLink.Web/appsettings.json"` from from `src\ShareLink.Migrations`
 
 ### EF Identity
-- To update db `dotnet ef database update --context IdentityDbContext -- "../ShareLink.Web/appsettings.json"` from `src\ShareLink.Migrations`
-- To add migration `dotnet ef migrations add {migrationName} --context IdentityDbContext --output-dir Migrations/IdentityMigrations -- "../ShareLink.Web/appsettings~~~~.json"` from from `src\ShareLink.Migrations`
+- To update db `dotnet ef database update --context AppIdentityDbContext -- "../ShareLink.Web/appsettings.json"` from `src\ShareLink.Migrations`
+- To add migration `dotnet ef migrations add {migrationName} --context AppIdentityDbContext --output-dir Migrations/IdentityMigrations -- "../ShareLink.Web/appsettings.json"` from from `src\ShareLink.Migrations`
 
 ### PG Admin
 PG Admin can be reached at http://localhost:5050/. Use password `postgres`.

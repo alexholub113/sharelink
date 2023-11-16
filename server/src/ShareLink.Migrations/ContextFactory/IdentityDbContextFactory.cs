@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ShareLink.Identity;
 
 namespace ShareLink.Migrations.ContextFactory
 {
-    public class IdentityDbContextFactory : DbContextFactoryBase<IdentityDbContext>
+    public class IdentityDbContextFactory : DbContextFactoryBase<AppIdentityDbContext>
     {
         protected override string DataBaseName => "Identity";
     }

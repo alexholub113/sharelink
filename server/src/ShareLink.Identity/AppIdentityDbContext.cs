@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ShareLink.Identity;
 
-public class IdentityDbContext : IdentityDbContext<ApplicationUser>
+public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
 {
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+    public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
         : base(options)
     {
     }

@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ShareLink.Identity.Services;
 
-public class OAuthEventHandler(IdentityDbContext identityDbContext) : IOAuthEventHandler
+public class OAuthEventHandler(AppIdentityDbContext appIdentityDbContext) : IOAuthEventHandler
 {
     public async Task HandleOnCreating(OAuthCreatingTicketContext context)
     {
         var userEmail = context.User.GetProperty("email").ToString();
-        var identityUser = await identityDbContext.Users
+        var identityUser = await appIdentityDbContext.Users
             .FirstOrDefaultAsync(u => u.Email == userEmail);
 
         if (identityUser is null)
@@ -18,8 +18,8 @@ public class OAuthEventHandler(IdentityDbContext identityDbContext) : IOAuthEven
                 Email = userEmail,
                 UserName = userEmail
             };
-            await identityDbContext.Users.AddAsync(identityUser);
-            await identityDbContext.SaveChangesAsync();
+            await appIdentityDbContext.Users.AddAsync(identityUser);
+            await appIdentityDbContext.SaveChangesAsync();
         }
     }
 }
