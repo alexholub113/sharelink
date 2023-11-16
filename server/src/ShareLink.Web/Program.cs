@@ -24,6 +24,8 @@ builder
     .AddIdentityServices(builder.Configuration, builder.Environment)
     .AddDalServices(builder.Configuration)
     .AddMigrationsServices(builder.Configuration);
+
+builder.Services.AddHealthChecks();
 builder.Services.AddCors();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
