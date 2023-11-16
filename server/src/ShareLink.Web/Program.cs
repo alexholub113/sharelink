@@ -63,5 +63,6 @@ app
         endpoints.MapControllers();
     });
 
+app.MapHealthChecks("/healthz");
 
 app.Run();
