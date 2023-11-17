@@ -10,7 +10,9 @@ using ShareLink.Web.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 System.Diagnostics.Trace.TraceError("MY LOGS HERE!!");
-System.Diagnostics.Trace.TraceError(builder.Configuration["connectionStrings"]);
+System.Diagnostics.Trace.TraceInformation("TraceInformation!!");
+System.Diagnostics.Trace.TraceError(
+    builder.Configuration["connectionStrings"] != null ? JsonSerializer.Serialize(builder.Configuration["connectionStrings"]) : "configurqation is null");
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers()
