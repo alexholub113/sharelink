@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using ShareLink.Application;
 using ShareLink.Dal;
@@ -7,6 +8,8 @@ using ShareLink.Migrations.Initializers;
 using ShareLink.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Console.WriteLine(JsonSerializer.Serialize(builder.Configuration["connectionStrings"]));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers()
