@@ -17,11 +17,6 @@ builder.Services.Configure<AzureFileLoggerOptions>(options =>
     options.RetainedFileCountLimit = 5;
 });
 
-System.Diagnostics.Trace.TraceError("MY LOGS HERE!!");
-System.Diagnostics.Trace.TraceInformation("TraceInformation!!");
-System.Diagnostics.Trace.TraceError(
-    builder.Configuration["connectionStrings"] != null ? JsonSerializer.Serialize(builder.Configuration["connectionStrings"]) : "configurqation is null");
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>
@@ -45,6 +40,8 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
+
+app.Logger.LogError("!!!ShareLink connection string: " + builder.Configuration.GetConnectionString("ShareLink"));
 
 await app.InitialiseDatabases();
 
