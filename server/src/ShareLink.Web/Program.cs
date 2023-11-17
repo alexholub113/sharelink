@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using ShareLink.Application;
 using ShareLink.Dal;
 using ShareLink.Migrations;
@@ -8,6 +9,13 @@ using ShareLink.Migrations.Initializers;
 using ShareLink.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddAzureWebAppDiagnostics();
+builder.Services.Configure<AzureFileLoggerOptions>(options =>
+{
+    options.FileName = "azure-diagnostics-";
+    options.FileSizeLimit = 50 * 1024;
+    options.RetainedFileCountLimit = 5;
+});
 
 System.Diagnostics.Trace.TraceError("MY LOGS HERE!!");
 System.Diagnostics.Trace.TraceInformation("TraceInformation!!");
