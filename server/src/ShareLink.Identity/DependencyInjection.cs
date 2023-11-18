@@ -56,7 +56,7 @@ public static class DependencyInjection
                 {
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 }
-                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.SameSite = SameSiteMode.None;
                 options.SlidingExpiration = true;
                 options.Events = new CookieAuthenticationEvents
                 {

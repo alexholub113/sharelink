@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Dto;
@@ -24,7 +23,7 @@ public class GetLinkListRequest : IRequest<GetLinkListResponse>
     public IReadOnlyCollection<string> Tags { get; init; } = Array.Empty<string>();
 }
 
-public class GetLinkListHandler(IApplicationDbContext context, IMapper mapper, IIdentityContext identityContext)
+public class GetLinkListHandler(IApplicationDbContext context, IIdentityContext identityContext)
     : IRequestHandler<GetLinkListRequest, GetLinkListResponse>
 {
     public async Task<GetLinkListResponse> Handle(GetLinkListRequest request, CancellationToken cancellationToken)

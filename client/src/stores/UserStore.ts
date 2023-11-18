@@ -1,8 +1,8 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import Events from '../constants/events.ts';
-import UserInfo from '../services/IdentityService/interfaces/UserInfo.ts';
 import safelyParseJson from '../utils/safelyParseJson.ts';
 import IAccountService from '../services/AccountService/interfaces/IAccountService.ts';
+import UserInfo from '../services/AccountService/interfaces/UserInfo.ts';
 
 type UserStoreState = {
     info?: UserInfo | undefined | null;

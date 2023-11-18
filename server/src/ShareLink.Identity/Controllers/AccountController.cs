@@ -1,7 +1,9 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShareLink.Identity.Dto;
 using ShareLink.Identity.Services;
 
@@ -9,7 +11,7 @@ namespace ShareLink.Identity.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AccountController(IIdentityService identityService) : ControllerBase
+public class AccountController(IIdentityService identityService, ILogger<AccountController> logger) : ControllerBase
 {
     [HttpPost("signup")]
     public async Task<Results<Ok, ValidationProblem>> Register([FromBody] SignUpRequest request)
@@ -39,6 +41,18 @@ public class AccountController(IIdentityService identityService) : ControllerBas
     [HttpGet("userinfo")]
     public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()
     {
-        return identityService.GetUserInfo();
+        logger.LogError("Getting user info");
+        try
+        {
+            var info = identityService.GetUserInfo();
+            logger.LogError("User info retrieved: " + JsonSerializer.Serialize(info));
+
+            return info;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while getting user info");
+            throw;
+        }
     }
 }

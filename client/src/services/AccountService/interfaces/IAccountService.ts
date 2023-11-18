@@ -28,8 +28,6 @@ interface IAccountService {
     signOut(): Promise<void>;
     refresh(request: RefreshRequest): Promise<AccessTokenResponse>;
     userInfo(): Promise<UserInfo | null>;
-    loginWithGoogle(): Promise<void>;
-    loginWithGithub(): Promise<void>;
 }
 
 export default IAccountService;

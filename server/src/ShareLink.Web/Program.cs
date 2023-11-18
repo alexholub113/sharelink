@@ -41,8 +41,6 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 
 var app = builder.Build();
 
-app.Logger.LogError("!!!ShareLink connection string: " + builder.Configuration.GetConnectionString("ShareLink"));
-
 await app.InitialiseDatabases();
 
 app.UseCors(x => x
