@@ -3,7 +3,6 @@ import type ILinkService from '../services/LinkService/interfaces/ILinkService.t
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
-import {validateUrl} from '../utils/urlValidator.ts';
 import {handleError} from '../utils/errors.ts';
 
 type Filter = {
@@ -98,14 +97,6 @@ class LinkStore {
         this.state.preview = {
             link: undefined,
         };
-        const { valid, error } = validateUrl(url);
-        if (!valid) {
-            return {
-                errorMessage: error === 'invalid-url' ?
-                    'Your URL is invalid. Try fix it.' :
-                    'This kind of URL is not supported.'
-            };
-        }
 
         const previewLink = await this.linkService.previewLink({ url });
 

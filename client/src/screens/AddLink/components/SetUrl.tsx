@@ -7,7 +7,6 @@ import ErrorAlert from '../../../components/ErrorAlert.tsx';
 import supportedWebsites from '../../../constants/supportedWebsites.ts';
 import {handleError} from '../../../utils/errors.ts';
 
-
 export const validateUrl = (url: string): string | undefined => {
     try {
         const urlObj = new URL(url);
