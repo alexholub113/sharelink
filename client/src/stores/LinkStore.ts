@@ -96,7 +96,6 @@ class LinkStore {
 
     public previewLink = async (url: string): Promise<{errorMessage?: string }> => {
         this.state.preview = {
-            url: undefined,
             link: undefined,
         };
         const { valid, error } = validateUrl(url);
@@ -108,13 +107,11 @@ class LinkStore {
             };
         }
 
-        this.state.preview.url = url;
-
         const previewLink = await this.linkService.previewLink({ url });
 
         runInAction(() => {
             this.state.preview = {
-                ...this.state.preview,
+                url,
                 link: previewLink
             };
         });
@@ -154,7 +151,7 @@ class LinkStore {
                 errorMessage: undefined
             };
         } catch (e: unknown) {
-            return { success: false, errorMessage: handleError(e).errorMessage };
+            return { success: false, errorMessage: handleError(e) };
         }
     };
 

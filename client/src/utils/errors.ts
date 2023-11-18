@@ -2,30 +2,22 @@ import FetchHttpResponseBusinessError from '../services/HttpClient/errors/FetchH
 import FetchHttpResponseError from '../services/HttpClient/errors/FetchHttpResponseError.ts';
 import FetchHttpResponseValidationError from '../services/HttpClient/errors/FetchHttpResponseValidationError.ts';
 
-export const handleError = (error: unknown): { errorMessage?: string } => {
+export const handleError = (error: unknown): string | undefined => {
     if (error instanceof FetchHttpResponseBusinessError) {
-        return {
-            errorMessage: error.message
-        };
+        return error.message;
     }
 
     if (error instanceof FetchHttpResponseValidationError) {
         const validationError = error as FetchHttpResponseValidationError;
-        return {
-            errorMessage: validationError.errors[0],
-        };
+        return validationError.errors[0];
     }
 
     if (error instanceof FetchHttpResponseError) {
         if (error.handled) {
-            return {};
+            return;
         }
-        return {
-            errorMessage: error.message
-        };
+        return error.message;
     }
 
-    return {
-        errorMessage: "Server failed to process the request"
-    };
+    return "Server failed to process the request";
 }

@@ -4,6 +4,22 @@ import LinkStore from '../../../stores/LinkStore.ts';
 import {useStore} from '../../../contexts/AppContext.tsx';
 import AddLinkInfoAlert from './AddLinkInfoAlert.tsx';
 import ErrorAlert from '../../../components/ErrorAlert.tsx';
+import supportedWebsites from '../../../constants/supportedWebsites.ts';
+import {handleError} from '../../../utils/errors.ts';
+
+
+export const validateUrl = (url: string): string | undefined => {
+    try {
+        const urlObj = new URL(url);
+
+        if (!supportedWebsites.includes(urlObj.origin)) {
+            return 'This kind of URL is not supported.';
+        }
+
+    } catch (e) {
+        return 'Your URL is invalid. Try fix it.';
+    }
+};
 
 const SetUrl = observer(() => {
     const { state: { preview: { url }}, previewLink } = useStore<LinkStore>(LinkStore);
@@ -13,16 +29,23 @@ const SetUrl = observer(() => {
 
     const handleSubmit = async () => {
         setIsLoading(true);
+
         try {
-            if (linkUrl === url) {
-                if (!url) {
-                    setPreviewErrorMessage('Please enter a link');
-                }
+            if (!linkUrl) {
+                setPreviewErrorMessage('Please enter a link');
+                return;
+            }
+
+            const errorMessage = validateUrl(linkUrl);
+            if (errorMessage) {
+                setPreviewErrorMessage(errorMessage);
                 return;
             }
 
             setPreviewErrorMessage(undefined);
-            const { errorMessage } = await previewLink(linkUrl!);
+            await previewLink(linkUrl!);
+        } catch (e) {
+            const errorMessage = handleError(e);
             if (errorMessage) {
                 setPreviewErrorMessage(errorMessage);
             }
@@ -33,7 +56,7 @@ const SetUrl = observer(() => {
     return (
         <div className="flex flex-col gap-4">
             <div className="relative">
-                <input type="text" onChange={(event) => setLinkUrl(event.target.value)} className="
+                <input type="text" value={linkUrl} onChange={(event) => setLinkUrl(event.target.value)} className="
                         block w-full p-4 pr-12 pl-10 border rounded-full input-border-blue dark:bg-zinc-600
                         dark:border-zinc-500 dark:placeholder-zinc-400 dark:text-white text-sm"
                        placeholder="https://www.youtube.com/watch?v=some-video-id" />
