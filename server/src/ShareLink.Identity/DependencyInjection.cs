@@ -52,10 +52,7 @@ public static class DependencyInjection
             .AddCookie(IdentityConstants.ApplicationScheme, options =>
             {
                 options.Cookie.HttpOnly = true;
-                if (!environment.IsDevelopment())
-                {
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                }
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.SlidingExpiration = true;
                 options.Events = new CookieAuthenticationEvents

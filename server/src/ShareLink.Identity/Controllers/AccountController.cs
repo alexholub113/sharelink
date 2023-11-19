@@ -41,18 +41,6 @@ public class AccountController(IIdentityService identityService, ILogger<Account
     [HttpGet("userinfo")]
     public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()
     {
-        logger.LogError("Getting user info");
-        try
-        {
-            var info = identityService.GetUserInfo();
-            logger.LogError("User info retrieved: " + JsonSerializer.Serialize(info));
-
-            return info;
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e, "Error while getting user info");
-            throw;
-        }
+        return identityService.GetUserInfo();
     }
 }
