@@ -16,8 +16,12 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.card-dark {
-  @apply dark:bg-zinc-700;
+.card-background {
+  @apply dark:bg-zinc-800;
+}
+
+.card-border {
+  @apply border border-solid dark:border-zinc-900;
 }
 
 .input-border-blue {

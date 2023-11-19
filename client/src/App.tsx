@@ -16,7 +16,7 @@ const App = observer(() => {
     }, [init]);
 
     return (
-        <div className="bg-zinc-800 min-h-screen">
+        <div className="bg-zinc-900 min-h-screen">
             <Toolbar />
             <Layout>
                 <>
