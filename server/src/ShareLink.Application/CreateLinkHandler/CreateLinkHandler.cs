@@ -1,10 +1,11 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Dto;
 using ShareLink.Application.Common.Exceptions;
+using ShareLink.Application.Common.Extensions;
 using ShareLink.Application.Common.Services;
+using ShareLink.Common.Exceptions;
 using ShareLink.Domain.Enums;
 using ShareLink.Domain.Models;
 
@@ -21,7 +22,6 @@ public class CreateLinkRequest : IRequest<LinkDto>
 
 public class CreateLinkHandler(
         IApplicationDbContext context,
-        IMapper mapper,
         IUrlParser urlParser,
         IGoogleApiService googleApiService,
         IIdentityContext identityContext)
@@ -42,42 +42,31 @@ public class CreateLinkHandler(
             throw new BusinessException(ErrorCodes.LinkExists, "Link already exists.");
         }
 
-        var link = new Link
-        {
-            Id = linkId,
-            Title = request.Title,
-            Type = linkType,
-            Youtube = linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
-            Tags = await CreateTagList(request.Tags, cancellationToken),
-            UserId = identityContext.UserId!,
-            UserNickname = identityContext.UserNickname!,
-            CreatedAt = DateTime.UtcNow
-        };
+        var link = Link.Create(
+            linkId,
+            request.Title,
+            linkType,
+            linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
+            identityContext.UserId!,
+            identityContext.UserNickname!,
+            await context.CreateTagList(request.Tags, cancellationToken));
         context.Links.Add(link);
         await context.SaveChangesAsync(cancellationToken);
 
-        return mapper.Map<LinkDto>(link);
-    }
-
-    private async Task<IReadOnlyCollection<Tag>> CreateTagList(string[] tags, CancellationToken cancellationToken)
-    {
-        var tagList = new List<Tag>();
-        var tagsInDatabase = await context.Tags
-            .Where(x => tags.Contains(x.Name))
-            .ToArrayAsync(cancellationToken);
-        foreach (var requestTag in tags)
+        return new LinkDto
         {
-            var tag = tagsInDatabase.FirstOrDefault(x => x.Name == requestTag);
-            if (tag is null)
-            {
-                tag = new Tag { Name = requestTag.ToLower() };
-                context.Tags.Add(tag);
-            }
-
-            tagList.Add(tag);
-        }
-
-        return tagList;
+            Id = link.Id,
+            Title = link.Title,
+            Type = link.Type,
+            Youtube = link.Youtube == null ? null : new YoutubeDataDto { VideoId = link.Youtube.VideoId },
+            Likes = 0,
+            IsLiked = false,
+            IsSaved = false,
+            User = link.UserNickname,
+            CreatedAt = link.CreatedAt,
+            Tags = link.Tags.Select(y => y.Name).ToArray(),
+            BelongsToUser = true
+        };
     }
 
     private async Task<YoutubeData> GetYoutubeData(string id)

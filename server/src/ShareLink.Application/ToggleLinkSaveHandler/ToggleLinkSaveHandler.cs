@@ -5,7 +5,7 @@ namespace ShareLink.Application.ToggleLinkSaveHandler;
 
 public class ToggleLinkSaveRequest : IRequest
 {
-    public string LinkId { get; set; } = string.Empty;
+    public required string LinkId { get; init; }
 
     public bool State { get; init; }
 }

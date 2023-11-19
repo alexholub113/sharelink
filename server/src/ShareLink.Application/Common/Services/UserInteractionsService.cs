@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Exceptions;
+using ShareLink.Common.Exceptions;
 using ShareLink.Domain.Models;
 
 namespace ShareLink.Application.Common.Services;

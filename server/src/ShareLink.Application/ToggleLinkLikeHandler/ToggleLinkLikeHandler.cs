@@ -5,7 +5,7 @@ namespace ShareLink.Application.ToggleLinkLikeHandler;
 
 public class ToggleLinkLikeRequest : IRequest
 {
-    public string LinkId { get; set; } = string.Empty;
+    public required string LinkId { get; init; }
 
     public bool State { get; init; }
 }

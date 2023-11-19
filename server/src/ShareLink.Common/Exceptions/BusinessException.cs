@@ -1,4 +1,4 @@
-﻿namespace ShareLink.Application.Common.Exceptions;
+﻿namespace ShareLink.Common.Exceptions;
 
 public static class ErrorCodes
 {
@@ -7,6 +7,7 @@ public static class ErrorCodes
     public const string UnableToParseUrl = "UnableToParseUrl";
     public const string LinkExists = "LinkExists";
     public const string LinkNotFound = "LinkNotFound";
+    public const string ActionFailed = "ActionFailed";
 }
 
 public class BusinessException(string code, string? message = null) : Exception(message)

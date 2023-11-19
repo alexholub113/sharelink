@@ -3,6 +3,7 @@ using Google.Apis.YouTube.v3;
 using Microsoft.Extensions.Options;
 using ShareLink.Application.Common.Configurations;
 using ShareLink.Application.Common.Exceptions;
+using ShareLink.Common.Exceptions;
 
 namespace ShareLink.Application.Common.Services;
 

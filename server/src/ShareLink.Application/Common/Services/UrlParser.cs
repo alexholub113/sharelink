@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using ShareLink.Application.Common.Exceptions;
+using ShareLink.Common.Exceptions;
 using ShareLink.Domain.Enums;
 
 namespace ShareLink.Application.Common.Services;

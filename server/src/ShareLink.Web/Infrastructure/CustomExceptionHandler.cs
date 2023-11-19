@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ShareLink.Application.Common.Exceptions;
+using ShareLink.Common.Exceptions;
 using ShareLink.Web.Errors;
 
 namespace ShareLink.Web.Infrastructure;

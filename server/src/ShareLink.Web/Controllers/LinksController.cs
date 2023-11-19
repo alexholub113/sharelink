@@ -6,8 +6,10 @@ using ShareLink.Application.Common.Dto;
 using ShareLink.Application.CreateLinkHandler;
 using ShareLink.Application.GetLinkListHandler;
 using ShareLink.Application.PreviewLinkHandler;
+using ShareLink.Application.RemoveLinkHandler;
 using ShareLink.Application.ToggleLinkLikeHandler;
 using ShareLink.Application.ToggleLinkSaveHandler;
+using ShareLink.Application.UpdateLinkHandler;
 using ShareLink.Identity;
 
 namespace ShareLink.Web.Controllers;
@@ -46,6 +48,20 @@ public class LinksController(ISender sender, UserManager<ApplicationUser> userMa
     [Authorize]
     [HttpPost("save")]
     public async Task SaveLink([FromBody] ToggleLinkSaveRequest request)
+    {
+        await sender.Send(request);
+    }
+
+    [Authorize]
+    [HttpPost("remove")]
+    public async Task RemoveLink([FromBody] RemoveLinkRequest request)
+    {
+        await sender.Send(request);
+    }
+
+    [Authorize]
+    [HttpPost("update")]
+    public async Task UpdateLink([FromBody] UpdateLinkRequest request)
     {
         await sender.Send(request);
     }

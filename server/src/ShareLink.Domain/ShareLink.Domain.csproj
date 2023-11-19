@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ShareLink.Common\ShareLink.Common.csproj" />
+    </ItemGroup>
+
 </Project>
