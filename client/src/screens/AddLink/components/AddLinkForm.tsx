@@ -11,6 +11,7 @@ import ErrorAlert from '../../../components/ErrorAlert.tsx';
 import LinkListItemSkeleton from '../../LinkList/components/LinkListItemSkeleton.tsx';
 import useSimpleReducer from '../../../hooks/useSimpleReducer.ts';
 import { useEffect } from 'react';
+import {handleError} from '../../../utils/errors.ts';
 
 type LocalState = {
     isSubmitting: boolean;
@@ -49,10 +50,11 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
 
         dispatch({ isSubmitting: true });
         try {
-            const { success, errorMessage } = await submitLink();
-            if (success) {
-                onSuccess();
-            } else if (errorMessage) {
+            await submitLink();
+            onSuccess();
+        } catch (e) {
+            const errorMessage = handleError(e);
+            if (errorMessage) {
                 dispatch({ submitErrorMessage: errorMessage });
             }
         } finally {

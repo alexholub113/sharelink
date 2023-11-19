@@ -48,7 +48,7 @@ public class CreateLinkHandler(
             Title = request.Title,
             Type = linkType,
             Youtube = linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
-            Tags = request.Tags.Select(x => new Tag { Name = x.ToLower() }).ToList(),
+            Tags = await CreateTagList(request.Tags, cancellationToken),
             UserId = identityContext.UserId!,
             UserNickname = identityContext.UserNickname!,
             CreatedAt = DateTime.UtcNow
@@ -57,6 +57,27 @@ public class CreateLinkHandler(
         await context.SaveChangesAsync(cancellationToken);
 
         return mapper.Map<LinkDto>(link);
+    }
+
+    private async Task<IReadOnlyCollection<Tag>> CreateTagList(string[] tags, CancellationToken cancellationToken)
+    {
+        var tagList = new List<Tag>();
+        var tagsInDatabase = await context.Tags
+            .Where(x => tags.Contains(x.Name))
+            .ToArrayAsync(cancellationToken);
+        foreach (var requestTag in tags)
+        {
+            var tag = tagsInDatabase.FirstOrDefault(x => x.Name == requestTag);
+            if (tag is null)
+            {
+                tag = new Tag { Name = requestTag.ToLower() };
+                context.Tags.Add(tag);
+            }
+
+            tagList.Add(tag);
+        }
+
+        return tagList;
     }
 
     private async Task<YoutubeData> GetYoutubeData(string id)

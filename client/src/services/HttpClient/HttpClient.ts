@@ -73,6 +73,6 @@ export default class HttpClient implements TransportInterface<RequestInit> {
             }
         }
 
-        throw new FetchHttpResponseError('Request error', response.status);
+        throw new FetchHttpResponseError('Internal Server Error', response.status);
     }
 }

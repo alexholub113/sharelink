@@ -3,7 +3,6 @@ import type ILinkService from '../services/LinkService/interfaces/ILinkService.t
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
-import {handleError} from '../utils/errors.ts';
 
 type Filter = {
     tags: Tag[];
@@ -121,29 +120,20 @@ class LinkStore {
         };
     };
 
-    public submitLink = async (): Promise<{ success: boolean, errorMessage?: string }> => {
+    public submitLink = async (): Promise<void> => {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
         }
 
-        try {
-            const link = await this.linkService.addLink({
-                url: this.state.preview.url!,
-                ...this.state.preview.link,
-            });
+        const link = await this.linkService.addLink({
+            url: this.state.preview.url!,
+            ...this.state.preview.link,
+        });
 
-            runInAction(() => {
-                this.state.links = [link, ...this.state.links];
-                this.state.preview = {};
-            });
-
-            return {
-                success: true,
-                errorMessage: undefined
-            };
-        } catch (e: unknown) {
-            return { success: false, errorMessage: handleError(e) };
-        }
+        runInAction(() => {
+            this.state.links = [link, ...this.state.links];
+            this.state.preview = {};
+        });
     };
 
     private init = async () => {
