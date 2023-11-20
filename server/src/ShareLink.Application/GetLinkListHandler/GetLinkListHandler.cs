@@ -21,16 +21,38 @@ public class GetLinkListRequest : IRequest<GetLinkListResponse>
     public string? Title { get; init; }
 
     public IReadOnlyCollection<string> Tags { get; init; } = Array.Empty<string>();
+
+    public bool Saved { get; init; }
+
+    public bool Liked { get; init; }
+
+    public bool Owned { get; init; }
 }
 
-public class GetLinkListHandler(IApplicationDbContext context, IIdentityContext identityContext)
+public class GetLinkListHandler(IApplicationDbContext context, IUserContext userContext)
     : IRequestHandler<GetLinkListRequest, GetLinkListResponse>
 {
     public async Task<GetLinkListResponse> Handle(GetLinkListRequest request, CancellationToken cancellationToken)
     {
-        var userId = identityContext.UserId;
+        var userId = userContext.UserId;
         var linksQuery = FilterByTags(request.Tags);
         linksQuery = FilterByTitle(linksQuery, request.Title);
+
+        if (request.Saved)
+        {
+            linksQuery = FilterSaved(linksQuery, userId);
+        }
+
+        if (request.Liked)
+        {
+            linksQuery = FilterLiked(linksQuery, userId);
+        }
+
+        if (request.Owned)
+        {
+            linksQuery = FilterOwned(linksQuery, userId);
+        }
+
         var links = await linksQuery
             .OrderByDescending(x => x.CreatedAt)
             .Select(x => new LinkDto
@@ -72,5 +94,26 @@ public class GetLinkListHandler(IApplicationDbContext context, IIdentityContext 
         return title is null
             ? linksQuery
             : linksQuery.Where(x => x.Title.Contains(title));
+    }
+
+    private static IQueryable<Link> FilterSaved(IQueryable<Link> linksQuery, string? userId)
+    {
+        return userId is null
+            ? linksQuery
+            : linksQuery.Where(x => x.SavedBy.Any(y => y.UserId == userId));
+    }
+
+    private static IQueryable<Link> FilterLiked(IQueryable<Link> linksQuery, string? userId)
+    {
+        return userId is null
+            ? linksQuery
+            : linksQuery.Where(x => x.LikedBy.Any(y => y.UserId == userId));
+    }
+
+    private static IQueryable<Link> FilterOwned(IQueryable<Link> linksQuery, string? userId)
+    {
+        return userId is null
+            ? linksQuery
+            : linksQuery.Where(x => x.UserId == userId);
     }
 }

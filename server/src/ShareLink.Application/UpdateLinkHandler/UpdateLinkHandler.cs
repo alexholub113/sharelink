@@ -14,11 +14,11 @@ public class UpdateLinkRequest : IRequest
     public required string[] Tags { get; init; }
 }
 
-public class UpdateLinkHandler(IApplicationDbContext context, IIdentityContext identityContext) : IRequestHandler<UpdateLinkRequest>
+public class UpdateLinkHandler(IApplicationDbContext context, IUserContext userContext) : IRequestHandler<UpdateLinkRequest>
 {
     public async Task Handle(UpdateLinkRequest request, CancellationToken cancellationToken)
     {
-        var userId = identityContext.UserId;
+        var userId = userContext.UserId;
         if (userId is null)
         {
             throw new UserUnauthorizedException();

@@ -24,12 +24,12 @@ public class CreateLinkHandler(
         IApplicationDbContext context,
         IUrlParser urlParser,
         IGoogleApiService googleApiService,
-        IIdentityContext identityContext)
+        IUserContext userContext)
     : IRequestHandler<CreateLinkRequest, LinkDto>
 {
     public async Task<LinkDto> Handle(CreateLinkRequest request, CancellationToken cancellationToken)
     {
-        if (identityContext.UserId is null)
+        if (userContext.UserId is null)
         {
             throw new UserUnauthorizedException();
         }
@@ -47,8 +47,8 @@ public class CreateLinkHandler(
             request.Title,
             linkType,
             linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
-            identityContext.UserId!,
-            identityContext.UserNickname!,
+            userContext.UserId!,
+            userContext.UserNickname!,
             await context.CreateTagList(request.Tags, cancellationToken));
         context.Links.Add(link);
         await context.SaveChangesAsync(cancellationToken);

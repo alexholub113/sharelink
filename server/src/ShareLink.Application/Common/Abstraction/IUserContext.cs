@@ -1,6 +1,6 @@
 namespace ShareLink.Application.Common.Abstraction;
 
-public interface IIdentityContext
+public interface IUserContext
 {
     string? UserNickname { get; }
 

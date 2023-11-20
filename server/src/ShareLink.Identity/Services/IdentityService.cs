@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using ShareLink.Application.Common.Abstraction;
 using ShareLink.Identity.Dto;
 
 namespace ShareLink.Identity.Services;
@@ -14,7 +15,8 @@ public class IdentityService(
     IUserStore<ApplicationUser> userStore,
     SignInManager<ApplicationUser> signInManager,
     IOptionsMonitor<BearerTokenOptions> bearerTokenOptions,
-    TimeProvider timeProvider) : IIdentityService
+    TimeProvider timeProvider,
+    IUserContext userContext) : IIdentityService
 {
     public async Task<Results<Ok, ValidationProblem>> SignUp(SignUpRequest request)
     {
@@ -73,15 +75,15 @@ public class IdentityService(
 
     public Results<Ok<UserInfo>, EmptyHttpResult> GetUserInfo()
     {
-        var user = signInManager.Context.User;
-        if (user is not { Identity: { IsAuthenticated: true } })
+        var userNickname = userContext.UserNickname;
+        if (string.IsNullOrEmpty(userNickname))
         {
             return TypedResults.Empty;
         }
 
         var userInfo = new UserInfo
         {
-            Nickname = user.FindFirstValue(ClaimsNames.Nickname) ?? user.FindFirstValue(ClaimTypes.Name)
+            Nickname = userNickname
         };
 
         return TypedResults.Ok(userInfo);

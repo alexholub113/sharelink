@@ -11,11 +11,11 @@ public class RemoveLinkRequest : IRequest
     public required string LinkId { get; init; }
 }
 
-public class RemoveLinkHandler(IApplicationDbContext context, IIdentityContext identityContext) : IRequestHandler<RemoveLinkRequest>
+public class RemoveLinkHandler(IApplicationDbContext context, IUserContext userContext) : IRequestHandler<RemoveLinkRequest>
 {
     public async Task Handle(RemoveLinkRequest request, CancellationToken cancellationToken)
     {
-        var userId = identityContext.UserId;
+        var userId = userContext.UserId;
         if (userId is null)
         {
             throw new UserUnauthorizedException();

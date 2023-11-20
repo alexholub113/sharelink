@@ -12,7 +12,7 @@ public interface IUserInteractionsService
     Task ToggleLinkSave(string linkId, bool state, CancellationToken cancellationToken);
 }
 
-public class UserInteractionsService(IApplicationDbContext context, IIdentityContext identityContext) : IUserInteractionsService
+public class UserInteractionsService(IApplicationDbContext context, IUserContext userContext) : IUserInteractionsService
 {
     public async Task ToggleLinkLike(string linkId, bool state, CancellationToken cancellationToken)
     {
@@ -51,7 +51,7 @@ public class UserInteractionsService(IApplicationDbContext context, IIdentityCon
 
     private async Task<UserProfile> GetUserProfile(CancellationToken cancellationToken)
     {
-        var userId = identityContext.UserId;
+        var userId = userContext.UserId;
         if (userId == null)
         {
             throw new UserUnauthorizedException();

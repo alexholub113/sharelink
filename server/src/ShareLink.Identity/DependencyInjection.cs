@@ -19,7 +19,7 @@ public static class DependencyInjection
         IWebHostEnvironment environment)
     {
         services.Configure<AuthenticationConfiguration>(configuration.GetSection(AuthenticationConfiguration.SectionName));
-        services.AddScoped<IIdentityContext, IdentityContext>();
+        services.AddScoped<IUserContext, UserContext>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddTransient<IOAuthEventHandler, OAuthEventHandler>();
 
