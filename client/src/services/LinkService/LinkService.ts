@@ -1,6 +1,12 @@
 import ILinkService, {
     AddLinkRequest,
-    GetListResponse, LikeLinkRequest, PreviewLinkRequest, PreviewLinkResponse, SaveLinkRequest
+    GetListResponse,
+    LikeLinkRequest,
+    PreviewLinkRequest,
+    PreviewLinkResponse,
+    DeleteLinkRequest,
+    SaveLinkRequest,
+    UpdateLinkRequest
 } from './interfaces/ILinkService.ts';
 import HttpClient from '../HttpClient/HttpClient.ts';
 import Link from './interfaces/Link.ts';
@@ -40,9 +46,12 @@ class LinkService implements ILinkService {
         await this.httpClient.post<SaveLinkRequest, {}>(`${this.baseUrl}/save`, { ...request });
     }
 
-    // @ts-ignore
-    remove(linkId: string): Promise<void> {
-        return Promise.resolve();
+    async delete(request: DeleteLinkRequest): Promise<void> {
+        await this.httpClient.post<DeleteLinkRequest, {}>(`${this.baseUrl}/delete`, { ...request });
+    }
+
+    async update(request: UpdateLinkRequest): Promise<void> {
+        await this.httpClient.post<UpdateLinkRequest, {}>(`${this.baseUrl}/update`, { ...request });
     }
 }
 

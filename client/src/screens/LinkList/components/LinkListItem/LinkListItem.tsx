@@ -6,10 +6,12 @@ import LinkListItemAuthor from './components/LinkListItemAuthor.tsx';
 import LinkListItemTags from './components/LinkListItemTags.tsx';
 import LinkListItemLikeBar from './components/LinkListItemLikeBar.tsx';
 import LinkListItemWrapper from './LinkListItemWrapper.tsx';
+import LinkListItemActionButtons from './components/LinkListItemActionButtons.tsx';
 
 const LinkListItem = ({ link }: { link: Link }) => {
     return (
         <LinkListItemWrapper>
+            <LinkListItemActionButtons {...link} />
             <LinkListItemTitle title={link.title} />
             <LinkListItemTags tags={link.tags} />
             <div className="mt-4">

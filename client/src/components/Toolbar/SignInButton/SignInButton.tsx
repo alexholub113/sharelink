@@ -13,7 +13,7 @@ const SignInButton = observer(() => {
                 Log in
             </button>
             { showLoginModal && (
-                <Modal onClose={closeSignInModal}>
+                <Modal onClose={closeSignInModal} priority="primary">
                     <SignInModalContent />
                 </Modal>
             ) }

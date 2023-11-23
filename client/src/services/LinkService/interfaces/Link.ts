@@ -16,6 +16,7 @@ type Link = {
     createdAt: string;
     type: LinkType;
     tags: string[];
+    editable: boolean;
 };
 
 export default Link;

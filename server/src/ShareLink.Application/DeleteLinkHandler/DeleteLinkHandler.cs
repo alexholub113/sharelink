@@ -4,16 +4,16 @@ using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Exceptions;
 using ShareLink.Common.Exceptions;
 
-namespace ShareLink.Application.RemoveLinkHandler;
+namespace ShareLink.Application.DeleteLinkHandler;
 
-public class RemoveLinkRequest : IRequest
+public class DeleteLinkRequest : IRequest
 {
     public required string LinkId { get; init; }
 }
 
-public class RemoveLinkHandler(IApplicationDbContext context, IUserContext userContext) : IRequestHandler<RemoveLinkRequest>
+public class DeleteLinkHandler(IApplicationDbContext context, IUserContext userContext) : IRequestHandler<DeleteLinkRequest>
 {
-    public async Task Handle(RemoveLinkRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteLinkRequest request, CancellationToken cancellationToken)
     {
         var userId = userContext.UserId;
         if (userId is null)

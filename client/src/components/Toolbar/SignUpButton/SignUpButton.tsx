@@ -10,7 +10,7 @@ const SignUpButton = () => {
                 Sign up
             </button>
             { isOpen && (
-                <Modal onClose={() => setIsOpen(false)}>
+                <Modal onClose={() => setIsOpen(false)} priority="primary">
                     <SignUpModalContent />
                 </Modal>
             ) }

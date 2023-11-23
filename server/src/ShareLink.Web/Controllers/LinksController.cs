@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShareLink.Application.Common.Dto;
 using ShareLink.Application.CreateLinkHandler;
+using ShareLink.Application.DeleteLinkHandler;
 using ShareLink.Application.GetLinkListHandler;
 using ShareLink.Application.PreviewLinkHandler;
-using ShareLink.Application.RemoveLinkHandler;
 using ShareLink.Application.ToggleLinkLikeHandler;
 using ShareLink.Application.ToggleLinkSaveHandler;
 using ShareLink.Application.UpdateLinkHandler;
@@ -53,8 +53,8 @@ public class LinksController(ISender sender, UserManager<ApplicationUser> userMa
     }
 
     [Authorize]
-    [HttpPost("remove")]
-    public async Task RemoveLink([FromBody] RemoveLinkRequest request)
+    [HttpPost("delete")]
+    public async Task DeleteLink([FromBody] DeleteLinkRequest request)
     {
         await sender.Send(request);
     }

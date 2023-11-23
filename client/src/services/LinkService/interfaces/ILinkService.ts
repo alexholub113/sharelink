@@ -31,6 +31,16 @@ export type SaveLinkRequest = {
     state: boolean;
 }
 
+export type DeleteLinkRequest = {
+    linkId: string;
+}
+
+export type UpdateLinkRequest = {
+    linkId: string;
+    tags: string[];
+    title: string;
+}
+
 export type PreviewLinkResponse = Pick<Link, 'type' | 'title' | 'youtube' | 'tags'>;
 
 interface ILinkService {
@@ -39,7 +49,8 @@ interface ILinkService {
     addLink(request: AddLinkRequest): Promise<Link>;
     like(request: LikeLinkRequest): Promise<void>;
     save(request: SaveLinkRequest): Promise<void>;
-    remove(linkId: string): Promise<void>;
+    delete(request: DeleteLinkRequest): Promise<void>;
+    update(request: UpdateLinkRequest): Promise<void>;
 }
 
 export default ILinkService;

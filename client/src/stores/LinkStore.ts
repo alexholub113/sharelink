@@ -1,4 +1,4 @@
-import {action, makeObservable, observable, runInAction} from 'mobx'
+import {makeAutoObservable, runInAction} from 'mobx'
 import type ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
@@ -24,17 +24,7 @@ type LinkStoreState = {
 
 class LinkStore {
     constructor(private readonly linkService: ILinkService) {
-        makeObservable(this, {
-            state: observable,
-            applyTagFilter: action,
-            removeTagFilter: action,
-            setQuery: action,
-            previewLink: action,
-            likeLink: action,
-            saveLink: action,
-            updatePreviewLink: action,
-            submitLink: action,
-        });
+        makeAutoObservable(this);
 
         this.init();
     }
@@ -144,6 +134,13 @@ class LinkStore {
             this.state.preview = {};
         });
     };
+
+    public deleteLink = async (id: string): Promise<void> => {
+        await this.linkService.delete({ linkId: id });
+        runInAction(() => {
+            this.state.links = this.state.links.filter(link => link.id !== id);
+        });
+    }
 
     private init = async () => {
         await this.getList();
