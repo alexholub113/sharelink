@@ -129,16 +129,27 @@ class LinkStore {
             ...this.state.preview.link,
         });
 
+        const tagsToAdd = link.tags.filter(tag => !this.state.tags.some(t => t.name === tag));
         runInAction(() => {
             this.state.links = [link, ...this.state.links];
             this.state.preview = {};
+            this.state.tags = [...this.state.tags, ...tagsToAdd.map(tag => ({ name: tag, count: 1 }))];
         });
     };
 
     public deleteLink = async (id: string): Promise<void> => {
+        const link = this.state.links.find(link => link.id === id);
+        if (!link) {
+            throw new Error('Link not found');
+        }
+
         await this.linkService.delete({ linkId: id });
+
+        const tagsToRemove = this.state.tags.filter(tag => link.tags.includes(tag.name) && tag.count === 1);
         runInAction(() => {
             this.state.links = this.state.links.filter(link => link.id !== id);
+            this.state.tags = this.state.tags.filter(tag => !tagsToRemove.includes(tag));
+            this.state.filter.tags = this.state.filter.tags.filter(tagName => !tagsToRemove.some(tag => tag.name === tagName));
         });
     }
 
