@@ -20,12 +20,12 @@ const TagFilter = observer(() => {
                 </div>
             ) || <div className="flex flex-row flex-wrap justify-center gap-2 items-center">
                 { appliedTags.map((tag) => (
-                    <button key={tag.name} onClick={() => removeTagFilter(tag)}>
-                        <TagBadge title={tag.name} removable />
+                    <button key={tag} onClick={() => removeTagFilter(tag)}>
+                        <TagBadge title={tag} removable />
                     </button>
                 ))}
-                { tags.filter(x => !appliedTags.some(e => e.name === x.name)).slice(0, MaxTagsShown).map((tag) => (
-                    <div key={tag.name} onClick={() => applyTagFilter(tag)} className="flex flex-row items-center justify-center py-1 text-sm mr-2 font-medium cursor-pointer secondary-text-color">
+                { tags.filter(x => !appliedTags.some(e => e === x.name)).slice(0, MaxTagsShown).map((tag) => (
+                    <div key={tag.name} onClick={() => applyTagFilter(tag.name)} className="flex flex-row items-center justify-center py-1 text-sm mr-2 font-medium cursor-pointer secondary-text-color">
                         <span className="mr-1">{formatTagTitle(tag.name)}</span>
                         <span className="text-xs font-normal text-gray-500 dark:text-gray-400 dark:bg-zinc-700 bg-gray-100 rounded-full px-1">{tag.count}</span>
                     </div>

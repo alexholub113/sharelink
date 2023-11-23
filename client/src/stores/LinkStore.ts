@@ -5,7 +5,7 @@ import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 
 type Filter = {
-    tags: Tag[];
+    tags: string[];
     query: string;
 };
 
@@ -51,12 +51,21 @@ class LinkStore {
         }
     };
 
-    public applyTagFilter = (tag: Tag) => {
-        this.state.filter.tags = [...this.state.filter.tags, tag];
+    public applyTagFilter = (tagName: string) => {
+        const tag = this.state.tags.find(tag => tag.name === tagName);
+        if (!tag) {
+            throw new Error('Tag not found');
+        }
+
+        if (this.state.filter.tags.find(t => t === tag.name)) {
+            return;
+        }
+
+        this.state.filter.tags = [...this.state.filter.tags, tag.name];
     };
 
-    public removeTagFilter = (tag: Tag) => {
-        this.state.filter.tags = this.state.filter.tags.filter(t => t.name !== tag.name);
+    public removeTagFilter = (tagName: string) => {
+        this.state.filter.tags = this.state.filter.tags.filter(t => t !== tagName);
     };
 
     public setQuery = (query: string) => {
