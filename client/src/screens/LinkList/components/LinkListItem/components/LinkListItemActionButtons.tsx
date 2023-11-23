@@ -3,7 +3,7 @@ import Modal from '../../../../../components/Modal.tsx';
 import {useLinkStore} from '../../../../../contexts/AppContext.tsx';
 import Link from '../../../../../services/LinkService/interfaces/Link.ts';
 
-const LinkListItemActionButtons = ({ id }: Pick<Link, 'id'>) => {
+const LinkListItemActionButtons = ({ id, editable }: Pick<Link, 'id' | 'editable'>) => {
     const { deleteLink } = useLinkStore();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -13,14 +13,16 @@ const LinkListItemActionButtons = ({ id }: Pick<Link, 'id'>) => {
     };
     return (
         <>
-            <div className="flex flex-row justify-end gap-6">
-                <button type="button" onClick={() => setShowConfirmModal(true)} className="flex justify-center bg-transparent text-sm items-center dark:text-zinc-400 dark:hover:text-zinc-300 transition hover:scale-105 active:scale-95" data-modal-hide="authentication-modal">
-                    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span className="sr-only">Delete link item</span>
-                </button>
-            </div>
+            { editable && (
+                <div className="flex flex-row justify-end gap-6">
+                    <button type="button" onClick={() => setShowConfirmModal(true)} className="flex justify-center bg-transparent text-sm items-center dark:text-zinc-400 dark:hover:text-zinc-300 transition hover:scale-105 active:scale-95" data-modal-hide="authentication-modal">
+                        <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span className="sr-only">Delete link item</span>
+                    </button>
+                </div>
+            )}
             { showConfirmModal && (
                 <Modal onClose={() => setShowConfirmModal(false)}>
                     <div className="flex flex-col justify-center items-center">

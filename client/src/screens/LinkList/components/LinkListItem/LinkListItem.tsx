@@ -11,7 +11,9 @@ import LinkListItemActionButtons from './components/LinkListItemActionButtons.ts
 const LinkListItem = ({ link }: { link: Link }) => {
     return (
         <LinkListItemWrapper>
-            <LinkListItemActionButtons {...link} />
+            <div className="h-3">
+                <LinkListItemActionButtons {...link} />
+            </div>
             <LinkListItemTitle title={link.title} />
             <LinkListItemTags tags={link.tags} />
             <div className="mt-4">

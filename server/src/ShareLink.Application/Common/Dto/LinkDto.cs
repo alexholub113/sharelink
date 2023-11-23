@@ -26,4 +26,6 @@ public class LinkDto
     public string User { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
+
+    public bool Editable { get; init; }
 }

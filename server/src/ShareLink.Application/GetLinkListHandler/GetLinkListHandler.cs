@@ -67,7 +67,8 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
                 User = x.UserNickname,
                 CreatedAt = x.CreatedAt,
                 Tags = x.Tags.Select(y => y.Name).ToArray(),
-                BelongsToUser = userId != null && userId == x.UserId
+                BelongsToUser = userId != null && userId == x.UserId,
+                Editable = userId != null && userId == x.UserId
             })
             .PaginatedListAsync(request.PageNumber, request.PageSize);
         var tags = await context.Tags

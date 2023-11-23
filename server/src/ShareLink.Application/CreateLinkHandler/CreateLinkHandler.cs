@@ -65,7 +65,8 @@ public class CreateLinkHandler(
             User = link.UserNickname,
             CreatedAt = link.CreatedAt,
             Tags = link.Tags.Select(y => y.Name).ToArray(),
-            BelongsToUser = true
+            BelongsToUser = true,
+            Editable = true
         };
     }
 
