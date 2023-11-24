@@ -6,7 +6,7 @@ type LinkListItemWrapperProps = {
 
 const LinkListItemWrapper = ({ children, className }: LinkListItemWrapperProps) => (
     <div className={`flex flex-col gap-3 w-full md:max-w-screen-sm p-4 border-gray-200 rounded-lg
-            dark:shadow-xl dark:shadow-zinc-900 card-border card-background ${className}`}>
+            dark:shadow-xl dark:shadow-zinc-900 card-border bg-transparent mt-6 ${className}`}>
         {children}
     </div>
 );

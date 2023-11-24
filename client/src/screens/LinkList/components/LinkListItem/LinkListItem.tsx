@@ -4,23 +4,20 @@ import LinkListItemTitle from './components/LinkListItemTitle.tsx';
 import Link from '../../../../services/LinkService/interfaces/Link.ts';
 import LinkListItemAuthor from './components/LinkListItemAuthor.tsx';
 import LinkListItemTags from './components/LinkListItemTags.tsx';
-import LinkListItemLikeBar from './components/LinkListItemLikeBar.tsx';
 import LinkListItemWrapper from './LinkListItemWrapper.tsx';
 import LinkListItemActionButtons from './components/LinkListItemActionButtons.tsx';
 
 const LinkListItem = ({ link }: { link: Link }) => {
     return (
         <LinkListItemWrapper>
-            <div className="h-3">
+            <LinkListItemAuthor {...link} />
+            <LinkListItemContent {...link} />
+            <div className="px-2">
                 <LinkListItemActionButtons {...link} />
             </div>
-            <LinkListItemTitle title={link.title} />
             <LinkListItemTags tags={link.tags} />
-            <div className="mt-4">
-                <LinkListItemAuthor {...link} />
-            </div>
-            <LinkListItemContent {...link} />
-            <LinkListItemLikeBar {...link} />
+            <LinkListItemTitle title={link.title} />
+
         </LinkListItemWrapper>
     );
 };

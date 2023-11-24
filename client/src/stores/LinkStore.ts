@@ -68,13 +68,14 @@ class LinkStore {
             throw new Error('Link not found');
         }
 
+        await this.linkService.like({ linkId: id, state: !link.isLiked });
+
         const index = this.state.links.findIndex(link => link.id === id);
         this.state.links[index] = {
             ...link,
             isLiked: !link.isLiked,
             likes: link.isLiked ? link.likes - 1 : link.likes + 1
         };
-        await this.linkService.like({ linkId: id, state: !link.isLiked });
     };
 
     public saveLink = async (id: string) => {
@@ -83,8 +84,9 @@ class LinkStore {
             throw new Error('Link not found');
         }
 
-        const index = this.state.links.findIndex(link => link.id === id);
         await this.linkService.save({ linkId: id, state: !link.isSaved });
+
+        const index = this.state.links.findIndex(link => link.id === id);
         this.state.links[index] = {
             ...link,
             isSaved: !link.isSaved

@@ -10,8 +10,8 @@ type TagBadgeProps = {
 
 const TagBadge = ({ title, removable, className, children, onClick }: TagBadgeProps) => (
     <div className={`flex flex-row items-center justify-center
-                                    text-sm font-semibold text-gray-700 cursor-pointer secondary-text-color
-                                    dark:bg-zinc-700 bg-gray-100 rounded-full px-3 py-1 ${className}`}
+                                    text-sm font-medium secondary-text-color cursor-pointer
+                                    dark:bg-zinc-700 rounded-full px-2 py-1 ${className}`}
          onClick={onClick}>
         <span>{formatTagTitle(title)}</span>
         {children}
