@@ -1,6 +1,16 @@
 import Link from './Link.ts';
 import Tag from './Tag.ts';
 
+export type GetListRequest = {
+    pageNumber?: number;
+    pageSize?: number;
+    tags?: string[];
+    title?: string;
+    saved?: boolean;
+    liked?: boolean;
+    owned?: boolean;
+};
+
 export type GetListResponse = {
     items: Link[];
     tags: Tag[];
@@ -44,7 +54,7 @@ export type UpdateLinkRequest = {
 export type PreviewLinkResponse = Pick<Link, 'type' | 'title' | 'youtube' | 'tags'>;
 
 interface ILinkService {
-    getList(): Promise<GetListResponse>;
+    getList(request: GetListRequest): Promise<GetListResponse>;
     previewLink(request: PreviewLinkRequest): Promise<PreviewLinkResponse>;
     addLink(request: AddLinkRequest): Promise<Link>;
     like(request: LikeLinkRequest): Promise<void>;

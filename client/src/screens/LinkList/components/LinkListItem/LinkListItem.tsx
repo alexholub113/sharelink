@@ -10,14 +10,13 @@ import LinkListItemActionButtons from './components/LinkListItemActionButtons.ts
 const LinkListItem = ({ link }: { link: Link }) => {
     return (
         <LinkListItemWrapper>
-            <LinkListItemAuthor {...link} />
             <LinkListItemContent {...link} />
-            <div className="px-2">
+            <div className="px-2 mb-4">
                 <LinkListItemActionButtons {...link} />
             </div>
             <LinkListItemTags tags={link.tags} />
             <LinkListItemTitle title={link.title} />
-
+            <LinkListItemAuthor {...link} />
         </LinkListItemWrapper>
     );
 };

@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react';
 import FloatingInput from '../../../../components/FloatingInput.tsx';
 import FloatingInputWrapper from '../../../../components/FloatingInputWrapper.tsx';
+import Button from '../../../../components/Button.tsx';
 
 const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -16,11 +17,10 @@ const SearchInput = () => {
                 onChange={(value) => setSearchTerm(value)}
                 placeholder="Search by name"
                 pl="pl-10" pr="pr-16"/>
-            <button onClick={() => setSearchTerm('')} className="secondary-text-color absolute right-2.5 bottom-2.5 dark:bg-transparent hover:bg-gray-100
-                                    focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer text-sm
-                                    px-2 top-3 outline-none">
+            <Button onClick={() => setSearchTerm('')} className="absolute right-2.5 bottom-2.5 dark:bg-transparent hover:bg-gray-100
+                                   px-2 top-3 outline-none">
                 Clear
-            </button>
+            </Button>
         </FloatingInputWrapper>
     );
 };

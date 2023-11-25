@@ -16,7 +16,7 @@ const DeleteLinkActionButton = ({ id }: Pick<Link, 'id'>) => {
     return (
         <>
             <div className="flex flex-row justify-end gap-6">
-                <Button type="button" onClick={() => setShowConfirmModal(true)} className="bg-transparent dark:text-zinc-400 dark:hover:text-zinc-300">
+                <Button type="button" onClick={() => setShowConfirmModal(true)} className="bg-transparent dark:hover:text-zinc-300">
                     {/*<svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>

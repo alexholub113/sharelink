@@ -6,7 +6,7 @@ import ILinkService, {
     PreviewLinkResponse,
     DeleteLinkRequest,
     SaveLinkRequest,
-    UpdateLinkRequest
+    UpdateLinkRequest, GetListRequest
 } from './interfaces/ILinkService.ts';
 import HttpClient from '../HttpClient/HttpClient.ts';
 import Link from './interfaces/Link.ts';
@@ -18,8 +18,31 @@ class LinkService implements ILinkService {
     constructor(private readonly httpClient: HttpClient) {
     }
 
-    async getList(): Promise<GetListResponse> {
-        const response = await this.httpClient.get<GetListResponse>(`${this.baseUrl}/list`);
+    async getList(request: GetListRequest): Promise<GetListResponse> {
+        const queryParams = new URLSearchParams();
+        if (request.pageNumber) {
+            queryParams.set('pageNumber', request.pageNumber.toString());
+        }
+        if (request.pageSize) {
+            queryParams.set('pageSize', request.pageSize.toString());
+        }
+        if (request.tags) {
+            queryParams.set('tags', request.tags.join(','));
+        }
+        if (request.title) {
+            queryParams.set('title', request.title);
+        }
+        if (request.saved) {
+            queryParams.set('saved', request.saved.toString());
+        }
+        if (request.liked) {
+            queryParams.set('liked', request.liked.toString());
+        }
+        if (request.owned) {
+            queryParams.set('owned', request.owned.toString());
+        }
+
+        const response = await this.httpClient.get<GetListResponse>(`${this.baseUrl}/list?${queryParams.toString()}`);
 
         return response.data;
     }

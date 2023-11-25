@@ -7,7 +7,7 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
     const { state: { preview: { url } }} = useLinkStore();
 
     return (
-        <div className="flex flex-col gap-4 mt-14 w-full md:max-w-screen-sm">
+        <div className="flex flex-col gap-4 mt-14 w-full max-w-screen-sm">
             <SetUrl />
             { url && (
                 <div className="mt-6">

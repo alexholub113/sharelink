@@ -6,7 +6,7 @@ import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 
 type Filter = {
     tags: string[];
-    query: string;
+    title: string;
 };
 
 type Preview = {
@@ -35,13 +35,18 @@ class LinkStore {
         tags: [],
         filter: {
             tags: [],
-            query: ''
+            title: ''
         },
         preview: {
         }
     };
 
-    public applyTagFilter = (tagName: string) => {
+    private pagination = {
+        pageNumber: 1,
+        pageSize: 10
+    };
+
+    public applyTagFilter = async (tagName: string) => {
         const tag = this.state.tags.find(tag => tag.name === tagName);
         if (!tag) {
             throw new Error('Tag not found');
@@ -52,14 +57,20 @@ class LinkStore {
         }
 
         this.state.filter.tags = [...this.state.filter.tags, tag.name];
+
+        await this.getList();
     };
 
-    public removeTagFilter = (tagName: string) => {
+    public removeTagFilter = async (tagName: string) => {
         this.state.filter.tags = this.state.filter.tags.filter(t => t !== tagName);
+
+        await this.getList();
     };
 
-    public setQuery = (query: string) => {
-        this.state.filter.query = query;
+    public setQuery = async (title: string) => {
+        this.state.filter.title = title;
+
+        await this.getList();
     };
 
     public likeLink = async (id: string) => {
@@ -160,7 +171,11 @@ class LinkStore {
     };
 
     private getList = async () => {
-        const response = await this.linkService.getList();
+        this.state.isListLoading = true;
+        const response = await this.linkService.getList({
+            ...this.pagination,
+            ...this.state.filter,
+        });
         runInAction(() => {
             this.state.links = response.items;
             this.state.tags = [...new Set<Tag>(response.tags)];
