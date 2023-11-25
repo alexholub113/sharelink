@@ -80,20 +80,18 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
             { link && (
                 <>
                     <LinkListItemWrapper>
+                        <LinkListItemContent {...link} />
                         <TitleInput initialTitle={link.title} onUpdate={updateTitle} />
                         { state.titleError && (<span className="text-red-500 text-sm">{state.titleError}</span>) }
                         <div className="flex flex-wrap gap-2 items-center">
                             {link.tags.map((tag) => (
-                                <div key={tag} onClick={() => removeTag(tag)}>
-                                    <TagBadge title={tag} key={tag} removable />
-                                </div>
+                                <TagBadge key={tag} onClick={() => removeTag(tag)} title={tag} removable />
                             ))}
                             { link.tags.length < MaxTags && <TagInput onAdd={addTag} />}
                         </div>
                         { state.tagsError && (<span className="text-red-500 text-sm">{state.tagsError}</span>) }
-                        <LinkListItemContent {...link} />
                     </LinkListItemWrapper>
-                    <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-lg">
+                    <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-xl font-medium dark:text-white">
                         Submit
                     </SubmitButton>
                     { state.submitErrorMessage &&

@@ -5,6 +5,7 @@ import TagBadge from '../../../../components/TagBadge.tsx';
 import {formatTagTitle} from '../../../../utils/format.ts';
 import Skeleton from '../../../../components/Skeleton.tsx';
 import {useMemo} from 'react';
+import Button from '../../../../components/Button.tsx';
 
 const MaxTagsShown = 12;
 
@@ -22,15 +23,13 @@ const TagFilter = observer(() => {
                 </div>
             ) || <div className="flex flex-row flex-wrap justify-center gap-2 items-center">
                 { appliedTags.map((tag) => (
-                    <button key={tag} onClick={() => removeTagFilter(tag)}>
-                        <TagBadge title={tag} removable />
-                    </button>
+                    <TagBadge key={tag} onClick={() => removeTagFilter(tag)} title={tag} removable />
                 ))}
                 { sortedTags.filter(x => !appliedTags.some(e => e === x.name)).slice(0, MaxTagsShown).map((tag) => (
-                    <div key={tag.name} onClick={() => applyTagFilter(tag.name)} className="flex flex-row items-center justify-center py-1 text-sm mr-2 font-medium cursor-pointer secondary-text-color">
+                    <Button key={tag.name} onClick={() => applyTagFilter(tag.name)} className="py-1 mr-2">
                         <span className="mr-1">{formatTagTitle(tag.name)}</span>
-                        <span className="text-xs font-normal text-gray-500 dark:text-gray-400 dark:bg-zinc-700 bg-gray-100 rounded-full px-1">{tag.count}</span>
-                    </div>
+                        <span className="text-xs font-normal text-gray-500 dark:text-zinc-400 dark:bg-zinc-700 rounded-full px-1">{tag.count}</span>
+                    </Button>
                 )) }
             </div>}
         </>
