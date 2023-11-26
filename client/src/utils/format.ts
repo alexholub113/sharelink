@@ -1,5 +1,5 @@
-export const formatTagTitle = (title: string) => {
-    const words = title.split(' ');
+export const formatTagName = (name: string) => {
+    const words = name.split(' ');
     return words.map((word) => {
         if (word.length < 4) {
             return word.toUpperCase();

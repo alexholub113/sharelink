@@ -85,7 +85,7 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
                         { state.titleError && (<span className="text-red-500 text-sm">{state.titleError}</span>) }
                         <div className="flex flex-wrap gap-2 items-center">
                             {link.tags.map((tag) => (
-                                <TagBadge key={tag} onClick={() => removeTag(tag)} title={tag} removable />
+                                <TagBadge key={tag} onClick={() => removeTag(tag)} name={tag} removable active />
                             ))}
                             { link.tags.length < MaxTags && <TagInput onAdd={addTag} />}
                         </div>

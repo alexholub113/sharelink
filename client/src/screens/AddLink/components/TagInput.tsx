@@ -26,7 +26,7 @@ const TagInput = ({ onAdd }: TagInputProps) => {
     return (
         <>
             {isInputVisible ? (
-                <TagBadge title="">
+                <TagBadge name="">
                     <input
                         autoFocus
                         type="text"

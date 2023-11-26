@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {RefObject, useEffect} from 'react';
 
-const useClickOutsideHandler = (callback: () => void) => {
+const useClickOutsideHandler = <T extends HTMLInputElement | HTMLButtonElement>(callback: () => void, triggerRef?: RefObject<T>) => {
     const refObject = React.useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
-        if (refObject.current && !refObject.current.contains(event.target as Node)) {
+        const clickTarget = event.target as Node;
+        const isClickedOutside = refObject && refObject.current && !refObject.current.contains(clickTarget);
+        const isClickedToTrigger = triggerRef && triggerRef.current && triggerRef.current.contains(clickTarget);
+
+        if (isClickedOutside && !isClickedToTrigger) {
             callback();
         }
     };

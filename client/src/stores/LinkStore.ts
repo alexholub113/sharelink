@@ -46,23 +46,21 @@ class LinkStore {
         pageSize: 10
     };
 
-    public applyTagFilter = async (tagName: string) => {
+    public get sortedTags() {
+        return this.state.tags.slice().sort((a, b) => b.count - a.count);
+    }
+
+    public toggleTagFilter = async (tagName: string) => {
         const tag = this.state.tags.find(tag => tag.name === tagName);
         if (!tag) {
             throw new Error('Tag not found');
         }
 
         if (this.state.filter.tags.find(t => t === tag.name)) {
-            return;
+            this.state.filter.tags = this.state.filter.tags.filter(t => t !== tagName);
+        } else {
+            this.state.filter.tags = [...this.state.filter.tags, tag.name];
         }
-
-        this.state.filter.tags = [...this.state.filter.tags, tag.name];
-
-        await this.getList();
-    };
-
-    public removeTagFilter = async (tagName: string) => {
-        this.state.filter.tags = this.state.filter.tags.filter(t => t !== tagName);
 
         await this.getList();
     };
@@ -143,10 +141,23 @@ class LinkStore {
         });
 
         const tagsToAdd = link.tags.filter(tag => !this.state.tags.some(t => t.name === tag));
+        const tags = [
+            ...this.state.tags.map(tag => {
+                if (link.tags.includes(tag.name)) {
+                    return {
+                        ...tag,
+                        count: tag.count + 1
+                    };
+                }
+
+                return tag;
+            }),
+            ...tagsToAdd.map(tag => ({ name: tag, count: 1 }))
+        ];
         runInAction(() => {
             this.state.links = [link, ...this.state.links];
             this.state.preview = {};
-            this.state.tags = [...this.state.tags, ...tagsToAdd.map(tag => ({ name: tag, count: 1 }))];
+            this.state.tags = tags;
         });
     };
 

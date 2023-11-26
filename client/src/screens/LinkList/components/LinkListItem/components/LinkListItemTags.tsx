@@ -4,12 +4,12 @@ import LinkStore from '../../../../../stores/LinkStore.ts';
 import {observer} from 'mobx-react-lite';
 
 const LinkListItemTags = observer(({ tags }: { tags: string[]}) => {
-    const { applyTagFilter } = useStore<LinkStore>(LinkStore);
+    const { toggleTagFilter } = useStore<LinkStore>(LinkStore);
 
     return (
         <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
-                <TagBadge title={tag} key={tag} onClick={() => applyTagFilter(tag)} />
+                <TagBadge name={tag} key={tag} onClick={() => toggleTagFilter(tag)} active />
             ))}
         </div>
     );
