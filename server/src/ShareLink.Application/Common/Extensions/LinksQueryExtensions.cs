@@ -12,7 +12,8 @@ public static class LinksQueryExtensions
         }
 
         var tagsArray = tags.Split(',');
-        return linksQuery.Where(x => x.Tags.Any(y => tagsArray.Contains(y.Name)));
+        var tagsCount = tagsArray.Length;
+        return linksQuery.Where(link => link.Tags.Count(tag => tagsArray.Contains(tag.Name)) == tagsCount);
     }
 
     public static IQueryable<Link> FilterByTitle(this IQueryable<Link> linksQuery, string? title)
