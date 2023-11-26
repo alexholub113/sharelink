@@ -3,7 +3,7 @@ import LinkListItemWrapper from '../../LinkList/components/LinkListItem/LinkList
 import LinkListItemContent from '../../LinkList/components/LinkListItem/components/LinkListItemContent.tsx';
 import TagBadge from '../../../components/TagBadge.tsx';
 import {observer} from 'mobx-react-lite';
-import TagInput from './TagInput.tsx';
+import AddTagButton from './AddTagButton.tsx';
 import {MaxTags} from '../../../constants/preferences.ts';
 import TitleInput from './TitleInput.tsx';
 import SubmitButton from '../../../components/SubmitButton.tsx';
@@ -87,7 +87,7 @@ const AddLinkForm = observer(({ onSuccess }: { onSuccess: () => void}) => {
                             {link.tags.map((tag) => (
                                 <TagBadge key={tag} onClick={() => removeTag(tag)} name={tag} removable active />
                             ))}
-                            { link.tags.length < MaxTags && <TagInput onAdd={addTag} />}
+                            { link.tags.length < MaxTags && <AddTagButton onAdd={addTag} />}
                         </div>
                         { state.tagsError && (<span className="text-red-500 text-sm">{state.tagsError}</span>) }
                     </LinkListItemWrapper>

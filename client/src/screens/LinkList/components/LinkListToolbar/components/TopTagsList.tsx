@@ -6,7 +6,7 @@ import Skeleton from '../../../../../components/Skeleton.tsx';
 
 const MaxTagsShown = 12;
 
-const TagFilter = observer(() => {
+const TopTagsList = observer(() => {
     const { sortedTags, state: { tags, filter: { tags: appliedTags }, isListLoading }, toggleTagFilter } = useStore<LinkStore>(LinkStore);
 
     const showSkeletons = isListLoading && tags.length === 0;
@@ -29,4 +29,4 @@ const TagFilter = observer(() => {
     );
 });
 
-export default TagFilter;
+export default TopTagsList;
