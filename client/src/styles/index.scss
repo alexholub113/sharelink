@@ -20,10 +20,6 @@
   @apply dark:bg-zinc-800;
 }
 
-.card-border {
-  @apply border border-solid dark:border-zinc-900;
-}
-
 .input-border-blue {
   @apply dark:focus:border-cyan-500 focus:outline-none;
 }
@@ -34,4 +30,12 @@
 
 .secondary-text-color {
     @apply dark:text-zinc-300;
+}
+
+.dark-border {
+  @apply border border-zinc-800;
+}
+
+.dark-background {
+  @apply dark:bg-zinc-900;
 }

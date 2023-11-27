@@ -56,8 +56,8 @@ const SetUrl = observer(() => {
         <div className="flex flex-col gap-4">
             <div className="relative">
                 <input type="text" value={linkUrl} onChange={(event) => setLinkUrl(event.target.value)} className="
-                        block w-full p-4 pr-12 pl-10 rounded-full input-border-blue card-border card-background
-                         dark:placeholder-zinc-400 text-sm dark:border-zinc-900"
+                        block w-full p-4 pr-12 pl-10 rounded-full input-border-blue card-background
+                         dark:placeholder-zinc-400 text-sm dark-border"
                        placeholder="https://www.youtube.com/watch?v=some-video-id" />
                 <button disabled={ isLoading} onClick={handleSubmit} className="absolute right-2.5 p-2 transition bottom-2.5 text-cyan-600 rounded-full cursor-pointer dark:text-cyan-500 active:scale-95 dark:hover:bg-cyan-700">
                     <svg className="w-5 h-5 rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
