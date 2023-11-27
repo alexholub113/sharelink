@@ -17,7 +17,7 @@ const LinkListScreen = observer(() => {
                 { links.map((link) => (
                     <LinkListItem key={link.id} link={link} />
                 )) }
-                { isListLoading && (
+                { !links.length && isListLoading && (
                     <>
                         <LinkListItemSkeleton />
                         <LinkListItemSkeleton />

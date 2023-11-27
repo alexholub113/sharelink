@@ -22,7 +22,7 @@ const Button = ({ isLoading, isDisabled, type, className, onClick, children, dis
 
     return (
         <button disabled={isLoading === true || isDisabled === true} type={type ?? 'button'} onClick={handleOnClick} className={`
-        flex items-center justify-center text-center transition text-sm cursor-pointer
+        flex items-center justify-center text-center transition text-sm cursor-pointer outline-none
         ${textColor === 'secondary' ? 'secondary-text-color' : ''}
         ${disableAnimation ? '' : ' hover:scale-105 active:scale-95'}
         ${className} ${isLoading ? ' opacity-70 active:scale-100' : ''}`}>

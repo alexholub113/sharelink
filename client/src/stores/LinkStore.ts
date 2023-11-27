@@ -7,6 +7,9 @@ import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 type Filter = {
     tags: string[];
     title: string;
+    liked: boolean;
+    saved: boolean;
+    owned: boolean;
 };
 
 type Preview = {
@@ -35,7 +38,10 @@ class LinkStore {
         tags: [],
         filter: {
             tags: [],
-            title: ''
+            title: '',
+            liked: false,
+            saved: false,
+            owned: false,
         },
         preview: {
         }
@@ -64,6 +70,21 @@ class LinkStore {
 
         await this.getList();
     };
+
+    public toggleLikedFilter = async () => {
+        this.state.filter.liked = !this.state.filter.liked;
+        await this.getList();
+    }
+
+    public toggleSavedFilter = async () => {
+        this.state.filter.saved = !this.state.filter.saved;
+        await this.getList();
+    }
+
+    public toggleOwnedFilter = async () => {
+        this.state.filter.owned = !this.state.filter.owned;
+        await this.getList();
+    }
 
     public setFilterTitle = (title: string) => {
         this.state.filter.title = title;
@@ -173,7 +194,7 @@ class LinkStore {
             this.state.tags = this.state.tags.filter(tag => !tagsToRemove.includes(tag));
             this.state.filter.tags = this.state.filter.tags.filter(tagName => !tagsToRemove.some(tag => tag.name === tagName));
         });
-    }
+    };
 
     public getList = async () => {
         this.state.isListLoading = true;
@@ -186,7 +207,7 @@ class LinkStore {
             this.state.tags = [...new Set<Tag>(response.tags)];
             this.state.isListLoading = false;
         });
-    }
+    };
 }
 
 export default LinkStore;
