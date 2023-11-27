@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'client/**'
+#    paths:
+#      - 'client/**'
 
 jobs:
   build_and_deploy_job:
@@ -27,10 +27,12 @@ jobs:
       # Install dependencies
       - name: Install Dependencies
         run: npm install
+        working-directory: ./client
 
       # Build the project manually
       - name: Build Project
         run: npm run build
+        working-directory: ./client
 
       # Deploy the project
       - name: Deploy to Azure Static Web Apps
