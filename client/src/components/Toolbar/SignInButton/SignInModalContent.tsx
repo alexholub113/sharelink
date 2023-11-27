@@ -33,7 +33,7 @@ const SignInModalContent = () => {
                                 Log in to your account
                             </SubmitButton>
                         </form>
-                        <div className="flex justify-between text-gray-500 dark:text-gray-300">
+                        <div className="flex justify-between secondary-text-color">
                             <span>Not registered?</span>
                             <button onClick={() => setShowSignUp(true)} className="text-cyan-700 hover:underline dark:text-cyan-500">Create account</button>
                         </div>

@@ -24,9 +24,9 @@ type IdentityProviderButtonProps = {
 };
 
 const IdentityProviderButton = ({ onClick, text, icon }: IdentityProviderButtonProps) => (
-    <button type="button" onClick={onClick} className="py-2.5 px-5 text-sm font-medium focus:outline-none rounded-full
-                        border border-zinc-200 focus:z-10 dark:bg-zinc-800/50 dark:text-zinc-200 dark:border-zinc-600
-                        dark:hover:text-white dark:hover:bg-zinc-800/20 active:scale-95 transition">
+    <button type="button" onClick={onClick} className="py-2.5 px-5 text-sm secondary-text-color font-medium focus:outline-none rounded-full
+                        border border-zinc-200 focus:z-10 dark:bg-zinc-800/50 dark:border-zinc-600
+                        dark:hover:text-white dark:hover:bg-zinc-800 active:scale-95 transition">
         <div className="flex justify-center items-center">
             {icons[icon]}
             <span>{text}</span>
