@@ -73,17 +73,35 @@ class LinkStore {
 
     public toggleLikedFilter = async () => {
         this.state.filter.liked = !this.state.filter.liked;
-        await this.getList();
+        try {
+            await this.getList();
+        } catch (e) {
+            runInAction(() => {
+                this.state.filter.liked = !this.state.filter.liked;
+            })
+        }
     }
 
     public toggleSavedFilter = async () => {
         this.state.filter.saved = !this.state.filter.saved;
-        await this.getList();
+        try {
+            await this.getList();
+        } catch (e) {
+            runInAction(() => {
+                this.state.filter.saved = !this.state.filter.saved;
+            })
+        }
     }
 
     public toggleOwnedFilter = async () => {
         this.state.filter.owned = !this.state.filter.owned;
-        await this.getList();
+        try {
+            await this.getList();
+        } catch (e) {
+            runInAction(() => {
+                this.state.filter.owned = !this.state.filter.owned;
+            })
+        }
     }
 
     public setFilterTitle = (title: string) => {
@@ -197,7 +215,9 @@ class LinkStore {
     };
 
     public getList = async () => {
-        this.state.isListLoading = true;
+        runInAction(() => {
+            this.state.isListLoading = true;
+        });
         const response = await this.linkService.getList({
             ...this.pagination,
             ...this.state.filter,

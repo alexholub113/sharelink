@@ -35,6 +35,10 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
     public async Task<GetLinkListResponse> Handle(GetLinkListRequest request, CancellationToken cancellationToken)
     {
         var userId = userContext.UserId;
+        if (string.IsNullOrEmpty(userId) && (request.Saved || request.Liked || request.Owned))
+        {
+            throw new UnauthorizedAccessException("You must be logged in to access this resource");
+        }
 
         var links = await context.Links
             .AsNoTracking()
