@@ -3,7 +3,7 @@ import useClickOutsideHandler from '../hooks/useClickOutsideHandler.ts';
 import {observer} from 'mobx-react-lite';
 import {useLinkStore} from '../contexts/AppContext.tsx';
 import TagBadge from '../components/TagBadge.tsx';
-import SearchIcon from '../components/Icons/SearchIcon.tsx';
+import SearchIcon from '../components/SearchIcon.tsx';
 
 type TagSearchProps = {
     showSuggestionsInitial?: boolean;
