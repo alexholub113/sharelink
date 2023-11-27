@@ -25,9 +25,10 @@ public class LinkConfiguration : IEntityTypeConfiguration<Link>
                 v => v.ToString(),
                 v => (LinkType)Enum.Parse(typeof(LinkType), v));
 
-        builder.Property(x => x.Youtube)
-            .HasColumnType("jsonb")
-            .IsRequired(false);
+        builder.OwnsOne<YoutubeData>(x => x.Youtube, d =>
+            {
+                d.ToJson();
+            });
 
         builder.HasMany(x => x.Tags)
             .WithMany(x => x.Links);

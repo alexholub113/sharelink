@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ShareLink.Dal;
-using ShareLink.Domain.Models;
 
 #nullable disable
 
@@ -18,7 +17,7 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -92,9 +91,6 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.Property<string>("UserNickname")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<YoutubeData>("Youtube")
-                        .HasColumnType("jsonb");
 
                     b.HasKey("Id");
 
@@ -172,6 +168,30 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         .HasForeignKey("SavedLinksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ShareLink.Domain.Models.Link", b =>
+                {
+                    b.OwnsOne("ShareLink.Domain.Models.YoutubeData", "Youtube", b1 =>
+                        {
+                            b1.Property<string>("LinkId")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("VideoId")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("LinkId");
+
+                            b1.ToTable("Links");
+
+                            b1.ToJson("Youtube");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LinkId");
+                        });
+
+                    b.Navigation("Youtube");
                 });
 #pragma warning restore 612, 618
         }
