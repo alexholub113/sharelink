@@ -26,7 +26,7 @@ class LinkStore {
     constructor(private readonly linkService: ILinkService) {
         makeAutoObservable(this);
 
-        this.init();
+        this.getList();
     }
 
     state: LinkStoreState = {
@@ -65,10 +65,8 @@ class LinkStore {
         await this.getList();
     };
 
-    public setQuery = async (title: string) => {
+    public setFilterTitle = (title: string) => {
         this.state.filter.title = title;
-
-        await this.getList();
     };
 
     public likeLink = async (id: string) => {
@@ -177,11 +175,7 @@ class LinkStore {
         });
     }
 
-    private init = async () => {
-        await this.getList();
-    };
-
-    private getList = async () => {
+    public getList = async () => {
         this.state.isListLoading = true;
         const response = await this.linkService.getList({
             ...this.pagination,

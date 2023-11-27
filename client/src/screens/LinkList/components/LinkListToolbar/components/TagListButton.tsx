@@ -1,4 +1,4 @@
-import {createRef, useRef, useState} from 'react';
+import {createRef, useState} from 'react';
 import useClickOutsideHandler from '../../../../../hooks/useClickOutsideHandler.ts';
 import {observer} from 'mobx-react-lite';
 import {useLinkStore} from '../../../../../contexts/AppContext.tsx';
@@ -22,7 +22,7 @@ const TagListButton = observer(() => {
                 <div ref={refObject} className="absolute bg-zinc-900 top-14 z-10 rounded-lg border border-zinc-800 w-96">
                     <div className="flex flex-wrap gap-2 p-4 justify-start">
                         {sortedTags.map((tag) => (
-                            <TagBadge title={tag.name} key={tag.name} onClick={() => toggleTagFilter(tag.name)} />
+                            <TagBadge name={tag.name} key={tag.name} onClick={() => toggleTagFilter(tag.name)} />
                         ))}
                     </div>
                 </div>

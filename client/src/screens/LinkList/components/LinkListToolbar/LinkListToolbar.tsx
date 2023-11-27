@@ -1,5 +1,5 @@
 import TopTagsList from './components/TopTagsList.tsx';
-import SearchInput from './components/SearchInput.tsx';
+import SearchByTitleInput from './components/SearchByTitleInput.tsx';
 import TagSearch from './components/TagSearch.tsx';
 
 const LinkListToolbar = () => {
@@ -9,7 +9,7 @@ const LinkListToolbar = () => {
             <div className="flex flex-row w-full items-center justify-center">
                 <TagSearch />
             </div>
-            <SearchInput />
+            <SearchByTitleInput />
         </div>
     );
 };

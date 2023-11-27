@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ShareLink.Domain.Models;
 
 namespace ShareLink.Application.Common.Extensions;
@@ -23,7 +24,7 @@ public static class LinksQueryExtensions
             return linksQuery;
         }
 
-        return linksQuery.Where(x => x.Title.Contains(title));
+        return linksQuery.Where(x => EF.Functions.ILike(EF.Functions.Collate(x.Title, "tr-TR-x-icu"), $"%{title}%"));
     }
 
     public static IQueryable<Link> FilterSaved(this IQueryable<Link> linksQuery, bool? considerFilter, string? userId)

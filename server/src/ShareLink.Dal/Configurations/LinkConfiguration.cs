@@ -14,7 +14,7 @@ public class LinkConfiguration : IEntityTypeConfiguration<Link>
         builder.HasIndex(x => x.Type);
         builder.HasIndex(x => x.CreatedAt);
 
-        builder.Property(x => x.Title).IsRequired();
+        builder.Property(x => x.Title).UseCollation("secondary_strength").IsRequired();
         builder.Property(x => x.Type).IsRequired();
         builder.Property(x => x.UserId).IsRequired();
         builder.Property(x => x.UserNickname).IsRequired();
