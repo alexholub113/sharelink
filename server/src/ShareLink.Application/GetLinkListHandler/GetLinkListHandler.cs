@@ -3,31 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Dto;
 using ShareLink.Application.Common.Extensions;
-using ShareLink.Domain.Models;
 
 namespace ShareLink.Application.GetLinkListHandler;
-
-public class GetLinkListResponse(PaginatedList<LinkDto> paginatedList, TagDto[] tags)
-    : PaginatedList<LinkDto>(paginatedList.Items, paginatedList.TotalCount, paginatedList.PageNumber, paginatedList.TotalPages)
-{
-    public TagDto[] Tags { get; } = tags;
-}
-
-public class GetLinkListRequest : IRequest<GetLinkListResponse>
-{
-    public int PageNumber { get; init; } = 1;
-    public int PageSize { get; init; } = 10;
-
-    public string? Title { get; init; }
-
-    public string? Tags { get; init; }
-
-    public bool Saved { get; init; }
-
-    public bool Liked { get; init; }
-
-    public bool Owned { get; init; }
-}
 
 public class GetLinkListHandler(IApplicationDbContext context, IUserContext userContext)
     : IRequestHandler<GetLinkListRequest, GetLinkListResponse>

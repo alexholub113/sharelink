@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Dto;
@@ -11,14 +12,7 @@ using ShareLink.Domain.Models;
 
 namespace ShareLink.Application.CreateLinkHandler;
 
-public class CreateLinkRequest : IRequest<LinkDto>
-{
-    public required string Title { get; init; }
 
-    public required string Url { get; init; }
-
-    public required string[] Tags { get; init; }
-}
 
 public class CreateLinkHandler(
         IApplicationDbContext context,

@@ -7,6 +7,7 @@ using ShareLink.Migrations;
 using ShareLink.Identity;
 using ShareLink.Identity.Extensions;
 using ShareLink.Migrations.Initializers;
+using ShareLink.Web.Extensions;
 using ShareLink.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,8 @@ builder.Services.AddControllers()
     {
         var enumConverter = new JsonStringEnumConverter();
         opts.JsonSerializerOptions.Converters.Add(enumConverter);
-    });
+    })
+    .ConfigureInvalidModelStateResponseFactory();
 
 builder
     .Services

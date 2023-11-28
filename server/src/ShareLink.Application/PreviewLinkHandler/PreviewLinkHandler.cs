@@ -1,27 +1,10 @@
 ﻿using MediatR;
 using ShareLink.Application.Common.Dto;
-using ShareLink.Application.Common.Exceptions;
 using ShareLink.Application.Common.Services;
 using ShareLink.Domain;
 using ShareLink.Domain.Enums;
 
 namespace ShareLink.Application.PreviewLinkHandler;
-
-public class PreviewLinkRequest : IRequest<PreviewLinkResponse>
-{
-    public string Url { get; set; } = null!;
-}
-
-public class PreviewLinkResponse
-{
-    public string Title { get; set; } = null!;
-
-    public LinkType Type { get; set; }
-
-    public YoutubeDataDto Youtube { get; set; } = null!;
-
-    public string[] Tags { get; set; } = Array.Empty<string>();
-}
 
 public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleApiService)
     : IRequestHandler<PreviewLinkRequest, PreviewLinkResponse>

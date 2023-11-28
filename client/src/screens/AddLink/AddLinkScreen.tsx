@@ -57,8 +57,8 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
     return (
         <div className="flex flex-col justify-center  gap-4 mt-14 w-full max-w-screen-sm">
             <UrlInput onSubmit={handleSubmit} isLoading={isLoading} initialUrl={url} />
-            { previewErrorMessage && <ErrorAlert message={previewErrorMessage} onClose={() => setPreviewErrorMessage(undefined)} /> }
-            { (!url || previewErrorMessage) && <AddLinkInfoAlert /> }
+            { !isLoading && previewErrorMessage && <ErrorAlert message={previewErrorMessage} onClose={() => setPreviewErrorMessage(undefined)} /> }
+            { !isLoading && (!url || previewErrorMessage) && <AddLinkInfoAlert /> }
             { isLoading && <LinkListItemSkeleton /> }
             { link && (
                 <div className="mt-6">

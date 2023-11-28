@@ -7,13 +7,6 @@ using ShareLink.Common.Exceptions;
 
 namespace ShareLink.Application.UpdateLinkHandler;
 
-public class UpdateLinkRequest : IRequest
-{
-    public required string LinkId { get; init; }
-    public required string Title { get; init; }
-    public required string[] Tags { get; init; }
-}
-
 public class UpdateLinkHandler(IApplicationDbContext context, IUserContext userContext) : IRequestHandler<UpdateLinkRequest>
 {
     public async Task Handle(UpdateLinkRequest request, CancellationToken cancellationToken)
