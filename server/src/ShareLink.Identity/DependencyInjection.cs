@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using ShareLink.Application.Common.Abstraction;
 using ShareLink.Identity.Services;
 
@@ -22,6 +21,7 @@ public static class DependencyInjection
         services.AddScoped<IUserContext, UserContext>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddTransient<IOAuthEventHandler, OAuthEventHandler>();
+        services.AddTransient<IdentityInitializer>();
 
         var identityConnectionString = configuration.GetConnectionString("Identity");
         var identityDbOptionsAction = new Action<DbContextOptionsBuilder>(
@@ -83,9 +83,10 @@ public static class DependencyInjection
                 };
             });
         services.AddAuthorizationBuilder();
-        services.AddIdentityCore<ApplicationUser>()
+        services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<AppIdentityDbContext>()
-            .AddApiEndpoints();
+            .AddApiEndpoints()
+            .AddDefaultTokenProviders();
 
         return services;
     }

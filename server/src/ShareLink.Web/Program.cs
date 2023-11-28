@@ -5,6 +5,7 @@ using ShareLink.Application;
 using ShareLink.Dal;
 using ShareLink.Migrations;
 using ShareLink.Identity;
+using ShareLink.Identity.Extensions;
 using ShareLink.Migrations.Initializers;
 using ShareLink.Web.Infrastructure;
 
@@ -41,7 +42,8 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 
 var app = builder.Build();
 
-await app.InitialiseDatabases();
+await app.RunMigrations();
+await app.InitializeIdentity();
 
 app.UseCors(x => x
     .WithOrigins(builder.Configuration["Security:AllowedOrigins"]?.Trim().Split(",") ?? Array.Empty<string>())

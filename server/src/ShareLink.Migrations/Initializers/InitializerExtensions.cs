@@ -5,7 +5,7 @@ namespace ShareLink.Migrations.Initializers;
 
 public static class InitializerExtensions
 {
-    public static async Task InitialiseDatabases(this WebApplication app)
+    public static async Task RunMigrations(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
 

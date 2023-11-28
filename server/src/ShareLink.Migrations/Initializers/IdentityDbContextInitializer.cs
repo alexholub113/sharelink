@@ -4,9 +4,7 @@ using ShareLink.Identity;
 
 namespace ShareLink.Migrations.Initializers;
 
-public class IdentityDbContextInitializer(
-    ILogger<AppIdentityDbContext> logger,
-    AppIdentityDbContext context)
+public class IdentityDbContextInitializer(ILogger<AppIdentityDbContext> logger, AppIdentityDbContext context)
 {
     public async Task InitialiseAsync()
     {
