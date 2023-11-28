@@ -8,7 +8,9 @@ public static class WebApplicationExtensions
 {
     public static async Task InitializeIdentity(this WebApplication webApplication)
     {
-        var identityInitializer = webApplication.Services.GetRequiredService<IdentityInitializer>();
+        using var scope = webApplication.Services.CreateScope();
+        var services = scope.ServiceProvider;
+        var identityInitializer = services.GetRequiredService<IdentityInitializer>();
         await identityInitializer.InitialiseAsync();
     }
 }

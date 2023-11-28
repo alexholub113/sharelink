@@ -83,10 +83,10 @@ public static class DependencyInjection
                 };
             });
         services.AddAuthorizationBuilder();
-        services.AddIdentity<ApplicationUser, IdentityRole>()
+        services.AddIdentityCore<ApplicationUser>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<AppIdentityDbContext>()
-            .AddApiEndpoints()
-            .AddDefaultTokenProviders();
+            .AddApiEndpoints();
 
         return services;
     }
