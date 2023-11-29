@@ -15,7 +15,7 @@ public class LinkTagCollectionAttribute : ValidationAttribute
                     $"Tags count must be at least {ValidationRules.Tag.MinTagsCount} and at most {ValidationRules.Tag.MaxTagsCount}");
             }
 
-            if (tags.Any(tag => tag.Length is < ValidationRules.Tag.MinTagLength or > ValidationRules.Tag.MaxTagLength))
+            if (tags.Any(tag => tag.Trim().Length is < ValidationRules.Tag.MinTagLength or > ValidationRules.Tag.MaxTagLength))
             {
                 return new ValidationResult(
                     $"Tag length must be at least {ValidationRules.Tag.MinTagLength} and at most {ValidationRules.Tag.MaxTagLength} characters long");
