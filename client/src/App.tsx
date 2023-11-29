@@ -6,6 +6,7 @@ import AddLinkButton from './components/AddLinkButton.tsx';
 import AddLinkScreen from './screens/AddLink/AddLinkScreen.tsx';
 import {useUserStore} from './contexts/AppContext.tsx';
 import {observer} from 'mobx-react-lite';
+import Footer from './components/Footer.tsx';
 
 const App = observer(() => {
     const [section, setSection] = useState<'list' | 'addLink'>('list');
@@ -27,6 +28,7 @@ const App = observer(() => {
                     { section === 'addLink' && <AddLinkScreen onSuccess={() => setSection('list')} /> }
                 </>
             </Layout>
+            <Footer />
         </div>
     )
 });
