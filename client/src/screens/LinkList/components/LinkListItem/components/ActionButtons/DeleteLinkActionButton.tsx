@@ -31,7 +31,7 @@ const DeleteLinkActionButton = ({ id }: Pick<Link, 'id'>) => {
                         <p className="text-sm text-black dark:text-white mb-4">Are you sure you want to delete this link ?</p>
                         <div className="flex flex-row gap-4">
                             <Button type="button" onClick={() => setShowConfirmModal(false)} className="dark:bg-zinc-700 text-black dark:text-white px-4 py-2 rounded-lg text-sm font-semibold">Cancel</Button>
-                            <Button type="button" isLoading={loading} onClick={execute} className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">Delete</Button>
+                            <Button type="button" loading={loading} onClick={execute} className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">Delete</Button>
                         </div>
                     </div>
                 </Modal>

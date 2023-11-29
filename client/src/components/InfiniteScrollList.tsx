@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { useRef, useCallback } from 'react';
+import {useRef, useCallback, PropsWithChildren} from 'react';
 
 type InfiniteScrollListProps = {
     isLoading: boolean;
@@ -8,9 +8,9 @@ type InfiniteScrollListProps = {
     threshold?: number;
     hasNextPage: boolean;
     fetchNextPage: () => void;
-};
+} & PropsWithChildren;
 
-const InfiniteScrollList: React.FC<React.PropsWithChildren<InfiniteScrollListProps>> = (props) => {
+const InfiniteScrollList = (props: InfiniteScrollListProps) => {
     const {
         children,
         isLoading,
@@ -55,7 +55,7 @@ const InfiniteScrollList: React.FC<React.PropsWithChildren<InfiniteScrollListPro
                 });
             }) }
 
-            { renderLoader(isLoading || isReloading) }
+            { hasNextPage && renderLoader(isLoading || isReloading) }
         </>
     );
 };

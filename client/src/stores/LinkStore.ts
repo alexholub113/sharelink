@@ -1,8 +1,9 @@
 import {makeAutoObservable, runInAction} from 'mobx'
-import type ILinkService from '../services/LinkService/interfaces/ILinkService.ts';
+import ILinkService, {GetListResponse} from '../services/LinkService/interfaces/ILinkService.ts';
 import Link from '../services/LinkService/interfaces/Link.ts';
 import Tag from '../services/LinkService/interfaces/Tag.ts';
 import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
+import {GetListRequest} from '../services/LinkService/interfaces/ILinkService.ts';
 
 type Filter = {
     tags: string[];
@@ -23,6 +24,7 @@ type LinkStoreState = {
     tags: Tag[];
     filter: Filter;
     preview: Preview;
+    paginationState: Pick<GetListResponse, 'totalPages' | 'totalCount' | 'hasNextPage' | 'hasPreviousPage'>;
 };
 
 class LinkStore {
@@ -44,16 +46,70 @@ class LinkStore {
             owned: false,
         },
         preview: {
+        },
+        paginationState: {
+            totalPages: 0,
+            totalCount: 0,
+            hasPreviousPage: false,
+            hasNextPage: false,
         }
     };
 
-    private pagination = {
+    private paginationParams: Pick<GetListRequest, 'pageSize' | 'pageNumber'> = {
         pageNumber: 1,
         pageSize: 10
     };
 
     public get sortedTags() {
         return this.state.tags.slice().sort((a, b) => b.count - a.count);
+    }
+
+    public getList = async () => {
+        runInAction(() => {
+            this.state.isListLoading = true;
+        });
+        this.paginationParams.pageNumber = 1;
+        const response = await this.linkService.getList({
+            ...this.paginationParams,
+            ...this.state.filter,
+        });
+        this.paginationParams.pageNumber = this.paginationParams.pageNumber + 1;
+        runInAction(() => {
+            this.state = {
+                ...this.state,
+                links: response.items,
+                tags: [...new Set<Tag>(response.tags)],
+                isListLoading: false,
+                paginationState: {
+                    totalPages: response.totalPages,
+                    totalCount: response.totalCount,
+                    hasPreviousPage: response.hasPreviousPage,
+                    hasNextPage: response.hasNextPage,
+                }
+            };
+        });
+    };
+
+    public loadMore = async () => {
+        console.log('loadMore')
+        if (this.state.paginationState.hasNextPage) {
+            console.log('loadMore2')
+            const response = await this.linkService.getList({
+                ...this.paginationParams,
+                ...this.state.filter,
+            });
+            this.paginationParams.pageNumber = this.paginationParams.pageNumber + 1;
+            runInAction(() => {
+                this.state.links = [...this.state.links, ...response.items];
+                this.state.paginationState = {
+                    totalPages: response.totalPages,
+                    totalCount: response.totalCount,
+                    hasPreviousPage: response.hasPreviousPage,
+                    hasNextPage: response.hasNextPage,
+                }
+
+            });
+        }
     }
 
     public toggleTagFilter = async (tagName: string) => {
@@ -211,21 +267,6 @@ class LinkStore {
             this.state.links = this.state.links.filter(link => link.id !== id);
             this.state.tags = this.state.tags.filter(tag => !tagsToRemove.includes(tag));
             this.state.filter.tags = this.state.filter.tags.filter(tagName => !tagsToRemove.some(tag => tag.name === tagName));
-        });
-    };
-
-    public getList = async () => {
-        runInAction(() => {
-            this.state.isListLoading = true;
-        });
-        const response = await this.linkService.getList({
-            ...this.pagination,
-            ...this.state.filter,
-        });
-        runInAction(() => {
-            this.state.links = response.items;
-            this.state.tags = [...new Set<Tag>(response.tags)];
-            this.state.isListLoading = false;
         });
     };
 }

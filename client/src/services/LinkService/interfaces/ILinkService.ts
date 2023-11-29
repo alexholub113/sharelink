@@ -2,8 +2,8 @@ import Link from './Link.ts';
 import Tag from './Tag.ts';
 
 export type GetListRequest = {
-    pageNumber?: number;
-    pageSize?: number;
+    pageNumber: number;
+    pageSize: number;
     tags?: string[];
     title?: string;
     saved?: boolean;
