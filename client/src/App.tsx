@@ -17,17 +17,19 @@ const App = observer(() => {
     }, [init]);
 
     return (
-        <div className="bg-zinc-900 min-h-screen">
-            <Toolbar />
-            <Layout>
-                <>
-                    <div className="mb-8">
-                        <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
-                    </div>
-                    { section === 'list' && <LinkListScreen /> }
-                    { section === 'addLink' && <AddLinkScreen onSuccess={() => setSection('list')} /> }
-                </>
-            </Layout>
+        <div className="bg-zinc-900 flex flex-col justify-start min-h-screen">
+            <div className="flex-grow">
+                <Toolbar />
+                <Layout>
+                    <>
+                        <div className="mb-8">
+                            <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
+                        </div>
+                        { section === 'list' && <LinkListScreen /> }
+                        { section === 'addLink' && <AddLinkScreen onSuccess={() => setSection('list')} /> }
+                    </>
+                </Layout>
+            </div>
             <Footer />
         </div>
     )

@@ -7,7 +7,7 @@ namespace ShareLink.Application.Common.Services;
 
 public interface IContentModerator
 {
-    Task<bool> ModerateText(string text);
+    Task<string[]> ModerateText(string text);
 }
 
 public class ContentModerator(IOptions<ContentModeratorConfiguration> configuration) : IContentModerator
@@ -17,11 +17,16 @@ public class ContentModerator(IOptions<ContentModeratorConfiguration> configurat
         Endpoint = configuration.Value.Endpoint
     };
 
-    public async Task<bool> ModerateText(string text)
+    public async Task<string[]> ModerateText(string text)
     {
         using var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(text));
         var result = await _client.TextModeration.ScreenTextAsync(
             "text/plain", memoryStream, "eng", true, true, null, true);
-        return result.Terms == null || !result.Terms.Any();
+        if (result.Terms == null)
+        {
+            return Array.Empty<string>();
+        }
+
+        return result.Terms.Select(x => x.Term).ToArray();
     }
 }

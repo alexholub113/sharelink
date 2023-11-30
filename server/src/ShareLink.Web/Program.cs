@@ -30,7 +30,6 @@ builder.Services.AddControllers()
 
 builder
     .Services
-    .AddSwaggerGen()
     .AddLogging()
     .AddApplicationServices(builder.Configuration)
     .AddIdentityServices(builder.Configuration, builder.Environment)
@@ -53,13 +52,7 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .AllowCredentials());
 
-app.UseSwagger();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerUI();
-}
-else
+if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
 }
