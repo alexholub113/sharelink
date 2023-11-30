@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using ShareLink.Application.Common.Services;
 
-namespace ShareLink.Application.CreateLinkHandler;
+namespace ShareLink.Application.UpdateLinkHandler;
 
-public class CreateLinkValidator : AbstractValidator<CreateLinkRequest>
+public class UpdateLinkValidator : AbstractValidator<UpdateLinkRequest>
 {
-    public CreateLinkValidator(IContentModerator contentModerator)
+    public UpdateLinkValidator(IContentModerator contentModerator)
     {
         RuleFor(request => request)
             .MustAsync((request, _) => contentModerator.ModerateText(request.Title + " " + string.Join(" ", request.Tags)))

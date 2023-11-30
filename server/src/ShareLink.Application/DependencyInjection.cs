@@ -18,10 +18,12 @@ public static class DependencyInjection
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.Configure<GoogleApiConfiguration>(configuration.GetSection(GoogleApiConfiguration.SectionName));
+        services.Configure<ContentModeratorConfiguration>(configuration.GetSection(ContentModeratorConfiguration.SectionName));
 
         services.AddScoped<IUrlParser, UrlParser>();
         services.AddScoped<IGoogleApiService, GoogleApiService>();
         services.AddScoped<IUserInteractionsService, UserInteractionsService>();
+        services.AddScoped<IContentModerator, ContentModerator>();
 
         services.AddMediatR(
             cfg =>
