@@ -1,5 +1,5 @@
-import LinkListToolbar from './components/LinkListToolbar/LinkListToolbar.tsx';
-import LinkInfiniteScrollList from './components/LinkInfiniteScrollList.tsx';
+import LinkInfiniteScrollList from './LinkInfiniteScrollList.tsx';
+import LinkListToolbar from '../../components/LinkListToolbar/LinkListToolbar.tsx';
 
 const LinkListScreen = () => {
     return (

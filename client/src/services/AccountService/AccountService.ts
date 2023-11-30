@@ -1,12 +1,12 @@
 
 import HttpClient from '../HttpClient/HttpClient.ts';
-import UserInfo from './interfaces/UserInfo.ts';
 import IAccountService, {
     AccessTokenResponse,
     LoginRequest,
     RefreshRequest,
     RegisterRequest
 } from './interfaces/IAccountService.ts';
+import UserInfo from '../../models/UserInfo.ts';
 
 
 class AccountService implements IAccountService {

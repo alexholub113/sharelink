@@ -1,4 +1,4 @@
-import {YoutubeVideo} from '../../../../../../services/LinkService/interfaces/Link.ts';
+import {YoutubeVideo} from '../../../../models/Link.ts';
 
 const YoutubeVideoContent = ({ videoId }: YoutubeVideo) => {
     return (

@@ -1,8 +1,8 @@
 import {createRef, useState} from 'react';
-import useClickOutsideHandler from '../../../../../hooks/useClickOutsideHandler.ts';
+import useClickOutsideHandler from '../../../hooks/useClickOutsideHandler.ts';
 import {observer} from 'mobx-react-lite';
-import {useLinkStore} from '../../../../../contexts/AppContext.tsx';
-import TagBadge from '../../../../../components/TagBadge.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
+import TagBadge from '../..//TagBadge.tsx';
 
 const TagListButton = observer(() => {
     const { sortedTags, toggleTagFilter } = useLinkStore();

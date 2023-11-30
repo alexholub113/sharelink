@@ -1,9 +1,9 @@
-import Link from '../../../../../../services/LinkService/interfaces/Link.ts';
-import {useLinkStore} from '../../../../../../contexts/AppContext.tsx';
+import Link from '../../../../models/Link.ts';
+import {useLinkStore} from '../../../../contexts/AppContext.tsx';
+import useAsyncAction from '../../../../hooks/useAsyncAction.ts';
+import Button from '../../../Button.tsx';
 import {useState} from 'react';
-import Modal from '../../../../../../components/Modal.tsx';
-import Button from '../../../../../../components/Button.tsx';
-import useAsyncAction from '../../../../../../hooks/useAsyncAction.ts';
+import Modal from '../../../Modal.tsx';
 
 const DeleteLinkActionButton = ({ id }: Pick<Link, 'id'>) => {
     const { deleteLink } = useLinkStore();

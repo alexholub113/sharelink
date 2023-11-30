@@ -1,5 +1,5 @@
-import {useLinkStore} from '../../../../../contexts/AppContext.tsx';
-import TagSearchInput from '../../../../../components/TagSearchInput.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
+import TagSearchInput from '../../TagSearchInput.tsx';
 
 const TagSearch = () => {
     const { toggleTagFilter } = useLinkStore();

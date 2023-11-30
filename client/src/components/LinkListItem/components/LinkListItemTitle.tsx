@@ -1,4 +1,4 @@
-import {MaxTitleLength} from '../../../../../constants/preferences.ts';
+import {MaxTitleLength} from '../../../constants/preferences.ts';
 
 const LinkListItemTitle = ({ title }: { title: string}) => {
     return (

@@ -1,7 +1,7 @@
-import Link from '../../../../../services/LinkService/interfaces/Link.ts';
 import LikeLinkActionButton from './ActionButtons/LikeLinkActionButton.tsx';
 import SaveLinkActionButton from './ActionButtons/SaveLinkActionButton.tsx';
 import DeleteLinkActionButton from './ActionButtons/DeleteLinkActionButton.tsx';
+import Link from '../../../models/Link.ts';
 
 const LinkListItemActionButtons = (link: Link) => {
     return (

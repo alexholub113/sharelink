@@ -9,7 +9,7 @@ import ILinkService, {
     UpdateLinkRequest, GetListRequest
 } from './interfaces/ILinkService.ts';
 import HttpClient from '../HttpClient/HttpClient.ts';
-import Link from './interfaces/Link.ts';
+import Link from '../../models/Link.ts';
 
 class LinkService implements ILinkService {
 

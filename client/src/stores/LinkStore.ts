@@ -1,9 +1,9 @@
 import {makeAutoObservable, runInAction} from 'mobx'
 import ILinkService, {GetListResponse} from '../services/LinkService/interfaces/ILinkService.ts';
-import Link from '../services/LinkService/interfaces/Link.ts';
-import Tag from '../services/LinkService/interfaces/Tag.ts';
-import PreviewLink from '../services/LinkService/interfaces/PreviewLink.ts';
 import {GetListRequest} from '../services/LinkService/interfaces/ILinkService.ts';
+import PreviewLink from '../models/PreviewLink.ts';
+import Link from '../models/Link.ts';
+import Tag from '../models/Tag.ts';
 
 type Filter = {
     tags: string[];

@@ -7,7 +7,7 @@ import supportedWebsites from '../../constants/supportedWebsites.ts';
 import {handleError} from '../../utils/errors.ts';
 import ErrorAlert from '../../components/ErrorAlert.tsx';
 import AddLinkInfoAlert from './components/AddLinkInfoAlert.tsx';
-import LinkListItemSkeleton from '../LinkList/components/LinkListItemSkeleton.tsx';
+import LinkListItemSkeleton from '../../components/LinkListItem/LinkListItemSkeleton.tsx';
 
 export const validateUrl = (url: string): string | undefined => {
     try {

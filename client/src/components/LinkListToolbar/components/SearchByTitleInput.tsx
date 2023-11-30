@@ -1,9 +1,9 @@
-﻿import FloatingInput from '../../../../../components/FloatingInput.tsx';
-import FloatingInputWrapper from '../../../../../components/FloatingInputWrapper.tsx';
-import Button from '../../../../../components/Button.tsx';
-import SearchIcon from '../../../../../components/SearchIcon.tsx';
-import {useLinkStore} from '../../../../../contexts/AppContext.tsx';
-import useDebounce from '../../../../../hooks/useDebounce.ts';
+﻿import FloatingInput from '../../FloatingInput.tsx';
+import FloatingInputWrapper from '../../FloatingInputWrapper.tsx';
+import Button from '../../Button.tsx';
+import SearchIcon from '../../SearchIcon.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
+import useDebounce from '../../../hooks/useDebounce.ts';
 import {observer} from 'mobx-react-lite';
 
 const SearchByTitleInput = observer(() => {

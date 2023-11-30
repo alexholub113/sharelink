@@ -1,9 +1,9 @@
 import {observer} from 'mobx-react-lite';
-import {useLinkStore} from '../../../contexts/AppContext.tsx';
-import LinkListItem from './LinkListItem/LinkListItem.tsx';
-import LinkListItemSkeleton from './LinkListItemSkeleton.tsx';
-import InfiniteScrollList from '../../../components/InfiniteScrollList.tsx';
-import useAsyncAction from '../../../hooks/useAsyncAction.ts';
+import LinkListItemSkeleton from '../../components/LinkListItem/LinkListItemSkeleton.tsx';
+import {useLinkStore} from '../../contexts/AppContext.tsx';
+import useAsyncAction from '../../hooks/useAsyncAction.ts';
+import InfiniteScrollList from '../../components/InfiniteScrollList.tsx';
+import LinkListItem from '../../components/LinkListItem/LinkListItem.tsx';
 
 const Skeletons = () => (
     <>

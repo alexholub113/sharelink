@@ -1,7 +1,8 @@
-import {useLinkStore} from '../../../../../../contexts/AppContext.tsx';
-import Link from '../../../../../../services/LinkService/interfaces/Link.ts';
-import Button from '../../../../../../components/Button.tsx';
-import useAsyncAction from '../../../../../../hooks/useAsyncAction.ts';
+import Link from '../../../../models/Link.ts';
+import {useLinkStore} from '../../../../contexts/AppContext.tsx';
+import useAsyncAction from '../../../../hooks/useAsyncAction.ts';
+import Button from '../../../Button.tsx';
+
 
 const SaveLinkActionButton = ({ isSaved, id }: Pick<Link, 'isSaved' | 'id'>) => {
     const { saveLink } = useLinkStore();

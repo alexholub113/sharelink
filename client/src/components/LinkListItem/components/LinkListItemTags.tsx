@@ -1,7 +1,7 @@
-import TagBadge from '../../../../../components/TagBadge.tsx';
-import {useStore} from '../../../../../contexts/AppContext.tsx';
-import LinkStore from '../../../../../stores/LinkStore.ts';
+import {useStore} from '../../../contexts/AppContext.tsx';
+import LinkStore from '../../../stores/LinkStore.ts';
 import {observer} from 'mobx-react-lite';
+import TagBadge from '../../TagBadge.tsx';
 
 const LinkListItemTags = observer(({ tags }: { tags: string[]}) => {
     const { toggleTagFilter } = useStore<LinkStore>(LinkStore);

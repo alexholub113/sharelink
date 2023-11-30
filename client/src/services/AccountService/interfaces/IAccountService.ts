@@ -1,4 +1,5 @@
-import UserInfo from './UserInfo.ts';
+import UserInfo from '../../../models/UserInfo.ts';
+
 
 export type AccessTokenResponse = {
     tokenType: string;

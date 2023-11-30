@@ -1,13 +1,12 @@
-import {useStore} from '../../../../../contexts/AppContext.tsx';
-import LinkStore from '../../../../../stores/LinkStore.ts';
 import {observer} from 'mobx-react-lite';
-import TagBadge from '../../../../../components/TagBadge.tsx';
-import Skeleton from '../../../../../components/Skeleton.tsx';
+import Skeleton from '../../Skeleton.tsx';
+import TagBadge from '../../TagBadge.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
 
 const MaxTagsShown = 12;
 
 const TopTagsList = observer(() => {
-    const { sortedTags, state: { tags, filter: { tags: appliedTags }, isListLoading }, toggleTagFilter } = useStore<LinkStore>(LinkStore);
+    const { sortedTags, state: { tags, filter: { tags: appliedTags }, isListLoading }, toggleTagFilter } = useLinkStore();
 
     const showSkeletons = isListLoading && tags.length === 0;
     return (

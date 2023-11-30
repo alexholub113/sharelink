@@ -1,4 +1,4 @@
-import Link from '../../../../../services/LinkService/interfaces/Link.ts';
+import Link from '../../../models/Link.ts';
 
 const LinkListItemAuthor = ({ user, createdAt }: Pick<Link, 'user' | 'createdAt'>) => (
     <p className="secondary-text-color text-sm italic font-light ">

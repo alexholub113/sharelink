@@ -1,10 +1,8 @@
-
-import LinkListItemWrapper from './LinkListItem/LinkListItemWrapper.tsx';
-import Skeleton from '../../../components/Skeleton.tsx';
+import Skeleton from '../Skeleton.tsx';
 
 const LinkListItemSkeleton = () => {
     return (
-        <LinkListItemWrapper>
+        <div className="link-item-wrapper">
             <Skeleton className="w-full h-[20rem] flex items-center justify-center">
                 <svg className="w-14 h-14 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
                     <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
@@ -14,7 +12,7 @@ const LinkListItemSkeleton = () => {
             <Skeleton className="w-full" />
             <Skeleton className="w-full" />
             <Skeleton className="w-44" />
-        </LinkListItemWrapper>
+        </div>
     );
 }
 

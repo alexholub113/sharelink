@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react-lite';
-import {useLinkStore} from '../../../../../contexts/AppContext.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
 import {PropsWithChildren} from 'react';
-import Button from '../../../../../components/Button.tsx';
+import Button from '../../Button.tsx';
 
 type UserInteractionButtonProps = {
     onClick: () => void;

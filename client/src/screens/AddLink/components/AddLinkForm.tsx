@@ -1,6 +1,4 @@
 import {useLinkStore} from '../../../contexts/AppContext.tsx';
-import LinkListItemWrapper from '../../LinkList/components/LinkListItem/LinkListItemWrapper.tsx';
-import LinkListItemContent from '../../LinkList/components/LinkListItem/components/LinkListItemContent.tsx';
 import TagBadge from '../../../components/TagBadge.tsx';
 import AddTagButton from './AddTagButton.tsx';
 import {MaxTags} from '../../../constants/preferences.ts';
@@ -9,7 +7,8 @@ import SubmitButton from '../../../components/SubmitButton.tsx';
 import ErrorAlert from '../../../components/ErrorAlert.tsx';
 import useSimpleReducer from '../../../hooks/useSimpleReducer.ts';
 import {handleError} from '../../../utils/errors.ts';
-import PreviewLink from '../../../services/LinkService/interfaces/PreviewLink.ts';
+import PreviewLink from '../../../models/PreviewLink.ts';
+import LinkListItemContent from '../../../components/LinkListItem/components/LinkListItemContent.tsx';
 
 type LocalState = {
     isSubmitting: boolean;
@@ -77,7 +76,7 @@ const AddLinkForm = ({ onSuccess, link }: AddLinkFormProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-4">
-            <LinkListItemWrapper>
+            <div className="link-item-wrapper">
                 <LinkListItemContent {...link} />
                 <TitleInput initialTitle={link.title} onUpdate={updateTitle} />
                 { state.titleError && (<span className="text-red-500 text-sm">{state.titleError}</span>) }
@@ -88,7 +87,7 @@ const AddLinkForm = ({ onSuccess, link }: AddLinkFormProps) => {
                     { link.tags.length < MaxTags && <AddTagButton onAdd={addTag} />}
                 </div>
                 { state.tagsError && (<span className="text-red-500 text-sm">{state.tagsError}</span>) }
-            </LinkListItemWrapper>
+            </div>
             <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-xl font-medium dark:text-white">
                 Submit
             </SubmitButton>

@@ -1,5 +1,5 @@
-import Link from './Link.ts';
-import Tag from './Tag.ts';
+import Link from '../../../models/Link.ts';
+import Tag from '../../../models/Tag.ts';
 
 export type GetListRequest = {
     pageNumber: number;
