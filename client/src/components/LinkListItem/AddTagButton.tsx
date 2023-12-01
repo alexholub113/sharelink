@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import TagSearchInput from '../../../components/TagSearchInput.tsx';
-import Button from '../../../components/Button.tsx';
+import TagSearchInput from './TagSearchInput.tsx';
+import Button from '../Button.tsx';
 
 type TagInputProps = {
     onAdd: (tag: string) => void;

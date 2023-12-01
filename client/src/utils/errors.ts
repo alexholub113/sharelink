@@ -3,7 +3,6 @@ import FetchHttpResponseError from '../services/HttpClient/errors/FetchHttpRespo
 import FetchHttpResponseValidationError from '../services/HttpClient/errors/FetchHttpResponseValidationError.ts';
 
 export const handleError = (error: unknown): string | undefined => {
-    console.log(error)
     if (error instanceof FetchHttpResponseBusinessError) {
         return error.message;
     }

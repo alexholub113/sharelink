@@ -1,6 +1,6 @@
 import YoutubeVideoContent from './Contents/YoutubeVideoContent.tsx';
-import Link from '../../../models/Link.ts';
-import LinkType from '../../../models/LinkType.ts';
+import Link from '../../models/Link.ts';
+import LinkType from '../../models/LinkType.ts';
 
 const LinkListItemContent = ({ type, youtube }: Pick<Link, 'type' | 'youtube'>) => {
     if (type === LinkType.Youtube) {

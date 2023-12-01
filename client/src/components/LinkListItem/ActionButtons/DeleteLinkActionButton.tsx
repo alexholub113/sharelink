@@ -1,9 +1,9 @@
-import Link from '../../../../models/Link.ts';
-import {useLinkStore} from '../../../../contexts/AppContext.tsx';
-import useAsyncAction from '../../../../hooks/useAsyncAction.ts';
-import Button from '../../../Button.tsx';
+import Link from '../../../models/Link.ts';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
+import useAsyncAction from '../../../hooks/useAsyncAction.ts';
+import Button from '../../Button.tsx';
 import {useState} from 'react';
-import Modal from '../../../Modal.tsx';
+import Modal from '../../Modal.tsx';
 
 const DeleteLinkActionButton = ({ id }: Pick<Link, 'id'>) => {
     const { deleteLink } = useLinkStore();
@@ -16,12 +16,10 @@ const DeleteLinkActionButton = ({ id }: Pick<Link, 'id'>) => {
     return (
         <>
             <div className="flex flex-row justify-end gap-6">
-                <Button type="button" onClick={() => setShowConfirmModal(true)} className="bg-transparent dark:hover:text-zinc-300">
-                    {/*<svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span className="sr-only">Delete link item</span>*/}
-                    Delete
+                <Button type="button" onClick={() => setShowConfirmModal(true)} className="bg-transparent">
+                    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                        <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                    </svg>
                 </Button>
             </div>
             { showConfirmModal && (

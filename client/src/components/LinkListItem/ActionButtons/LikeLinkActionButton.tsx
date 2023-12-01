@@ -1,7 +1,7 @@
-import Link from '../../../../models/Link.ts';
-import {useLinkStore} from '../../../../contexts/AppContext.tsx';
-import useAsyncAction from '../../../../hooks/useAsyncAction.ts';
-import Button from '../../../Button.tsx';
+import Link from '../../../models/Link.ts';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
+import useAsyncAction from '../../../hooks/useAsyncAction.ts';
+import Button from '../../Button.tsx';
 
 const shortLikes = (likes: number) => {
     if (likes < 1000) {

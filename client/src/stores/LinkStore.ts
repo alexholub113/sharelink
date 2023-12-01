@@ -91,9 +91,7 @@ class LinkStore {
     };
 
     public loadMore = async () => {
-        console.log('loadMore')
         if (this.state.paginationState.hasNextPage) {
-            console.log('loadMore2')
             const response = await this.linkService.getList({
                 ...this.paginationParams,
                 ...this.state.filter,
@@ -212,7 +210,7 @@ class LinkStore {
         return {};
     };
 
-    public updatePreviewLink = (updates: Partial<PreviewLink>) => {
+    public updatePreviewLink = (updates: Partial<Pick<PreviewLink, 'title' | 'tags'>>) => {
         if (!this.state.preview.link) {
             throw new Error('Preview Link not found');
         }
@@ -222,6 +220,44 @@ class LinkStore {
             ...updates,
         };
     };
+
+    public updateLink = async (linkId: string, update: Pick<Link, 'title' | 'tags'>) => {
+        await this.linkService.update({ linkId, ...update });
+
+        const linkIndex = this.state.links.findIndex(link => link.id === linkId);
+        if (linkIndex === -1) {
+            throw new Error('Link not found');
+        }
+
+        const link = this.state.links[linkIndex];
+        const removedTags = link.tags.filter(tag => !update.tags.includes(tag));
+        const addedTags = update.tags.filter(tag => !link.tags.includes(tag));
+        const updatedTags = this.state.tags.map(tag => {
+            if (removedTags.includes(tag.name)) {
+                return {
+                    ...tag,
+                    count: tag.count - 1
+                };
+            }
+
+            if (addedTags.includes(tag.name)) {
+                return {
+                    ...tag,
+                    count: tag.count + 1
+                };
+            }
+
+            return tag;
+        }).filter(x => x.count > 0);
+        runInAction(() => {
+            this.state.links[linkIndex] = {
+                ...link,
+                ...update,
+            };
+            this.state.tags = updatedTags;
+        });
+
+    }
 
     public submitLink = async (): Promise<void> => {
         if (!this.state.preview.link) {

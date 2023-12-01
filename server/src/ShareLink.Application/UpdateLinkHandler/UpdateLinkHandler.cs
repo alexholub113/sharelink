@@ -17,7 +17,9 @@ public class UpdateLinkHandler(IApplicationDbContext context, IUserContext userC
             throw new UserUnauthorizedException();
         }
 
-        var link = await context.Links.SingleOrDefaultAsync(x => x.Id == request.LinkId && x.UserId == userId, cancellationToken);
+        var link = await context.Links
+            .Include(x => x.Tags)
+            .SingleOrDefaultAsync(x => x.Id == request.LinkId && x.UserId == userId, cancellationToken);
         if (link is null)
         {
             throw new BusinessException(ErrorCodes.LinkNotFound);
