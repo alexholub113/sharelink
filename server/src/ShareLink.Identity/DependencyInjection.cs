@@ -52,6 +52,7 @@ public static class DependencyInjection
             .AddCookie(IdentityConstants.ApplicationScheme, options =>
             {
                 options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(15);
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.SlidingExpiration = true;

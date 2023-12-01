@@ -79,18 +79,18 @@ class UserStore {
             }
 
             await this.accountService.signOut();
-
-            runInAction(() => {
-                this.state = {
-                    info: undefined,
-                    showLoginModal: false
-                }
-            });
-
-            localStorage.removeItem('user');
         } catch (error) {
             // Handle error scenario, possibly setting flags to show error messages
         }
+
+        runInAction(() => {
+            this.state = {
+                info: undefined,
+                showLoginModal: false
+            }
+        });
+
+        localStorage.removeItem('user');
     };
 
     public register = async (nickname: string, email: string, password: string): Promise<void> => {
