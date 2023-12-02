@@ -8,7 +8,9 @@ const LinkListScreen = () => {
                 <LinkListToolbar />
             </div>
 
-            <LinkInfiniteScrollList />
+            <div className="flex flex-wrap w-full items-start justify-center gap-4">
+                <LinkInfiniteScrollList />
+            </div>
         </>
     );
 };

@@ -18,7 +18,7 @@ const LinkInfiniteScrollList = observer(() => {
     const { state: { links, isListLoading, paginationState: { hasNextPage } }, loadMore } = useLinkStore();
     const {execute: executeLoadMore, loading: nextPageLoading } = useAsyncAction(loadMore);
     return (
-        <div className="flex flex-wrap w-full items-start justify-center gap-4">
+        <>
             {!isListLoading && (
                 <InfiniteScrollList isLoading={nextPageLoading}
                                     isReloading={false}
@@ -34,7 +34,7 @@ const LinkInfiniteScrollList = observer(() => {
                 </InfiniteScrollList>
             )}
             { isListLoading && <Skeletons />}
-        </div>
+        </>
     );
 });
 
