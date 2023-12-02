@@ -37,7 +37,7 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
                 IsSaved = x.SavedBy.Any(y => y.UserId == userId),
                 User = x.UserNickname,
                 CreatedAt = x.CreatedAt,
-                Tags = x.Tags.Select(y => y.Name).ToArray(),
+                Tags = x.Tags.Select(y => y.Name).OrderBy(tag => tag).ToArray(),
                 BelongsToUser = userId != null && userId == x.UserId,
                 Editable = userId != null && userId == x.UserId
             })
@@ -45,6 +45,7 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
         var tags = await context.Tags
             .Include(x => x.Links)
             .AsNoTracking()
+            .Where(x => x.Links.Count > 0)
             .Select(x => new TagDto(x.Name, x.Links.Count))
             .ToArrayAsync(cancellationToken);
 
