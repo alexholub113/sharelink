@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 import FetchHttpResponseError from '../../../services/HttpClient/errors/FetchHttpResponseError.ts';
+import {handleError} from '../../../utils/errors.ts';
 
 const schema = z.object({
     email: z.string().email(),
@@ -27,6 +28,8 @@ const useSignInForm = () => {
                 if (error.status === 401) {
                     setError('password', { message: 'Invalid email or password' });
                 }
+            } else {
+                setError('password', { message: handleError(error) });
             }
         }
     });

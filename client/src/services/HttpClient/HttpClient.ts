@@ -67,6 +67,10 @@ export default class HttpClient implements TransportInterface<RequestInit> {
                 switch (error.type) {
                     case 'validation_error':
                         throw new FetchHttpResponseValidationError(error.errors);
+                    case 'https://tools.ietf.org/html/rfc9110#section-15.5.1':
+                        throw new FetchHttpResponseValidationError(Object.keys(error.errors)
+                            .map(key => error.errors[key])
+                            .flat());
                     case 'business_error':
                         throw new FetchHttpResponseBusinessError(error.code, error.message);
                 }

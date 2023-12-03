@@ -4,7 +4,7 @@ import Input from '../../Input.tsx';
 import IdentityProviderAuthForm from '../IdentityProviderAuthForm/IdentityProviderAuthForm.tsx';
 
 const SignUpModalContent = () => {
-   const { onSubmit, register, errors } = useSignUpForm();
+   const { onSubmit, register, errors, registerError } = useSignUpForm();
 
     return (
         <>
@@ -18,6 +18,7 @@ const SignUpModalContent = () => {
                     <Input type="password" errorMessage={errors.password?.message} label='Your password' placeholder="••••••••" rest={{...register('password')}} />
                     <Input type="password" errorMessage={errors.confirmPassword?.message} label='Confirm password' placeholder="••••••••" rest={{...register('confirmPassword')}} />
                     <SubmitButton className="w-full mt-4" type="submit">Create account</SubmitButton>
+                    {registerError && <p className="text-red-500 text-sm text-center">{registerError}</p>}
                 </form>
             </div>
         </>

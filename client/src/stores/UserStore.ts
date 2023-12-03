@@ -94,12 +94,8 @@ class UserStore {
     };
 
     public register = async (nickname: string, email: string, password: string): Promise<void> => {
-        try {
-            await this.accountService.register({ nickname, email, password });
-            await this.logIn(email, password);
-        } catch (error) {
-            // Handle error scenario, possibly setting flags to show error messages
-        }
+        await this.accountService.register({ nickname, email, password });
+        await this.logIn(email, password);
     };
 
     public showSignInModal = () => {
