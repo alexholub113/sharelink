@@ -3,38 +3,36 @@ import LinkListItemTitle from './LinkListItemTitle.tsx';
 import LinkListItemAuthor from './LinkListItemAuthor.tsx';
 import LinkListItemTags from './LinkListItemTags.tsx';
 import Link from '../../models/Link.ts';
-import {useState} from 'react';
-import {useLinkStore} from '../../contexts/AppContext.tsx';
+import { useState } from 'react';
+import { useLinkStore } from '../../contexts/AppContext.tsx';
 import LinkListItemActionPanel from './LinkListItemActionPanel.tsx';
 import useAsyncAction from '../../hooks/useAsyncAction.ts';
+import LinkType from '../../models/LinkType.ts';
 
 const LinkListItem = ({ link }: { link: Link }) => {
     const [updating, setUpdating] = useState(false);
-    const { updateLink } = useLinkStore();
-    const [updateState, setUpdateState] = useState<Pick<Link, 'title' | 'tags'>>({ title: link.title, tags: link.tags });
-    const {loading, execute} = useAsyncAction(() => updateLink(link.id, updateState));
+    const { updateLink, toggleTagFilter } = useLinkStore();
+    const {loading, execute} = useAsyncAction(({title, tags}: Pick<Link, 'title' | 'tags'>) => updateLink(link.id, { title, tags }));
 
     const handleOnEditClick = () => {
-        setUpdateState({ title: link.title, tags: link.tags });
         setUpdating(true);
     };
 
-    const handleOnApplyClick = async () => {
-        await execute();
-        setUpdating(false);
-    };
-
-    const handleOnRemoveTag = (tag: string) => {
-        setUpdateState((prevState) => ({ ...prevState, tags: prevState.tags.filter((t) => t !== tag) }));
-    };
-
-    const handleOnAddTag = (tag: string) => {
-        setUpdateState((prevState) => ({ ...prevState, tags: [...prevState.tags, tag] }));
-    };
-
     const handleOnTitleUpdate = (title: string) => {
-        setUpdateState((prevState) => ({ ...prevState, title }));
+        execute({ ...link, title });
     }
+
+    const handleOnTagSelect = (tag: string) => {
+        if (!updating) {
+            toggleTagFilter(tag);
+        } else {
+            if (link.tags.includes(tag)) {
+                execute({ ...link, tags: link.tags.filter((t) => t !== tag) });
+            } else {
+                execute({ ...link, tags: [...new Set([...link.tags, tag])] });
+            }
+        }
+    };
 
     return (
         <>
@@ -43,12 +41,11 @@ const LinkListItem = ({ link }: { link: Link }) => {
                 <LinkListItemActionPanel
                     disabled={loading}
                     updating={updating} link={link}
-                    onApplyClick={handleOnApplyClick}
                     onCancelClick={() => setUpdating(false)}
                     onEditClick={handleOnEditClick} />
             </div>
-            <LinkListItemTags editable={updating} tags={updating ? updateState.tags : link.tags} onRemove={handleOnRemoveTag} onAdd={handleOnAddTag} />
-            <LinkListItemTitle editable={updating} title={updating ? updateState.title : link.title} onUpdate={handleOnTitleUpdate} />
+            <LinkListItemTags updating={updating} tags={link.tags} onTagSelect={handleOnTagSelect} />
+            <LinkListItemTitle editable={updating && link.type !== LinkType.Youtube} title={link.title} onUpdate={handleOnTitleUpdate} />
             <LinkListItemAuthor {...link} />
         </>
     );

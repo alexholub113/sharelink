@@ -8,7 +8,7 @@ type ContentUrlInput = {
 };
 
 const UrlInput = ({onSubmit, initialUrl, isLoading}: ContentUrlInput) => {
-    const [linkUrl, setLinkUrl] = useState<string | undefined>(initialUrl);
+    const [linkUrl, setLinkUrl] = useState<string | undefined>(initialUrl ?? '');
 
     return (
         <div className="relative">

@@ -3,20 +3,20 @@ import {handleError} from '../utils/errors.ts';
 
 
 type AsyncAction = {
-    execute: () => Promise<void>;
+    execute: (param?: any) => void;
     loading: boolean;
     error?: string;
 };
 
-const useAsyncAction = (action: () => Promise<void>): AsyncAction => {
+const useAsyncAction = <T>(action: (param: T) => Promise<void>): AsyncAction => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | undefined>()
 
-    const execute = useCallback(async () => {
+    const execute = useCallback(async (param: T) => {
         setLoading(true)
         setError(undefined)
         try {
-            await action();
+            await action(param);
         } catch (error) {
             setError(handleError(error))
         }

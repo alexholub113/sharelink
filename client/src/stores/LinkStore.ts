@@ -122,6 +122,9 @@ class LinkStore {
             this.state.filter.tags = [...this.state.filter.tags, tag.name];
         }
 
+        // scroll to top
+        window.scrollTo(0, 0);
+
         await this.getList();
     };
 
@@ -252,9 +255,11 @@ class LinkStore {
         runInAction(() => {
             this.state.links[linkIndex] = {
                 ...link,
-                ...update,
+                title: update.title,
+                tags: update.tags.sort()
             };
             this.state.tags = updatedTags;
+            this.state.filter.tags = this.state.filter.tags.filter(tag => !removedTags.includes(tag));
         });
 
     }
@@ -284,7 +289,7 @@ class LinkStore {
             ...tagsToAdd.map(tag => ({ name: tag, count: 1 }))
         ];
         runInAction(() => {
-            this.state.links = [link, ...this.state.links];
+            this.state.links = [{...link, tags: link.tags.sort()}, ...this.state.links];
             this.state.preview = {};
             this.state.tags = tags;
         });

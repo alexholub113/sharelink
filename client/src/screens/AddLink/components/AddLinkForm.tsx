@@ -1,12 +1,13 @@
-import {useLinkStore} from '../../../contexts/AppContext.tsx';
+import { useLinkStore } from '../../../contexts/AppContext.tsx';
 import SubmitButton from '../../../components/SubmitButton.tsx';
 import ErrorAlert from '../../../components/ErrorAlert.tsx';
 import useSimpleReducer from '../../../hooks/useSimpleReducer.ts';
-import {handleError} from '../../../utils/errors.ts';
+import { handleError } from '../../../utils/errors.ts';
 import PreviewLink from '../../../models/PreviewLink.ts';
 import LinkListItemContent from '../../../components/LinkListItem/LinkListItemContent.tsx';
 import LinkListItemTitle from '../../../components/LinkListItem/LinkListItemTitle.tsx';
 import LinkListItemTags from '../../../components/LinkListItem/LinkListItemTags.tsx';
+import LinkType from '../../../models/LinkType.ts';
 
 type LocalState = {
     isSubmitting: boolean;
@@ -60,12 +61,12 @@ const AddLinkForm = ({ onSuccess, link }: AddLinkFormProps) => {
         }
     }
 
-    const removeTag = (tag: string) => {
-        updatePreviewLink({ tags: link!.tags.filter((t) => t !== tag)});
-    };
-
-    const addTag = (tag: string) => {
-        updatePreviewLink({ tags: [...new Set([...link!.tags, tag])]});
+    const handleOnTagSelect = (tag: string) => {
+        if (link.tags.includes(tag)) {
+            updatePreviewLink({ tags: link!.tags.filter((t) => t !== tag)});
+        } else {
+            updatePreviewLink({ tags: [...new Set([...link!.tags, tag])]});
+        }
     };
 
     const updateTitle = (title: string) => {
@@ -76,8 +77,8 @@ const AddLinkForm = ({ onSuccess, link }: AddLinkFormProps) => {
         <div className="flex flex-col items-center justify-center gap-4">
             <div className="link-item-wrapper">
                 <LinkListItemContent {...link} />
-                <LinkListItemTags editable tags={link.tags} onAdd={addTag} onRemove={removeTag} error={state.tagsError} />
-                <LinkListItemTitle editable title={link.title} onUpdate={updateTitle} error={state.titleError} />
+                <LinkListItemTags updating tags={link.tags} onTagSelect={handleOnTagSelect} error={state.tagsError} />
+                <LinkListItemTitle editable={link.type !== LinkType.Youtube} title={link.title} onUpdate={updateTitle} error={state.titleError} />
             </div>
             <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-xl font-medium dark:text-white">
                 Submit

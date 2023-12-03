@@ -1,5 +1,3 @@
-import {useStore} from '../../contexts/AppContext.tsx';
-import LinkStore from '../../stores/LinkStore.ts';
 import {observer} from 'mobx-react-lite';
 import TagBadge from '../TagBadge.tsx';
 import {MaxTags} from '../../constants/preferences.ts';
@@ -7,19 +5,15 @@ import AddTagButton from './AddTagButton.tsx';
 
 type LinkListItemTagsProps = {
     tags: string[];
-    editable?: boolean;
+    updating?: boolean;
     error?: string;
-    onAdd?: (tag: string) => void;
-    onRemove?: (tag: string) => void;
+    onTagSelect: (tag: string) => void;
 };
 
-const LinkListItemTags = observer(({ tags, editable, error, onAdd, onRemove }: LinkListItemTagsProps) => {
-    const { toggleTagFilter } = useStore<LinkStore>(LinkStore);
-    const handleOnClick = (tag: string) => {
-        if (!editable) {
-            toggleTagFilter(tag);
-        } else if (onRemove) {
-            onRemove(tag);
+const LinkListItemTags = observer(({ tags, updating, error, onTagSelect }: LinkListItemTagsProps) => {
+    const handleOnTagSelect = (tag: string) => {
+        if (onTagSelect) {
+            onTagSelect(tag);
         }
     };
 
@@ -27,11 +21,11 @@ const LinkListItemTags = observer(({ tags, editable, error, onAdd, onRemove }: L
         <>
             <div className="flex flex-wrap gap-2 items-center">
                 {tags.map((tag) => (
-                    <TagBadge key={tag} onClick={() => handleOnClick(tag)} name={tag} removable={editable} active />
+                    <TagBadge key={tag} onClick={() => handleOnTagSelect(tag)} name={tag} removable={updating} active />
                 ))}
-                { editable && tags.length < MaxTags && <AddTagButton onAdd={(tag) => onAdd && onAdd(tag)} />}
+                { updating && tags.length < MaxTags && <AddTagButton exclude={updating ? tags : []} onTagSelect={handleOnTagSelect} />}
             </div>
-            { editable && error && (<span className="text-red-500 text-sm">{error}</span>) }
+            { updating && error && (<span className="text-red-500 text-sm">{error}</span>) }
         </>
     );
 });
