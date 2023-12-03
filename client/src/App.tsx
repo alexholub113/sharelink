@@ -17,7 +17,7 @@ const App = observer(() => {
     }, [init]);
 
     return (
-        <div className="bg-zinc-900 flex flex-col justify-start min-h-screen">
+        <div className="flex flex-col justify-start min-h-screen">
             <div className="flex-grow">
                 <Toolbar />
                 <Layout>
