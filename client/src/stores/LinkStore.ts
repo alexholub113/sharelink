@@ -68,26 +68,31 @@ class LinkStore {
         runInAction(() => {
             this.state.isListLoading = true;
         });
-        this.paginationParams.pageNumber = 1;
-        const response = await this.linkService.getList({
-            ...this.paginationParams,
-            ...this.state.filter,
-        });
-        this.paginationParams.pageNumber = this.paginationParams.pageNumber + 1;
-        runInAction(() => {
-            this.state = {
-                ...this.state,
-                links: response.items,
-                tags: [...new Set<Tag>(response.tags)],
-                isListLoading: false,
-                paginationState: {
-                    totalPages: response.totalPages,
-                    totalCount: response.totalCount,
-                    hasPreviousPage: response.hasPreviousPage,
-                    hasNextPage: response.hasNextPage,
-                }
-            };
-        });
+        try {
+            this.paginationParams.pageNumber = 1;
+            const response = await this.linkService.getList({
+                ...this.paginationParams,
+                ...this.state.filter,
+            });
+            this.paginationParams.pageNumber = this.paginationParams.pageNumber + 1;
+            runInAction(() => {
+                this.state = {
+                    ...this.state,
+                    links: response.items,
+                    tags: [...new Set<Tag>(response.tags)],
+                    paginationState: {
+                        totalPages: response.totalPages,
+                        totalCount: response.totalCount,
+                        hasPreviousPage: response.hasPreviousPage,
+                        hasNextPage: response.hasNextPage,
+                    }
+                };
+            });
+        } finally {
+            runInAction(() => {
+                this.state.isListLoading = false;
+            });
+        }
     };
 
     public loadMore = async () => {
