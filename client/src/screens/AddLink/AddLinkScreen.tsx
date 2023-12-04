@@ -59,12 +59,11 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
             <UrlInput onSubmit={handleSubmit} isLoading={isLoading} initialUrl={url} />
             { !isLoading && previewErrorMessage && <ErrorAlert message={previewErrorMessage} onClose={() => setPreviewErrorMessage(undefined)} /> }
             { !isLoading && (!url || previewErrorMessage) && <AddLinkInfoAlert /> }
-            { isLoading && <LinkListItemSkeleton /> }
-            { link && (
-                <div className="mt-6">
-                    <AddLinkForm onSuccess={onSuccess} link={link} />
-                </div>
-            )}
+
+            <div className="flex flex-col items-center justify-center gap-4 mt-6">
+                { isLoading && <LinkListItemSkeleton /> }
+                { link && <AddLinkForm onSuccess={onSuccess} link={link} /> }
+            </div>
         </div>
     );
 });

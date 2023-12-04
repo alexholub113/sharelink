@@ -7,7 +7,6 @@ import PreviewLink from '../../../models/PreviewLink.ts';
 import LinkListItemContent from '../../../components/LinkListItem/LinkListItemContent.tsx';
 import LinkListItemTitle from '../../../components/LinkListItem/LinkListItemTitle.tsx';
 import LinkListItemTags from '../../../components/LinkListItem/LinkListItemTags.tsx';
-import LinkType from '../../../models/LinkType.ts';
 
 type LocalState = {
     isSubmitting: boolean;
@@ -74,11 +73,11 @@ const AddLinkForm = ({ onSuccess, link }: AddLinkFormProps) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center gap-4">
+        <>
             <div className="link-item-wrapper">
                 <LinkListItemContent {...link} />
-                <LinkListItemTags updating tags={link.tags} onTagSelect={handleOnTagSelect} error={state.tagsError} />
-                <LinkListItemTitle editable={link.type !== LinkType.Youtube} title={link.title} onUpdate={updateTitle} error={state.titleError} />
+                <LinkListItemTags editable tags={link.tags} onTagSelect={handleOnTagSelect} error={state.tagsError} />
+                <LinkListItemTitle editable title={link.title} onUpdate={updateTitle} error={state.titleError} />
             </div>
             <SubmitButton isLoading={state.isSubmitting} onClick={submitHandler} type="button" className="px-4 text-xl font-medium dark:text-white">
                 Submit
@@ -86,7 +85,7 @@ const AddLinkForm = ({ onSuccess, link }: AddLinkFormProps) => {
             { state.submitErrorMessage &&
                 <ErrorAlert className="mt-4" message={state.submitErrorMessage}
                             onClose={() => dispatch({ submitErrorMessage: undefined })} /> }
-        </div>
+        </>
     );
 };
 

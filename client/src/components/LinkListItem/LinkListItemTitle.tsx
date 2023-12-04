@@ -11,7 +11,7 @@ type LinkListItemTitleProps = {
 const LinkListItemTitle = ({ title, onUpdate, editable, error }: LinkListItemTitleProps) => {
     const [value, setValue] = useState(title);
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setValue(event.target.value);
     };
 
@@ -24,12 +24,12 @@ const LinkListItemTitle = ({ title, onUpdate, editable, error }: LinkListItemTit
     return (
         <>
             { editable && (
-                <input type="text"
+                <textarea
                        value={value}
                        onChange={handleInputChange}
                        onBlur={handleEditEnd}
                        placeholder="Set title"
-                       className="p-2 group secondary-text-color dark-border w-full bg-zinc-900 focus:outline-none font-medium rounded-lg text-sm"
+                       className="resize-none p-2 group secondary-text-color dark-border w-full bg-zinc-900 focus:outline-none font-medium rounded-lg text-sm"
                 />
             )}
             { !editable && (

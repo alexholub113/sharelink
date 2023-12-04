@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { useLinkStore } from '../../contexts/AppContext.tsx';
 import LinkListItemActionPanel from './LinkListItemActionPanel.tsx';
 import useAsyncAction from '../../hooks/useAsyncAction.ts';
-import LinkType from '../../models/LinkType.ts';
 
 const LinkListItem = ({ link }: { link: Link }) => {
     const [updating, setUpdating] = useState(false);
@@ -19,7 +18,9 @@ const LinkListItem = ({ link }: { link: Link }) => {
     };
 
     const handleOnTitleUpdate = (title: string) => {
-        execute({ ...link, title });
+        if (title !== link.title) {
+            execute({ ...link, title });
+        }
     }
 
     const handleOnTagSelect = (tag: string) => {
@@ -44,8 +45,8 @@ const LinkListItem = ({ link }: { link: Link }) => {
                     onCancelClick={() => setUpdating(false)}
                     onEditClick={handleOnEditClick} />
             </div>
-            <LinkListItemTags updating={updating} tags={link.tags} onTagSelect={handleOnTagSelect} />
-            <LinkListItemTitle editable={updating && link.type !== LinkType.Youtube} title={link.title} onUpdate={handleOnTitleUpdate} />
+            <LinkListItemTags editable={updating} tags={link.tags} onTagSelect={handleOnTagSelect} />
+            <LinkListItemTitle editable={updating} title={link.title} onUpdate={handleOnTitleUpdate} />
             <LinkListItemAuthor {...link} />
         </>
     );

@@ -41,5 +41,5 @@
 }
 
 .link-item-wrapper {
-  @apply flex flex-col gap-2 w-full md:max-w-screen-sm border-gray-200 rounded-lg dark:shadow-xl dark:shadow-zinc-900 bg-transparent mt-6;
+  @apply flex flex-col gap-2 w-96 rounded-lg bg-transparent mt-6;
 }

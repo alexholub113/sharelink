@@ -5,12 +5,12 @@ import AddTagButton from './AddTagButton.tsx';
 
 type LinkListItemTagsProps = {
     tags: string[];
-    updating?: boolean;
+    editable?: boolean;
     error?: string;
     onTagSelect: (tag: string) => void;
 };
 
-const LinkListItemTags = observer(({ tags, updating, error, onTagSelect }: LinkListItemTagsProps) => {
+const LinkListItemTags = observer(({ tags, editable, error, onTagSelect }: LinkListItemTagsProps) => {
     const handleOnTagSelect = (tag: string) => {
         if (onTagSelect) {
             onTagSelect(tag);
@@ -21,11 +21,11 @@ const LinkListItemTags = observer(({ tags, updating, error, onTagSelect }: LinkL
         <>
             <div className="flex flex-wrap gap-2 items-center">
                 {tags.map((tag) => (
-                    <TagBadge key={tag} onClick={() => handleOnTagSelect(tag)} name={tag} removable={updating} active />
+                    <TagBadge key={tag} onClick={() => handleOnTagSelect(tag)} name={tag} removable={editable} active />
                 ))}
-                { updating && tags.length < MaxTags && <AddTagButton exclude={updating ? tags : []} onTagSelect={handleOnTagSelect} />}
+                { editable && tags.length < MaxTags && <AddTagButton exclude={editable ? tags : []} onTagSelect={handleOnTagSelect} />}
             </div>
-            { updating && error && (<span className="text-red-500 text-sm">{error}</span>) }
+            { editable && error && (<span className="text-red-500 text-sm">{error}</span>) }
         </>
     );
 });
