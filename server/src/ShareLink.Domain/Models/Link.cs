@@ -13,6 +13,8 @@ public class Link
 
     public YoutubeData? Youtube { get; init; }
 
+    public UnknownSourceData? UnknownSource { get; init; }
+
     public ICollection<UserProfile> LikedBy { get; } = new List<UserProfile>();
 
     public ICollection<UserProfile> SavedBy { get; } = new List<UserProfile>();
@@ -38,12 +40,13 @@ public class Link
         string title,
         LinkType type,
         YoutubeData? youtube,
+        UnknownSourceData? unknownSource,
         string userId,
         string userNickname,
         IReadOnlyCollection<Tag> tags)
     {
         Validate(title, tags);
-        Validate(type, youtube);
+        Validate(type, youtube, unknownSource);
 
         return new Link
         {
@@ -51,6 +54,7 @@ public class Link
             Title = title,
             Type = type,
             Youtube = youtube,
+            UnknownSource = unknownSource,
             Tags = tags,
             UserId = userId,
             UserNickname = userNickname,
@@ -58,11 +62,16 @@ public class Link
         };
     }
 
-    private static void Validate(LinkType type, YoutubeData? youtube)
+    private static void Validate(LinkType type, YoutubeData? youtube, UnknownSourceData? unknownSourceData)
     {
-        if (type == LinkType.Youtube && youtube is null)
+        if (type == LinkType.Youtube && string.IsNullOrEmpty(youtube?.VideoId))
         {
-            throw new ActionFailedException("Youtube data is required.");
+            throw new ActionFailedException("Youtube video id is required.");
+        }
+
+        if (type == LinkType.UnknownSource && string.IsNullOrEmpty(unknownSourceData?.Url))
+        {
+            throw new ActionFailedException("Url is required.");
         }
     }
 

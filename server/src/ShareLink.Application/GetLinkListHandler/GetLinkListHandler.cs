@@ -32,6 +32,7 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
                 Title = x.Title,
                 Type = x.Type,
                 Youtube = x.Youtube == null ? null : new YoutubeDataDto { VideoId = x.Youtube.VideoId },
+                UnknownSource = x.UnknownSource == null ? null : new UnknownSourceDataDto { Url = x.UnknownSource.Url },
                 Likes = x.LikedBy.Count,
                 IsLiked = x.LikedBy.Any(y => y.UserId == userId),
                 IsSaved = x.SavedBy.Any(y => y.UserId == userId),

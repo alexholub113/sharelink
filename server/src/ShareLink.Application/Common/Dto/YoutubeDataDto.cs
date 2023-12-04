@@ -2,5 +2,5 @@
 
 public class YoutubeDataDto
 {
-    public string VideoId { get; set; } = null!;
+    public required string VideoId { get; set; }
 }

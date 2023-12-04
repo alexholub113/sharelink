@@ -7,9 +7,11 @@ public class PreviewLinkResponse
 {
     public string Title { get; set; } = null!;
 
-    public LinkType Type { get; set; }
+    public LinkType Type { get; init; }
 
-    public YoutubeDataDto Youtube { get; set; } = null!;
+    public YoutubeDataDto? Youtube { get; init; }
+
+    public UnknownSourceDataDto? UnknownSource { get; init; }
 
     public string[] Tags { get; set; } = Array.Empty<string>();
 }

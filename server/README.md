@@ -17,7 +17,7 @@ additionally with database pgAdmin will be deployed.
 
 ### PG Admin
 PG Admin can be reached at http://localhost:5050/. Use password `postgres`.
-- name: `domainlist`
+- name: `sharelink`
 - host: `postgres`
 
 To connect to server right click on `Servers`, select `Create` -> `Server...`
@@ -28,9 +28,9 @@ Server props:
 
 # Tests
 ## Run with docker-compose
-run `docker-compose -f docker-compose.deps.yaml -f docker-compose.deps.local.yaml up -d && dotnet test`
+run `docker-compose -f docker-compose.deps.yaml -f docker-compose.deps.local.yaml up -d`
 
 ## Troubleshoot
 ### I'm getting "Unrecognized option '--'" error
 Update dotnet-ef version. To do so run:
-`dotnet tool update --global dotnet-ef --version 5.0.0` with correct version.
+`dotnet tool update --global dotnet-ef`

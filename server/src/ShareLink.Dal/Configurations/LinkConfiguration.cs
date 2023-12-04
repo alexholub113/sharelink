@@ -29,6 +29,10 @@ public class LinkConfiguration : IEntityTypeConfiguration<Link>
             {
                 d.ToJson();
             });
+        builder.OwnsOne<UnknownSourceData>(x => x.UnknownSource, d =>
+        {
+            d.ToJson();
+        });
 
         builder.HasMany(x => x.Tags)
             .WithMany(x => x.Links);

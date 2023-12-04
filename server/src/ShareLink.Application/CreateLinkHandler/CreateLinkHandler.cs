@@ -41,6 +41,7 @@ public class CreateLinkHandler(
             request.Title,
             linkType,
             linkType == LinkType.Youtube ? await GetYoutubeData(urlId) : null,
+            linkType == LinkType.UnknownSource ? new UnknownSourceData { Url = urlId } : null,
             userContext.UserId!,
             userContext.UserNickname!,
             await context.CreateTagList(request.Tags, cancellationToken));
@@ -53,6 +54,7 @@ public class CreateLinkHandler(
             Title = link.Title,
             Type = link.Type,
             Youtube = link.Youtube == null ? null : new YoutubeDataDto { VideoId = link.Youtube.VideoId },
+            UnknownSource = link.UnknownSource == null ? null : new UnknownSourceDataDto { Url = link.UnknownSource.Url },
             Likes = 0,
             IsLiked = false,
             IsSaved = false,
@@ -76,6 +78,7 @@ public class CreateLinkHandler(
         return linkType switch
         {
             LinkType.Youtube => type + "-" + contentId,
+            LinkType.UnknownSource => type + "-" + contentId.GetHashCode(),
             _ => throw new NotSupportedException()
         };
     }

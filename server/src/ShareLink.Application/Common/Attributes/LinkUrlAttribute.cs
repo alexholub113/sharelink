@@ -9,9 +9,9 @@ public class LinkUrlAttribute : ValidationAttribute
     {
         if (value is string url)
         {
-            if (!UrlParser.IsUrlSupported(url))
+            if (!UrlParser.IsUrlValid(url))
             {
-                return new ValidationResult("Provided URL is not supported.");
+                return new ValidationResult("Url is not valid.");
             }
         }
 

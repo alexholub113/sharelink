@@ -3,22 +3,17 @@ import {observer} from 'mobx-react-lite';
 import {useLinkStore} from '../../contexts/AppContext.tsx';
 import AddLinkForm from './components/AddLinkForm.tsx';
 import {useState} from 'react';
-import supportedWebsites from '../../constants/supportedWebsites.ts';
 import {handleError} from '../../utils/errors.ts';
 import ErrorAlert from '../../components/ErrorAlert.tsx';
 import AddLinkInfoAlert from './components/AddLinkInfoAlert.tsx';
 import LinkListItemSkeleton from '../../components/LinkListItem/LinkListItemSkeleton.tsx';
 
-export const validateUrl = (url: string): string | undefined => {
+export const isUrlValid = (url: string): boolean => {
     try {
-        const urlObj = new URL(url);
-
-        if (!supportedWebsites.includes(urlObj.origin)) {
-            return 'This kind of URL is not supported.';
-        }
-
+        new URL(url);
+        return true;
     } catch (e) {
-        return 'Your URL is invalid. Try fix it.';
+        return false;
     }
 };
 
@@ -27,7 +22,7 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
     const [previewErrorMessage, setPreviewErrorMessage] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleSubmit = async (url?: string) => {
+    const handleUrlSubmit = async (url?: string) => {
         setIsLoading(true);
 
         try {
@@ -36,9 +31,8 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
                 return;
             }
 
-            const errorMessage = validateUrl(url);
-            if (errorMessage) {
-                setPreviewErrorMessage(errorMessage);
+            if (!isUrlValid(url)) {
+                setPreviewErrorMessage('Your URL is invalid. Try fix it.');
                 return;
             }
 
@@ -56,7 +50,7 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
 
     return (
         <div className="flex flex-col justify-center  gap-4 w-full max-w-screen-sm">
-            <UrlInput onSubmit={handleSubmit} isLoading={isLoading} initialUrl={url} />
+            <UrlInput onUrlSubmit={handleUrlSubmit} isLoading={isLoading} initialUrl={url} />
             { !isLoading && previewErrorMessage && <ErrorAlert message={previewErrorMessage} onClose={() => setPreviewErrorMessage(undefined)} /> }
             { !isLoading && (!url || previewErrorMessage) && <AddLinkInfoAlert /> }
 

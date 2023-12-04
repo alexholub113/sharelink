@@ -13,6 +13,8 @@ public class LinkDto
 
     public YoutubeDataDto? Youtube { get; set; }
 
+    public UnknownSourceDataDto? UnknownSource { get; set; }
+
     public string[] Tags { get; set; } = null!;
 
     public int Likes { get; set; }

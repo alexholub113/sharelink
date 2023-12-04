@@ -43,3 +43,7 @@
 .link-item-wrapper {
   @apply flex flex-col gap-2 w-96 rounded-lg bg-transparent mt-6;
 }
+
+.shadow-bottom-zinc-500 {
+  box-shadow: 0 8px 10px -5px #71717a;
+}

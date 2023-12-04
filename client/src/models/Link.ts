@@ -1,4 +1,5 @@
 import LinkType from './LinkType.ts';
+import UnknownSource from './UnknownSource.ts';
 
 export type YoutubeVideo = {
     videoId: string;
@@ -7,7 +8,8 @@ export type YoutubeVideo = {
 type Link = {
     id: string;
     title: string;
-    youtube: YoutubeVideo,
+    youtube?: YoutubeVideo,
+    unknownSource?: UnknownSource,
     likes: number;
     isLiked: boolean;
     isSaved: boolean;

@@ -12,7 +12,7 @@ public interface IUrlParser
 
 public class UrlParser : IUrlParser
 {
-    private static readonly LinkTypeSettings[] Settings = {
+    private static readonly LinkTypeSettings[] KnownLinkSources = {
         new(LinkType.Youtube, "https://www.youtube.com/watch?v=", @"youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})"),
         new(LinkType.Youtube, "https://youtu.be/", @"youtu\.be\/([a-zA-Z0-9_-]{11})"),
         new(LinkType.Youtube, "http://youtu.be/", @"youtu\.be\/([a-zA-Z0-9_-]{11})"),
@@ -20,33 +20,40 @@ public class UrlParser : IUrlParser
 
     public (LinkType linkType, string urlId) ParseUrl(string url)
     {
-        var linkTypeSettings = Settings.FirstOrDefault(x => url.StartsWith(x.Website));
-        if (linkTypeSettings is null)
+        var linkSource = KnownLinkSources.FirstOrDefault(x => url.StartsWith(x.Website));
+        if (linkSource is null)
         {
-            throw new BusinessException(ErrorCodes.UrlNotSupported, "This kind of URL isn't supported");
+            if (!IsUrlValid(url))
+            {
+                throw new BusinessException(ErrorCodes.UnableToParseUrl, "Invalid URL");
+            }
+
+            return (LinkType.UnknownSource, url);
         }
 
-        var match = Regex.Match(url, linkTypeSettings.IdRegexPatter);
+        var match = Regex.Match(url, linkSource.IdRegexPatter);
         if (!match.Success)
         {
             throw new BusinessException(ErrorCodes.UnableToParseUrl, "Unable to parse URL");
         }
 
         var urlId = match.Groups[1].Value;
-        return (linkTypeSettings.LinkType, urlId);
+        return (linkSource.LinkType, urlId);
     }
 
-    public static bool IsUrlSupported(string url)
+    public static bool IsUrlValid(string url)
     {
-        var linkTypeSettings = Settings.FirstOrDefault(x => url.StartsWith(x.Website));
-        if (linkTypeSettings is null)
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
         {
             return false;
         }
 
-        var match = Regex.Match(url, linkTypeSettings.IdRegexPatter);
+        if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
+        {
+            return false;
+        }
 
-        return match.Success;
+        return true;
     }
 
     private class LinkTypeSettings(LinkType linkType, string website, string idRegexPatter)

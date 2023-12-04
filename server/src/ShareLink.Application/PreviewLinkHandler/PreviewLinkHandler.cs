@@ -15,6 +15,7 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
         return linkType switch
         {
             LinkType.Youtube => HandleYoutube(id),
+            LinkType.UnknownSource => Task.FromResult(HandleUnknownSourceLink(id)),
             _ => throw new NotSupportedException($"Link type {linkType} is not supported.")
         };
     }
@@ -42,4 +43,13 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
             Tags = tags,
         };
     }
+
+    private PreviewLinkResponse HandleUnknownSourceLink(string id) =>
+        new()
+        {
+            Title = "",
+            Type = LinkType.UnknownSource,
+            UnknownSource = new UnknownSourceDataDto { Url = id },
+            Tags = Array.Empty<string>(),
+        };
 }
