@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShareLink.Domain.Enums;
 using ShareLink.Domain.Models;
+using ShareLink.Domain.Models.ValueObjects;
 
 namespace ShareLink.Dal.Configurations;
 

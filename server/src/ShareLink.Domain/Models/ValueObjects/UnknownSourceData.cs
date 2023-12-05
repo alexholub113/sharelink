@@ -1,4 +1,4 @@
-namespace ShareLink.Domain.Models;
+namespace ShareLink.Domain.Models.ValueObjects;
 
 public class UnknownSourceData
 {

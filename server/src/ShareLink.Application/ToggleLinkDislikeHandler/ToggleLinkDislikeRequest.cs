@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace ShareLink.Application.ToggleLinkLikeHandler;
+namespace ShareLink.Application.ToggleLinkDislikeHandler;
 
-public class ToggleLinkLikeRequest : IRequest
+public class ToggleLinkDislikeRequest : IRequest
 {
     [Required(ErrorMessage = "Link id is required.")]
     public required string LinkId { get; init; }

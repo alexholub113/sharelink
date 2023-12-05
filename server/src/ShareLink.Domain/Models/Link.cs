@@ -1,5 +1,6 @@
 ﻿using ShareLink.Common.Exceptions;
 using ShareLink.Domain.Enums;
+using ShareLink.Domain.Models.ValueObjects;
 
 namespace ShareLink.Domain.Models;
 
@@ -16,6 +17,8 @@ public class Link
     public UnknownSourceData? UnknownSource { get; init; }
 
     public ICollection<UserProfile> LikedBy { get; } = new List<UserProfile>();
+
+    public ICollection<UserProfile> DislikedBy { get; } = new List<UserProfile>();
 
     public ICollection<UserProfile> SavedBy { get; } = new List<UserProfile>();
 

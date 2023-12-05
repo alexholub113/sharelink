@@ -54,6 +54,21 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 
             modelBuilder.Entity("LinkUserProfile1", b =>
                 {
+                    b.Property<string>("DislikedByUserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DislikedLinksId")
+                        .HasColumnType("text");
+
+                    b.HasKey("DislikedByUserId", "DislikedLinksId");
+
+                    b.HasIndex("DislikedLinksId");
+
+                    b.ToTable("UserDislikedLinks", (string)null);
+                });
+
+            modelBuilder.Entity("LinkUserProfile2", b =>
+                {
                     b.Property<string>("SavedByUserId")
                         .HasColumnType("text");
 
@@ -159,6 +174,21 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 {
                     b.HasOne("ShareLink.Domain.Models.UserProfile", null)
                         .WithMany()
+                        .HasForeignKey("DislikedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShareLink.Domain.Models.Link", null)
+                        .WithMany()
+                        .HasForeignKey("DislikedLinksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LinkUserProfile2", b =>
+                {
+                    b.HasOne("ShareLink.Domain.Models.UserProfile", null)
+                        .WithMany()
                         .HasForeignKey("SavedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -172,7 +202,7 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 
             modelBuilder.Entity("ShareLink.Domain.Models.Link", b =>
                 {
-                    b.OwnsOne("ShareLink.Domain.Models.UnknownSourceData", "UnknownSource", b1 =>
+                    b.OwnsOne("ShareLink.Domain.Models.ValueObjects.UnknownSourceData", "UnknownSource", b1 =>
                         {
                             b1.Property<string>("LinkId")
                                 .HasColumnType("text");
@@ -191,7 +221,7 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                                 .HasForeignKey("LinkId");
                         });
 
-                    b.OwnsOne("ShareLink.Domain.Models.YoutubeData", "Youtube", b1 =>
+                    b.OwnsOne("ShareLink.Domain.Models.ValueObjects.YoutubeData", "Youtube", b1 =>
                         {
                             b1.Property<string>("LinkId")
                                 .HasColumnType("text");

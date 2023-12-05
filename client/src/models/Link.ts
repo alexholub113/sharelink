@@ -11,7 +11,9 @@ type Link = {
     youtube?: YoutubeVideo,
     unknownSource?: UnknownSource,
     likes: number;
+    dislikes: number;
     isLiked: boolean;
+    isDisliked: boolean;
     isSaved: boolean;
     belongsToUser: boolean;
     user: string;

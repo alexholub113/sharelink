@@ -6,7 +6,7 @@ import ILinkService, {
     PreviewLinkResponse,
     DeleteLinkRequest,
     SaveLinkRequest,
-    UpdateLinkRequest, GetListRequest
+    UpdateLinkRequest, GetListRequest, DislikeLinkRequest
 } from './interfaces/ILinkService.ts';
 import HttpClient from '../HttpClient/HttpClient.ts';
 import Link from '../../models/Link.ts';
@@ -63,6 +63,10 @@ class LinkService implements ILinkService {
 
     async like(request: LikeLinkRequest): Promise<void> {
         await this.httpClient.post<LikeLinkRequest, {}>(`${this.baseUrl}/like`, { ...request });
+    }
+
+    async dislike(request: DislikeLinkRequest): Promise<void> {
+        await this.httpClient.post<DislikeLinkRequest, {}>(`${this.baseUrl}/dislike`, { ...request });
     }
 
     async save(request: SaveLinkRequest): Promise<void> {

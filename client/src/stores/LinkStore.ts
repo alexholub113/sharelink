@@ -176,13 +176,33 @@ class LinkStore {
             throw new Error('Link not found');
         }
 
-        await this.linkService.like({ linkId: id, state: !link.isLiked });
+        await this.linkService.like({ linkId: id });
 
         const index = this.state.links.findIndex(link => link.id === id);
         this.state.links[index] = {
             ...link,
             isLiked: !link.isLiked,
+            isDisliked: false,
+            dislikes: link.isDisliked && !link.isLiked ? link.dislikes - 1 : link.dislikes,
             likes: link.isLiked ? link.likes - 1 : link.likes + 1
+        };
+    };
+
+    public dislikeLink = async (id: string) => {
+        const link = this.state.links.find(link => link.id === id);
+        if (!link) {
+            throw new Error('Link not found');
+        }
+
+        await this.linkService.dislike({ linkId: id });
+
+        const index = this.state.links.findIndex(link => link.id === id);
+        this.state.links[index] = {
+            ...link,
+            isLiked: false,
+            isDisliked: !link.isDisliked,
+            likes: link.isLiked && !link.isDisliked ? link.likes - 1 : link.likes,
+            dislikes: link.isDisliked ? link.dislikes - 1 : link.dislikes + 1
         };
     };
 
@@ -192,7 +212,7 @@ class LinkStore {
             throw new Error('Link not found');
         }
 
-        await this.linkService.save({ linkId: id, state: !link.isSaved });
+        await this.linkService.save({ linkId: id });
 
         const index = this.state.links.findIndex(link => link.id === id);
         this.state.links[index] = {

@@ -7,6 +7,7 @@ using ShareLink.Application.CreateLinkHandler;
 using ShareLink.Application.DeleteLinkHandler;
 using ShareLink.Application.GetLinkListHandler;
 using ShareLink.Application.PreviewLinkHandler;
+using ShareLink.Application.ToggleLinkDislikeHandler;
 using ShareLink.Application.ToggleLinkLikeHandler;
 using ShareLink.Application.ToggleLinkSaveHandler;
 using ShareLink.Application.UpdateLinkHandler;
@@ -41,6 +42,13 @@ public class LinksController(ISender sender, UserManager<ApplicationUser> userMa
     [Authorize]
     [HttpPost("like")]
     public async Task LikeLink([FromBody] ToggleLinkLikeRequest request)
+    {
+        await sender.Send(request);
+    }
+
+    [Authorize]
+    [HttpPost("dislike")]
+    public async Task DislikeLink([FromBody] ToggleLinkDislikeRequest request)
     {
         await sender.Send(request);
     }

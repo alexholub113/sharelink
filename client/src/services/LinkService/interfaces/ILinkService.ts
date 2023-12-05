@@ -33,12 +33,14 @@ export type PreviewLinkRequest = {
 
 export type LikeLinkRequest = {
     linkId: string;
-    state: boolean;
+}
+
+export type DislikeLinkRequest = {
+    linkId: string;
 }
 
 export type SaveLinkRequest = {
     linkId: string;
-    state: boolean;
 }
 
 export type DeleteLinkRequest = {
@@ -58,6 +60,7 @@ interface ILinkService {
     previewLink(request: PreviewLinkRequest): Promise<PreviewLinkResponse>;
     addLink(request: AddLinkRequest): Promise<Link>;
     like(request: LikeLinkRequest): Promise<void>;
+    dislike(request: DislikeLinkRequest): Promise<void>;
     save(request: SaveLinkRequest): Promise<void>;
     delete(request: DeleteLinkRequest): Promise<void>;
     update(request: UpdateLinkRequest): Promise<void>;

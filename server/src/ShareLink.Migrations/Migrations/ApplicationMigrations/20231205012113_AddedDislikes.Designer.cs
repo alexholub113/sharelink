@@ -6,23 +6,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ShareLink.Dal;
-using ShareLink.Domain.Models;
-using ShareLink.Domain.Models.ValueObjects;
 
 #nullable disable
 
 namespace ShareLink.Migrations.Migrations.ApplicationMigrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231127000426_AddedCaseInsansitiveCollation")]
-    partial class AddedCaseInsansitiveCollation
+    [Migration("20231205012113_AddedDislikes")]
+    partial class AddedDislikes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -58,6 +56,21 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 });
 
             modelBuilder.Entity("LinkUserProfile1", b =>
+                {
+                    b.Property<string>("DislikedByUserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DislikedLinksId")
+                        .HasColumnType("text");
+
+                    b.HasKey("DislikedByUserId", "DislikedLinksId");
+
+                    b.HasIndex("DislikedLinksId");
+
+                    b.ToTable("UserDislikedLinks", (string)null);
+                });
+
+            modelBuilder.Entity("LinkUserProfile2", b =>
                 {
                     b.Property<string>("SavedByUserId")
                         .HasColumnType("text");
@@ -96,9 +109,6 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                     b.Property<string>("UserNickname")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<YoutubeData>("Youtube")
-                        .HasColumnType("jsonb");
 
                     b.HasKey("Id");
 
@@ -167,6 +177,21 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                 {
                     b.HasOne("ShareLink.Domain.Models.UserProfile", null)
                         .WithMany()
+                        .HasForeignKey("DislikedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShareLink.Domain.Models.Link", null)
+                        .WithMany()
+                        .HasForeignKey("DislikedLinksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LinkUserProfile2", b =>
+                {
+                    b.HasOne("ShareLink.Domain.Models.UserProfile", null)
+                        .WithMany()
                         .HasForeignKey("SavedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -176,6 +201,51 @@ namespace ShareLink.Migrations.Migrations.ApplicationMigrations
                         .HasForeignKey("SavedLinksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ShareLink.Domain.Models.Link", b =>
+                {
+                    b.OwnsOne("ShareLink.Domain.Models.ValueObjects.UnknownSourceData", "UnknownSource", b1 =>
+                        {
+                            b1.Property<string>("LinkId")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("LinkId");
+
+                            b1.ToTable("Links");
+
+                            b1.ToJson("UnknownSource");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LinkId");
+                        });
+
+                    b.OwnsOne("ShareLink.Domain.Models.ValueObjects.YoutubeData", "Youtube", b1 =>
+                        {
+                            b1.Property<string>("LinkId")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("VideoId")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("LinkId");
+
+                            b1.ToTable("Links");
+
+                            b1.ToJson("Youtube");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LinkId");
+                        });
+
+                    b.Navigation("UnknownSource");
+
+                    b.Navigation("Youtube");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,9 +15,14 @@ public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
             .WithMany(l => l.LikedBy)
             .UsingEntity(j => j.ToTable("UserLikedLinks"));
 
-        // Configure the many-to-many relationship for SavedLinks
+        builder.HasMany(u => u.DislikedLinks)
+            .WithMany(l => l.DislikedBy)
+            .UsingEntity(j => j.ToTable("UserDislikedLinks"));
+
         builder.HasMany(u => u.SavedLinks)
             .WithMany(l => l.SavedBy)
             .UsingEntity(j => j.ToTable("UserSavedLinks"));
+
+
     }
 }

@@ -5,29 +5,33 @@ namespace ShareLink.Application.Common.Dto;
 
 public class LinkDto
 {
-    public string Id { get; set; } = null!;
+    public required string Id { get; set; }
 
-    public LinkType Type { get; set; }
+    public LinkType Type { get; init; }
 
-    public string Title { get; set; } = null!;
+    public required string Title { get; init; }
 
-    public YoutubeDataDto? Youtube { get; set; }
+    public YoutubeDataDto? Youtube { get; init; }
 
-    public UnknownSourceDataDto? UnknownSource { get; set; }
+    public UnknownSourceDataDto? UnknownSource { get; init; }
 
-    public string[] Tags { get; set; } = null!;
+    public required string[] Tags { get; init; }
 
-    public int Likes { get; set; }
+    public int Likes { get; init; }
 
-    public bool IsLiked { get; set; }
+    public int Dislikes { get; init; }
 
-    public bool IsSaved { get; set; }
+    public bool IsLiked { get; init; }
 
-    public bool BelongsToUser { get; set; }
+    public bool IsDisliked { get; init; }
 
-    public string User { get; set; } = null!;
+    public bool IsSaved { get; init; }
 
-    public DateTime CreatedAt { get; set; }
+    public bool BelongsToUser { get; init; }
+
+    public required string User { get; init; }
+
+    public DateTime CreatedAt { get; init; }
 
     public bool Editable { get; init; }
 }

@@ -9,6 +9,7 @@ using ShareLink.Application.Common.Services;
 using ShareLink.Common.Exceptions;
 using ShareLink.Domain.Enums;
 using ShareLink.Domain.Models;
+using ShareLink.Domain.Models.ValueObjects;
 
 namespace ShareLink.Application.CreateLinkHandler;
 
@@ -56,7 +57,9 @@ public class CreateLinkHandler(
             Youtube = link.Youtube == null ? null : new YoutubeDataDto { VideoId = link.Youtube.VideoId },
             UnknownSource = link.UnknownSource == null ? null : new UnknownSourceDataDto { Url = link.UnknownSource.Url },
             Likes = 0,
+            Dislikes = 0,
             IsLiked = false,
+            IsDisliked = false,
             IsSaved = false,
             User = link.UserNickname,
             CreatedAt = link.CreatedAt,

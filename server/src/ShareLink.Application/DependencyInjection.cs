@@ -22,7 +22,6 @@ public static class DependencyInjection
 
         services.AddScoped<IUrlParser, UrlParser>();
         services.AddScoped<IGoogleApiService, GoogleApiService>();
-        services.AddScoped<IUserInteractionsService, UserInteractionsService>();
         services.AddScoped<IContentModerator, ContentModerator>();
 
         services.AddMediatR(

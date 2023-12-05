@@ -27,7 +27,7 @@ const LinkInfiniteScrollList = observer(() => {
                                     fetchNextPage={executeLoadMore}
                 threshold={2}>
                     { links.map((link) => (
-                        <div key={link.id} className="link-item-wrapper">
+                        <div key={link.id} className={`link-item-wrapper ${link.dislikes > link.likes && 'opacity-50'}`}>
                             <LinkListItem  link={link} />
                         </div>
                     )) }
