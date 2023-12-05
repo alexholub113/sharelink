@@ -5,7 +5,6 @@ import AddLinkForm from './components/AddLinkForm.tsx';
 import {useState} from 'react';
 import {handleError} from '../../utils/errors.ts';
 import ErrorAlert from '../../components/ErrorAlert.tsx';
-import AddLinkInfoAlert from './components/AddLinkInfoAlert.tsx';
 import LinkListItemSkeleton from '../../components/LinkListItem/LinkListItemSkeleton.tsx';
 
 export const isUrlValid = (url: string): boolean => {
@@ -52,8 +51,6 @@ const AddLinkScreen = observer(({ onSuccess }: { onSuccess: () => void}) => {
         <div className="flex flex-col justify-center  gap-4 w-full max-w-screen-sm">
             <UrlInput onUrlSubmit={handleUrlSubmit} isLoading={isLoading} initialUrl={url} />
             { !isLoading && previewErrorMessage && <ErrorAlert message={previewErrorMessage} onClose={() => setPreviewErrorMessage(undefined)} /> }
-            { !isLoading && (!url || previewErrorMessage) && <AddLinkInfoAlert /> }
-
             <div className="flex flex-col items-center justify-center gap-4 mt-6">
                 { isLoading && <LinkListItemSkeleton /> }
                 { link && <AddLinkForm onSuccess={onSuccess} link={link} /> }

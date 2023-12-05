@@ -11,11 +11,11 @@ const getDomainName = (url: string): string => {
 
 const UnknownSourceContent = ({ url }: UnknownSource) => (
     <a href={url} target="_blank" rel="noreferrer">
-        <div className="w-full relative flex items-center justify-center text-zinc-500 text-center">
-            <svg className="aspect-video p-6 pb-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+        <div className="group w-full relative flex items-center justify-center text-zinc-600 text-center dark-border" style={{background: "#212125"}}>
+            <svg className="aspect-video group-hover:text-zinc-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition p-6 pb-16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
             </svg>
-            <span className="absolute bottom-2 text-sm font-semibold px-2 break-all">{getDomainName(url)}</span>
+            <span className="absolute group-hover:text-zinc-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition bottom-2 text-sm font-semibold px-2 break-all">{getDomainName(url)}</span>
         </div>
     </a>
 );
