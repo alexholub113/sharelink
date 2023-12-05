@@ -7,6 +7,7 @@ import AddLinkScreen from './screens/AddLink/AddLinkScreen.tsx';
 import {useUserStore} from './contexts/AppContext.tsx';
 import {observer} from 'mobx-react-lite';
 import Footer from './components/Footer.tsx';
+import Header from './components/Header.tsx';
 
 const App = observer(() => {
     const [section, setSection] = useState<'list' | 'addLink'>('list');
@@ -20,8 +21,10 @@ const App = observer(() => {
         <div className="flex flex-col justify-start min-h-screen">
             <div className="flex-grow">
                 <Toolbar />
+
                 <Layout>
                     <>
+                        <Header />
                         <div className="mb-8">
                             <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
                         </div>
