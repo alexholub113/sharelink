@@ -17,14 +17,16 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
             throw new UnauthorizedAccessException("You must be logged in to access this resource");
         }
 
-        var links = await context.Links
+        var query = context.Links
             .AsNoTracking()
             .Include(x => x.Tags)
             .FilterByTags(request.Tags)
             .FilterByTitle(request.Title)
             .FilterLiked(request.Liked, userId)
             .FilterSaved(request.Saved, userId)
-            .FilterOwned(request.Owned, userId)
+            .FilterOwned(request.Owned, userId);
+
+        var links = await query
             .OrderByDescending(x => x.CreatedAt)
             .Select(x => new LinkDto
             {
@@ -45,9 +47,10 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
                 Editable = userId != null && userId == x.UserId
             })
             .PaginatedListAsync(request.PageNumber, request.PageSize);
-        var tags = await context.Tags
-            .Include(x => x.Links)
-            .AsNoTracking()
+        var tags = await query
+            .Include(x => x.Tags).ThenInclude(x => x.Links)
+            .SelectMany(x => x.Tags)
+            .Distinct()
             .Where(x => x.Links.Count > 0)
             .Select(x => new TagDto(x.Name, x.Links.Count))
             .ToArrayAsync(cancellationToken);
