@@ -50,9 +50,8 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
         var tags = await query
             .Include(x => x.Tags).ThenInclude(x => x.Links)
             .SelectMany(x => x.Tags)
-            .Distinct()
-            .Where(x => x.Links.Count > 0)
-            .Select(x => new TagDto(x.Name, x.Links.Count))
+            .GroupBy(x => x.Name)
+            .Select(x => new TagDto(x.Key, x.Count()))
             .ToArrayAsync(cancellationToken);
 
         return new GetLinkListResponse(links, tags);
