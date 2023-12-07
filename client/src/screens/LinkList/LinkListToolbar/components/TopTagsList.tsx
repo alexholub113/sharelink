@@ -4,7 +4,7 @@ import TagBadge from '../../../../components/TagBadge.tsx';
 import {useLinkStore} from '../../../../contexts/AppContext.tsx';
 import {useMemo, useState} from 'react';
 
-const MaxTagsShown = 6;
+const MaxTagsShown = 10;
 
 const TopTagsList = observer(() => {
     const { sortedTags, state: { tags, filter: { tags: appliedTags }, isListLoading }, toggleTagFilter } = useLinkStore();
