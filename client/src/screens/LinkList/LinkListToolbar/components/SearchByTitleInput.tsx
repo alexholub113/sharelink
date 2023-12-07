@@ -1,10 +1,11 @@
-﻿import Button from '../../Button.tsx';
-import SearchIcon from '../../SearchIcon.tsx';
-import {useLinkStore} from '../../../contexts/AppContext.tsx';
-import useDebounce from '../../../hooks/useDebounce.ts';
-import {observer} from 'mobx-react-lite';
-import FloatingInputWrapper from '../../FloatingInput/FloatingInputWrapper.tsx';
-import FloatingInput from '../../FloatingInput/FloatingInput.tsx';
+﻿import {observer} from 'mobx-react-lite';
+import {useLinkStore} from '../../../../contexts/AppContext.tsx';
+import useDebounce from '../../../../hooks/useDebounce.ts';
+import FloatingInputWrapper from '../../../../components/FloatingInput/FloatingInputWrapper.tsx';
+import SearchIcon from '../../../../components/SearchIcon.tsx';
+import FloatingInput from '../../../../components/FloatingInput/FloatingInput.tsx';
+import Button from '../../../../components/Button.tsx';
+
 
 const SearchByTitleInput = observer(() => {
     const { setFilterTitle, getList, state: { filter: { title }}} = useLinkStore();

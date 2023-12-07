@@ -1,9 +1,9 @@
 import TopTagsList from './components/TopTagsList.tsx';
 import SearchByTitleInput from './components/SearchByTitleInput.tsx';
 import UserInteractionsFilter from './components/UserInteractionsFilter.tsx';
-import {useLinkStore} from '../../contexts/AppContext.tsx';
-import TagSearchInput from '../LinkListItem/TagSearchInput.tsx';
 import { observer } from 'mobx-react-lite';
+import TagSearchInput from '../../../components/LinkListItem/TagSearchInput.tsx';
+import {useLinkStore} from '../../../contexts/AppContext.tsx';
 
 const LinkListToolbar = observer(() => {
     const { toggleTagFilter, state: { filter: { tags }} } = useLinkStore();
