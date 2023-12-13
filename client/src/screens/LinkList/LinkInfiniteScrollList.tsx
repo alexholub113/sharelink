@@ -11,6 +11,11 @@ const Skeletons = () => (
         <LinkListItemSkeleton />
         <LinkListItemSkeleton />
         <LinkListItemSkeleton />
+        <LinkListItemSkeleton />
+        <LinkListItemSkeleton />
+        <LinkListItemSkeleton />
+        <LinkListItemSkeleton />
+        <LinkListItemSkeleton />
     </>
 );
 
