@@ -1,13 +1,15 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import Events from '../constants/events.ts';
-import safelyParseJson from '../utils/safelyParseJson.ts';
 import IAccountService from '../services/AccountService/interfaces/IAccountService.ts';
 import UserInfo from '../models/UserInfo.ts';
 
 type UserStoreState = {
     info?: UserInfo | undefined | null;
+    expireDate?: Date | undefined | null;
     showLoginModal: boolean;
 };
+
+const expirationTime = 15 * 24 * 60 * 60 * 1000;
 
 class UserStore {
     constructor(private readonly accountService: IAccountService) {
@@ -22,6 +24,22 @@ class UserStore {
     };
 
     get isAuthenticated(): boolean {
+        if (this.state.expireDate) {
+            if (this.isExpired(this.state.expireDate)) {
+                return false;
+            }
+        }
+
+        const expireDateCookie = localStorage.getItem('expireDate');
+        if (!expireDateCookie) {
+            return false;
+        }
+
+        const expireDate = new Date(expireDateCookie);
+        if (this.isExpired(expireDate)) {
+            return false;
+        }
+
         return !!this.state.info?.nickname;
     }
 
@@ -29,31 +47,22 @@ class UserStore {
         this.state = {
             showLoginModal: true,
             info: undefined,
+            expireDate: undefined,
         }
     };
 
     public init = async (): Promise<void> => {
-        const userStorageItem = safelyParseJson(localStorage.getItem('user'));
-        if (userStorageItem && userStorageItem.nickname) {
-            runInAction(() => {
-                this.state = {
-                    ...this.state,
-                    info: {
-                        nickname: userStorageItem.nickname,
-                    },
-                };
-            });
-
-            return ;
-        }
-
         const userInfo = await this.accountService.userInfo();
         localStorage.setItem('user', JSON.stringify(userInfo));
+        const expireDate = new Date();
+        expireDate.setTime(expireDate.getTime() + expirationTime);
+        localStorage.setItem('expireDate', expireDate.toString());
 
         runInAction(() => {
             this.state = {
                 ...this.state,
-                info: userInfo
+                expireDate,
+                info: userInfo,
             };
         });
     }
@@ -68,8 +77,7 @@ class UserStore {
             }
         });
 
-        await this.init();
-
+        return this.init();
     };
 
     public signOut = async (): Promise<void> => {
@@ -86,6 +94,7 @@ class UserStore {
         runInAction(() => {
             this.state = {
                 info: undefined,
+                expireDate: undefined,
                 showLoginModal: false
             }
         });
@@ -110,6 +119,11 @@ class UserStore {
             ...this.state,
             showLoginModal: false,
         }
+    };
+
+    private isExpired = (expireDate: Date): boolean => {
+        const now = new Date();
+        return now.getTime() > expireDate.getTime();
     };
 }
 
