@@ -18,8 +18,6 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
         }
 
         var query = context.Links
-            .AsNoTracking()
-            .Include(x => x.Tags)
             .FilterByTags(request.Tags)
             .FilterByTitle(request.Title)
             .FilterLiked(request.Liked, userId)
@@ -46,12 +44,13 @@ public class GetLinkListHandler(IApplicationDbContext context, IUserContext user
                 BelongsToUser = userId != null && userId == x.UserId,
                 Editable = userId != null && userId == x.UserId
             })
+            .AsNoTracking()
             .PaginatedListAsync(request.PageNumber, request.PageSize);
         var tags = await query
-            .Include(x => x.Tags).ThenInclude(x => x.Links)
             .SelectMany(x => x.Tags)
             .GroupBy(x => x.Name)
             .Select(x => new TagDto(x.Key, x.Count()))
+            .AsNoTracking()
             .ToArrayAsync(cancellationToken);
 
         return new GetLinkListResponse(links, tags);

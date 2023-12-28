@@ -31,7 +31,7 @@ const TopTagsList = observer(() => {
                         show more
                     </button>
                 )}
-                { showAll && (
+                { showAll && sortedTags.length > MaxTagsShown && (
                     <button onClick={() => setShowAll(false)} className="py-1 font-semibold text-zinc-500 hover:text-zinc-300">
                         show less
                     </button>
