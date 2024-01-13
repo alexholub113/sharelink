@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using ShareLink.Application.Common.Abstraction;
 using ShareLink.Application.Common.Dto;
 using ShareLink.Application.Common.Services;
 using ShareLink.Domain;
@@ -6,7 +8,7 @@ using ShareLink.Domain.Enums;
 
 namespace ShareLink.Application.PreviewLinkHandler;
 
-public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleApiService)
+public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleApiService, IApplicationDbContext context)
     : IRequestHandler<PreviewLinkRequest, PreviewLinkResponse>
 {
     public Task<PreviewLinkResponse> Handle(PreviewLinkRequest request, CancellationToken cancellationToken)
@@ -23,12 +25,7 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
     private async Task<PreviewLinkResponse> HandleYoutube(string id)
     {
         var videoInfo = await googleApiService.GetYoutubeVideoInfo(id);
-        var tags = videoInfo.Tags
-            .Select(tag => tag.Trim().ToLower())
-            .Distinct()
-            .Where(x => x.Length is >= ValidationRules.Tag.MinTagLength and <= ValidationRules.Tag.MaxTagLength)
-            .Take(3)
-            .ToArray();
+        var tags = await FindMostMentionedTags(videoInfo.Tags);
         var title = videoInfo.Title.Length > ValidationRules.LinkTitle.MaxLength
             ? videoInfo.Title[..(ValidationRules.LinkTitle.MaxLength - 3)] + "..."
             : videoInfo.Title;
@@ -42,6 +39,25 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
             },
             Tags = tags,
         };
+    }
+
+    private async Task<string[]> FindMostMentionedTags(IEnumerable<string> youtubeVideoTags)
+    {
+        var allTags = await context.Tags.Select(tag => tag.Name).ToArrayAsync();
+        var tagOccurrences = new Dictionary<string, int>();
+
+        foreach (var videoTag in youtubeVideoTags.Distinct())
+        {
+            var lowerCaseVideoTag = videoTag.ToLowerInvariant();
+            var matchedTags = allTags.Where(tag => lowerCaseVideoTag.Contains(tag));
+            foreach (var matchedTag in matchedTags)
+            {
+                tagOccurrences.TryGetValue(matchedTag, out var value);
+                tagOccurrences[matchedTag] = ++value;
+            }
+        }
+
+        return tagOccurrences.OrderByDescending(kv => kv.Value).Take(ValidationRules.Tag.MaxTagsCount).Select(kv => kv.Key).ToArray();
     }
 
     private PreviewLinkResponse HandleUnknownSourceLink(string id) =>
