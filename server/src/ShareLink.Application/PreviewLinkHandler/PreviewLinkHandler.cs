@@ -57,7 +57,7 @@ public class PreviewLinkHandler(IUrlParser urlParser, IGoogleApiService googleAp
             }
         }
 
-        return tagOccurrences.OrderByDescending(kv => kv.Value).Take(ValidationRules.Tag.MaxTagsCount).Select(kv => kv.Key).ToArray();
+        return tagOccurrences.OrderByDescending(kv => kv.Value).Take(ValidationRules.Tag.MaxSuggestedTagsCount).Select(kv => kv.Key).ToArray();
     }
 
     private PreviewLinkResponse HandleUnknownSourceLink(string id) =>

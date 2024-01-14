@@ -12,6 +12,7 @@ public static class ValidationRules
     {
         public const int MinTagsCount = 1;
         public const int MaxTagsCount = 5;
+        public const int MaxSuggestedTagsCount = 3;
         public const int MinTagLength = 2;
         public const int MaxTagLength = 30;
     }
