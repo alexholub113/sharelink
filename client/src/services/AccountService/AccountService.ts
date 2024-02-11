@@ -10,7 +10,7 @@ import UserInfo from '../../models/UserInfo.ts';
 
 
 class AccountService implements IAccountService {
-    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/account`;
+    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/api/v1/identity`;
 
     constructor(private readonly httpClient: HttpClient) {
     }
@@ -32,7 +32,7 @@ class AccountService implements IAccountService {
     }
 
     async userInfo(): Promise<UserInfo | null> {
-        const response = await this.httpClient.get<UserInfo | null>(`${this.baseUrl}/userInfo`);
+        const response = await this.httpClient.post<{}, UserInfo>(`${this.baseUrl}/getuserInfo`, {});
 
         return response.data;
     }

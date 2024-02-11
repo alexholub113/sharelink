@@ -77,8 +77,7 @@ public static class CommandEndpointRouteBuilderExtensions
                             }
                             : new BindingInfo
                             {
-                                BinderModelName = $"__injection${x.Name}",
-                                BindingSource = BindingSource.Services,
+                                BindingSource = BindingSource.Special,
                             }
                     })
                 .ToList();
@@ -195,7 +194,7 @@ public static class CommandEndpointRouteBuilderExtensions
     {
         [HttpPost]
         [Authorize]
-        public Task<string?> Handle([FromBody] string? request)
+        public Task<string?> Handle([FromBody] string? request, CancellationToken token = default)
         {
             throw new NotImplementedException();
         }

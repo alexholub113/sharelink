@@ -1,14 +1,9 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging.AzureAppServices;
-using ShareLink.Application;
-using ShareLink.Dal;
-using ShareLink.Migrations;
-using ShareLink.Identity;
 using ShareLink.Identity.Extensions;
+using ShareLink.Infrastructure.Commands;
 using ShareLink.Migrations.Initializers;
-using ShareLink.Web.Extensions;
-using ShareLink.Web.Infrastructure;
+using ShareLink.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddAzureWebAppDiagnostics();
@@ -28,13 +23,12 @@ builder.Services.AddControllers()
     })
     .ConfigureInvalidModelStateResponseFactory();
 
-builder
-    .Services
-    .AddLogging()
-    .AddApplicationServices(builder.Configuration)
-    .AddIdentityServices(builder.Configuration, builder.Environment)
-    .AddDalServices(builder.Configuration)
-    .AddMigrationsServices(builder.Configuration);
+builder.Services.AddLogging();
+
+ShareLink.Application.Startup.ConfigureServices(builder.Services, builder.Configuration);
+ShareLink.Dal.Startup.ConfigureServices(builder.Services, builder.Configuration);
+ShareLink.Identity.Startup.ConfigureServices(builder.Services, builder.Configuration);
+ShareLink.Migrations.Startup.ConfigureServices(builder.Services, builder.Configuration);
 
 builder.Services.AddHealthChecks();
 builder.Services.AddCors();
@@ -60,14 +54,17 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseExceptionHandler(options => { });
 
-app
-    .UseRouting()
-    .UseAuthentication()
-    .UseAuthorization()
-    .UseEndpoints(endpoints =>
+app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
+#pragma warning disable ASP0014
+app.UseEndpoints(
+    endpoints =>
     {
+        endpoints.MapCommands();
         endpoints.MapControllers();
     });
+#pragma warning restore ASP0014
 
 app.MapHealthChecks("/healthz");
 

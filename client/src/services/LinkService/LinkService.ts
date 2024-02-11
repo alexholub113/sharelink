@@ -13,36 +13,13 @@ import Link from '../../models/Link.ts';
 
 class LinkService implements ILinkService {
 
-    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/api/links`;
+    private readonly baseUrl = `${import.meta.env.VITE_SHARELINK_API_BASE_URL}/api/v1/links`;
 
     constructor(private readonly httpClient: HttpClient) {
     }
 
     async getList(request: GetListRequest): Promise<GetListResponse> {
-        const queryParams = new URLSearchParams();
-        if (request.pageNumber) {
-            queryParams.set('pageNumber', request.pageNumber.toString());
-        }
-        if (request.pageSize) {
-            queryParams.set('pageSize', request.pageSize.toString());
-        }
-        if (request.tags) {
-            queryParams.set('tags', request.tags.join(','));
-        }
-        if (request.title) {
-            queryParams.set('title', request.title);
-        }
-        if (request.saved) {
-            queryParams.set('saved', request.saved.toString());
-        }
-        if (request.liked) {
-            queryParams.set('liked', request.liked.toString());
-        }
-        if (request.owned) {
-            queryParams.set('owned', request.owned.toString());
-        }
-
-        const response = await this.httpClient.get<GetListResponse>(`${this.baseUrl}/list?${queryParams.toString()}`);
+        const response = await this.httpClient.post<GetListRequest, GetListResponse>(`${this.baseUrl}/getlist`, {...request});
 
         return response.data;
     }
@@ -62,15 +39,15 @@ class LinkService implements ILinkService {
     }
 
     async like(request: LikeLinkRequest): Promise<void> {
-        await this.httpClient.post<LikeLinkRequest, {}>(`${this.baseUrl}/like`, { ...request });
+        await this.httpClient.post<LikeLinkRequest, {}>(`${this.baseUrl}/togglelike`, { ...request });
     }
 
     async dislike(request: DislikeLinkRequest): Promise<void> {
-        await this.httpClient.post<DislikeLinkRequest, {}>(`${this.baseUrl}/dislike`, { ...request });
+        await this.httpClient.post<DislikeLinkRequest, {}>(`${this.baseUrl}/toggledislike`, { ...request });
     }
 
     async save(request: SaveLinkRequest): Promise<void> {
-        await this.httpClient.post<SaveLinkRequest, {}>(`${this.baseUrl}/save`, { ...request });
+        await this.httpClient.post<SaveLinkRequest, {}>(`${this.baseUrl}/togglesave`, { ...request });
     }
 
     async delete(request: DeleteLinkRequest): Promise<void> {

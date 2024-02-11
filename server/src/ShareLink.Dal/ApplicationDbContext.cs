@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ShareLink.Application.Common.Abstraction;
+using ShareLink.Application.Abstraction;
 using ShareLink.Domain.Models;
 
 namespace ShareLink.Dal;

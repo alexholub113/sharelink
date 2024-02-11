@@ -44,6 +44,7 @@ class UserStore {
     }
 
     handleUnauthorizedResponse = () => {
+        console.log('Unauthorized response received');
         this.state = {
             showLoginModal: true,
             info: undefined,

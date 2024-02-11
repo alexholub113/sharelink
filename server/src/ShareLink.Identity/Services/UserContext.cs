@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using ShareLink.Application.Common.Abstraction;
+using ShareLink.Application.Abstraction;
 
 namespace ShareLink.Identity.Services;
 
