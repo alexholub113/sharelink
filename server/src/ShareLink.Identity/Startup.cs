@@ -85,7 +85,8 @@ public class Startup
         services.AddAuthorizationBuilder();
         services.AddIdentityCore<ApplicationUser>()
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<AppIdentityDbContext>();
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
+            .AddApiEndpoints();
 
         services.AddCommandsFromAssembly<Startup>((type, builder) =>
         {

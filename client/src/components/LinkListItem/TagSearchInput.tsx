@@ -66,7 +66,7 @@ const TagSearchInput = ({ exclude, className, onTagSelect, showSuggestionsInitia
                    onChange={(e) => setUserInput(e.currentTarget.value)}
                    onFocus={handleOnFocus}
                    placeholder="Search tag"
-                   className={`relative pl-10 pr-4 py-2 input-border-blue group secondary-text-color dark-border w-[9rem] bg-zinc-900 focus:outline-none font-medium rounded-full text-sm
+                   className={`relative pl-10 pr-4 py-2 input-border-blue group secondary-text-color dark-border w-[10rem] bg-zinc-900 focus:outline-none font-medium rounded-full text-sm
                     ${className}`} />
             <SearchIcon />
             { showSuggestions && (
