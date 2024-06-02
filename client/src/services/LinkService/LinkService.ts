@@ -10,6 +10,7 @@ import ILinkService, {
 } from './interfaces/ILinkService.ts';
 import HttpClient from '../HttpClient/HttpClient.ts';
 import Link from '../../models/Link.ts';
+import {getListFakeData} from './FakeData.ts';
 
 class LinkService implements ILinkService {
 
@@ -19,6 +20,10 @@ class LinkService implements ILinkService {
     }
 
     async getList(request: GetListRequest): Promise<GetListResponse> {
+        if (import.meta.env.VITE_MOCK_API === 'true') {
+            return getListFakeData;
+        }
+
         const response = await this.httpClient.post<GetListRequest, GetListResponse>(`${this.baseUrl}/getlist`, {...request});
 
         return response.data;

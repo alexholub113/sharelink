@@ -13,7 +13,7 @@ const Modal = ({ children, onClose, priority }: ModalProps) => {
 
     return (
         <>
-            <div className="top-0 left-0 w-full h-full fixed overflow-y-auto bg-black opacity-80"></div>
+            <div className="top-0 left-0 w-full h-full fixed overflow-y-auto bg-black opacity-50"></div>
             <FadeDiv className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${priority === 'primary' ? 'z-50' : 'z-40'}`}>
                 <div ref={modalRef} className="relative w-full max-w-md rounded-lg shadow-2xl bg-white dark-background mx-3 md:mx-0">
                     <Button type="button" onClick={onClose} className="absolute top-3 right-2.5 bg-transparent text-sm items-center dark:text-zinc-400 ml-auto inline-flex justify-center dark:hover:text-zinc-300">
