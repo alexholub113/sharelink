@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-using ShareLink.Domain.Models;
-using ShareLink.Domain.Models.ValueObjects;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using ShareLink.Links.Api.Models.ValueObjects;
 
 #nullable disable
 

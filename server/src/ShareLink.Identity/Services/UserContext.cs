@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using ShareLink.Application.Abstraction;
+using ShareLink.Links.Api.Abstraction;
 
-namespace ShareLink.Identity.Services;
+namespace ShareLink.Identity.Api.Services;
 
 public class UserContext(IHttpContextAccessor contextAccessor) : IUserContext
 {

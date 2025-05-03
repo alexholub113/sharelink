@@ -32,7 +32,7 @@ class AccountService implements IAccountService {
     }
 
     async userInfo(): Promise<UserInfo | null> {
-        const response = await this.httpClient.post<{}, UserInfo>(`${this.baseUrl}/getuserInfo`, {});
+        const response = await this.httpClient.get<UserInfo>(`${this.baseUrl}/getuserInfo`);
 
         return response.data;
     }

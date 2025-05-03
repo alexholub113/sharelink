@@ -1,4 +1,4 @@
-namespace ShareLink.Application.Abstraction;
+namespace ShareLink.Links.Api.Abstraction;
 
 public interface IUserContext
 {

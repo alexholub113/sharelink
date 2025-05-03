@@ -1,4 +1,4 @@
-namespace ShareLink.Identity;
+namespace ShareLink.Identity.Api;
 
 public static class Roles
 {

@@ -1,10 +1,10 @@
 ﻿using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Microsoft.Extensions.Options;
-using ShareLink.Application.Configurations;
 using ShareLink.Common.Exceptions;
+using ShareLink.Links.Api.Configurations;
 
-namespace ShareLink.Application.Services;
+namespace ShareLink.Links.Api.Services;
 
 public class VideoInfo(string id, string title, string[] tags)
 {

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using ShareLink.Identity.Services;
+using ShareLink.Identity.Api.Services;
 
-namespace ShareLink.Identity.Extensions;
+namespace ShareLink.Identity.Api.Extensions;
 
 public static class WebApplicationExtensions
 {

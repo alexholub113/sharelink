@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using ShareLink.Common.Exceptions;
-using ShareLink.Domain.Enums;
+using ShareLink.Links.Api.Enums;
 
-namespace ShareLink.Application.Services;
+namespace ShareLink.Links.Api.Services;
 
 public interface IUrlParser
 {

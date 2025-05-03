@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShareLink.Identity;
+namespace ShareLink.Identity.Api;
 
 public class AppIdentityDbContext : IdentityDbContext<ApplicationUser>
 {

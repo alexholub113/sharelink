@@ -1,4 +1,4 @@
-﻿namespace ShareLink.Application.Dto;
+﻿namespace ShareLink.Links.Api.Dto;
 
 public class YoutubeDataDto
 {

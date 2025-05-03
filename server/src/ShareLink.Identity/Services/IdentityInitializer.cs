@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace ShareLink.Identity.Services;
+namespace ShareLink.Identity.Api.Services;
 
 internal class IdentityInitializer(
     IOptions<AuthenticationConfiguration> authenticationConfiguration,

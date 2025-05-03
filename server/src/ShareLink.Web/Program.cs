@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging.AzureAppServices;
-using ShareLink.Identity.Extensions;
-using ShareLink.Infrastructure.Commands;
+using ShareLink.Identity.Api.Extensions;
+using ShareLink.Infrastructure.Extensions;
 using ShareLink.Migrations.Initializers;
 using ShareLink.Web;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddAzureWebAppDiagnostics();
@@ -22,12 +22,13 @@ builder.Services.AddControllers()
         opts.JsonSerializerOptions.Converters.Add(enumConverter);
     })
     .ConfigureInvalidModelStateResponseFactory();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddLogging();
 
-ShareLink.Application.Startup.ConfigureServices(builder.Services, builder.Configuration);
+ShareLink.Links.Api.Startup.ConfigureServices(builder.Services, builder.Configuration);
 ShareLink.Dal.Startup.ConfigureServices(builder.Services, builder.Configuration);
-ShareLink.Identity.Startup.ConfigureServices(builder.Services, builder.Configuration);
+ShareLink.Identity.Api.Startup.ConfigureServices(builder.Services, builder.Configuration);
 ShareLink.Migrations.Startup.ConfigureServices(builder.Services, builder.Configuration);
 
 builder.Services.AddHealthChecks();
@@ -36,6 +37,12 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 await app.RunMigrations();
 await app.InitializeIdentity();
@@ -57,11 +64,11 @@ app.UseExceptionHandler(options => { });
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
+app.MapEndpoints();
 #pragma warning disable ASP0014
 app.UseEndpoints(
     endpoints =>
     {
-        endpoints.MapCommands();
         endpoints.MapControllers();
     });
 #pragma warning restore ASP0014

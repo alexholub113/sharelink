@@ -1,6 +1,6 @@
-﻿using ShareLink.Domain.Enums;
+﻿using ShareLink.Links.Api.Enums;
 
-namespace ShareLink.Application.Dto;
+namespace ShareLink.Links.Api.Dto;
 
 public class LinkDto
 {

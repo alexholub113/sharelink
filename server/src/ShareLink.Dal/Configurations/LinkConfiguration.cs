@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShareLink.Domain.Enums;
-using ShareLink.Domain.Models;
-using ShareLink.Domain.Models.ValueObjects;
+using ShareLink.Links.Api.Enums;
+using ShareLink.Links.Api.Models;
+using ShareLink.Links.Api.Models.ValueObjects;
 
 namespace ShareLink.Dal.Configurations;
 

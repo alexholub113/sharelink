@@ -1,10 +1,10 @@
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using ShareLink.Application.Abstraction;
 using ShareLink.Common.Exceptions;
-using ShareLink.Domain.Models;
+using ShareLink.Links.Api.Abstraction;
+using ShareLink.Links.Api.Models;
 
-namespace ShareLink.Application.Extensions;
+namespace ShareLink.Links.Api.Extensions;
 
 public static class ApplicationDbContextExtensions
 {

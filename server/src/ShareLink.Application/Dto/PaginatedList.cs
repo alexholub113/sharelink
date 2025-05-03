@@ -1,4 +1,4 @@
-﻿namespace ShareLink.Application.Dto;
+﻿namespace ShareLink.Links.Api.Dto;
 
 public class PaginatedList<T>(IReadOnlyCollection<T> items, int totalCount, int pageNumber, int totalPages)
 {

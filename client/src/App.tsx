@@ -12,11 +12,19 @@ import MockApiWarning from './components/MockApiWarning.tsx';
 
 const App = observer(() => {
     const [section, setSection] = useState<'list' | 'addLink'>('list');
-    const { init } = useUserStore();
+    const { init, isAuthenticated, showSignInModal } = useUserStore();
 
     useEffect(() => {
         init();
     }, [init]);
+    
+    const handleAddLinkButton = () => {
+        if (section === 'list' && !isAuthenticated) {
+            showSignInModal();
+        }
+
+        setSection(section === 'list' ? 'addLink' : 'list');
+    };
 
     return (
         <div className="flex flex-col justify-start min-h-screen">
@@ -28,7 +36,7 @@ const App = observer(() => {
                     <>
                         <Header />
                         <div className="mb-8">
-                            <AddLinkButton showAddLink={section == 'list'} onClick={() => setSection(section === 'list' ? 'addLink' : 'list')} />
+                            <AddLinkButton showAddLink={section == 'list'} onClick={handleAddLinkButton} />
                         </div>
                         { section === 'list' && <LinkListScreen /> }
                         { section === 'addLink' && <AddLinkScreen onSuccess={() => setSection('list')} /> }

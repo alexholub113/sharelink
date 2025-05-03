@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShareLink.Identity.Services;
+namespace ShareLink.Identity.Api.Services;
 
 public class OAuthEventHandler(AppIdentityDbContext appIdentityDbContext) : IOAuthEventHandler
 {

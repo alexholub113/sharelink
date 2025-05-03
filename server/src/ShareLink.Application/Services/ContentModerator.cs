@@ -1,9 +1,9 @@
 using System.Text;
 using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Microsoft.Extensions.Options;
-using ShareLink.Application.Configurations;
+using ShareLink.Links.Api.Configurations;
 
-namespace ShareLink.Application.Services;
+namespace ShareLink.Links.Api.Services;
 
 public interface IContentModerator
 {

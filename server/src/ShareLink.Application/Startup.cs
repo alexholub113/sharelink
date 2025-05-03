@@ -1,11 +1,10 @@
-﻿using System.Text.RegularExpressions;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareLink.Application.Configurations;
-using ShareLink.Application.Services;
-using ShareLink.Infrastructure.Commands;
+using ShareLink.Infrastructure.Extensions;
+using ShareLink.Links.Api.Configurations;
+using ShareLink.Links.Api.Services;
 
-namespace ShareLink.Application;
+namespace ShareLink.Links.Api;
 
 public class Startup
 {
@@ -17,10 +16,6 @@ public class Startup
         services.AddScoped<IGoogleApiService, GoogleApiService>();
         services.AddScoped<IContentModerator, ContentModerator>();
 
-        services.AddCommandsFromAssembly<Startup>((type, builder) =>
-        {
-            var name = Regex.Replace(type.Name, @"Handler$", string.Empty).ToLowerInvariant();
-            builder.Route = $"/api/v1/links/{name}";
-        });
+        services.AddEndpoints(typeof(Startup).Assembly);
     }
 }

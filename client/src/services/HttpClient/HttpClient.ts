@@ -17,14 +17,24 @@ const responseInterceptors: ResponseInterceptor[] = [
 ];
 export default class HttpClient implements TransportInterface<RequestInit> {
 
-    public post<TRequestBody, TResponse>(url: string, body: TRequestBody): Promise<HttpResponse<TResponse>> {
+    public post<TRequestBody, TResponse>(url: string, body: TRequestBody | undefined = undefined): Promise<HttpResponse<TResponse>> {
         const headers = new Headers();
         headers.append('content-type', 'application/json');
-        return this.request(url, { body: JSON.stringify(body), method: 'POST', headers });
+        return this.request(url, { body: !!body ? JSON.stringify(body) : null, method: 'POST', headers });
+    }
+
+    public put<TRequestBody, TResponse>(url: string, body: TRequestBody | undefined = undefined): Promise<HttpResponse<TResponse>> {
+        const headers = new Headers();
+        headers.append('content-type', 'application/json');
+        return this.request(url, { body: !!body ? JSON.stringify(body) : null, method: 'PUT', headers });
     }
 
     public get<T>(url: string): Promise<HttpResponse<T>> {
         return this.request(url, { method: 'GET' });
+    }
+
+    public delete<T>(url: string): Promise<HttpResponse<T>> {
+        return this.request(url, { method: 'DELETE' });
     }
 
     public async request<T = unknown>(url: string, config: RequestInit): Promise<HttpResponse<T>> {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using ShareLink.Application.Services;
+using ShareLink.Links.Api.Services;
 
-namespace ShareLink.Application.Attributes;
+namespace ShareLink.Links.Api.Attributes;
 
 public class LinkUrlAttribute : ValidationAttribute
 {

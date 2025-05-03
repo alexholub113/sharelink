@@ -24,7 +24,16 @@ class LinkService implements ILinkService {
             return getListFakeData;
         }
 
-        const response = await this.httpClient.post<GetListRequest, GetListResponse>(`${this.baseUrl}/getlist`, {...request});
+        const query = new URLSearchParams();
+        if (request.pageNumber !== undefined) query.append("pageNumber", request.pageNumber.toString());
+        if (request.pageSize !== undefined) query.append("pageSize", request.pageSize.toString());
+        if (request.tags) request.tags.forEach(tag => query.append("tags", tag));
+        if (request.title) query.append("title", request.title);
+        if (request.saved !== undefined) query.append("saved", request.saved.toString());
+        if (request.liked !== undefined) query.append("liked", request.liked.toString());
+        if (request.owned !== undefined) query.append("owned", request.owned.toString());
+
+        const response = await this.httpClient.get<GetListResponse>(`${this.baseUrl}/list?${query.toString()}`);
 
         return response.data;
     }
@@ -44,23 +53,23 @@ class LinkService implements ILinkService {
     }
 
     async like(request: LikeLinkRequest): Promise<void> {
-        await this.httpClient.post<LikeLinkRequest, {}>(`${this.baseUrl}/togglelike`, { ...request });
+        await this.httpClient.post<{}, {}>(`${this.baseUrl}/like/${request.linkId}`);
     }
 
     async dislike(request: DislikeLinkRequest): Promise<void> {
-        await this.httpClient.post<DislikeLinkRequest, {}>(`${this.baseUrl}/toggledislike`, { ...request });
+        await this.httpClient.post<{}, {}>(`${this.baseUrl}/dislike/${request.linkId}`);
     }
 
     async save(request: SaveLinkRequest): Promise<void> {
-        await this.httpClient.post<SaveLinkRequest, {}>(`${this.baseUrl}/togglesave`, { ...request });
+        await this.httpClient.post<{}, {}>(`${this.baseUrl}/save/${request.linkId}`);
     }
 
     async delete(request: DeleteLinkRequest): Promise<void> {
-        await this.httpClient.post<DeleteLinkRequest, {}>(`${this.baseUrl}/delete`, { ...request });
+        await this.httpClient.delete<{}>(`${this.baseUrl}/${request.linkId}`);
     }
 
     async update(request: UpdateLinkRequest): Promise<void> {
-        await this.httpClient.post<UpdateLinkRequest, {}>(`${this.baseUrl}/update`, { ...request });
+        await this.httpClient.put<UpdateLinkRequest, {}>(`${this.baseUrl}/update`, { ...request });
     }
 }
 

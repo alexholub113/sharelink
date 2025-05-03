@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace ShareLink.Identity.Controllers;
+namespace ShareLink.Identity.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

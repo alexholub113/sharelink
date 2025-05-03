@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ShareLink.Dal;
-using ShareLink.Domain.Models;
-using ShareLink.Domain.Models.ValueObjects;
+using ShareLink.Links.Api.Models.ValueObjects;
 
 #nullable disable
 

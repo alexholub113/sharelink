@@ -1,4 +1,4 @@
-using ShareLink.Identity;
+using ShareLink.Identity.Api;
 
 namespace ShareLink.Migrations.ContextFactory
 {

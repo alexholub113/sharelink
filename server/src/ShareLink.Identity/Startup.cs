@@ -1,16 +1,14 @@
-﻿using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareLink.Application.Abstraction;
-using ShareLink.Identity.Services;
-using ShareLink.Infrastructure.Commands;
+using ShareLink.Identity.Api.Services;
+using ShareLink.Infrastructure.Extensions;
+using ShareLink.Links.Api.Abstraction;
 
-namespace ShareLink.Identity;
+namespace ShareLink.Identity.Api;
 
 public class Startup
 {
@@ -30,15 +28,16 @@ public class Startup
         services.AddDbContext<AppIdentityDbContext>(identityDbOptionsAction);
 
         services.AddHttpContextAccessor();
-        services.AddAuthentication(options => {
-                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-                options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
-            })
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
+        })
             .AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+                googleOptions.ClientId = configuration["Authentication:Google:ClientId"]!;
+                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"]!;
                 googleOptions.CallbackPath = new PathString("/signing-google");
             })
             .AddGitHub(githubOptions =>
@@ -88,10 +87,6 @@ public class Startup
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddApiEndpoints();
 
-        services.AddCommandsFromAssembly<Startup>((type, builder) =>
-        {
-            var name = Regex.Replace(type.Name, @"Handler$", string.Empty).ToLowerInvariant();
-            builder.Route = $"/api/v1/identity/{name}";
-        });
+        services.AddEndpoints(typeof(Startup).Assembly);
     }
 }

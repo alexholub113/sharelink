@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ShareLink.Identity;
+using ShareLink.Identity.Api;
 
 namespace ShareLink.Migrations.Initializers;
 

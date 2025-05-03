@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.OAuth;
 
-namespace ShareLink.Identity.Services;
+namespace ShareLink.Identity.Api.Services;
 
 public interface IOAuthEventHandler
 {

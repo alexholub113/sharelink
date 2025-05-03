@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ShareLink.Identity.Dto;
+namespace ShareLink.Identity.Api.Dto;
 
 public class RefreshRequest
 {

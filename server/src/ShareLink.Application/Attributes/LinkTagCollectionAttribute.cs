@@ -1,7 +1,7 @@
+using ShareLink.Links.Api.Constants;
 using System.ComponentModel.DataAnnotations;
-using ShareLink.Domain;
 
-namespace ShareLink.Application.Attributes;
+namespace ShareLink.Links.Api.Attributes;
 
 public class LinkTagCollectionAttribute : ValidationAttribute
 {

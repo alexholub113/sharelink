@@ -1,4 +1,4 @@
-namespace ShareLink.Application.Configurations;
+namespace ShareLink.Links.Api.Configurations;
 
 public class ContentModeratorConfiguration
 {

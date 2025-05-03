@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareLink.Application.Abstraction;
+using ShareLink.Links.Api.Abstraction;
 
 namespace ShareLink.Dal;
 

@@ -1,6 +1,3 @@
-namespace ShareLink.Application.Dto;
+namespace ShareLink.Links.Api.Dto;
 
-public class UnknownSourceDataDto
-{
-    public required string Url { get; init; }
-}
+public record UnknownSourceDataDto(string Url);

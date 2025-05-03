@@ -1,14 +1,3 @@
-﻿namespace ShareLink.Application.Dto;
+﻿namespace ShareLink.Links.Api.Dto;
 
-public class TagDto
-{
-    public TagDto(string name, int count)
-    {
-        Name = name;
-        Count = count;
-    }
-
-    public string Name { get; }
-    
-    public int Count { get; }
-}
+public record TagDto(string Name, int Count);

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShareLink.Application.Dto;
+using ShareLink.Links.Api.Dto;
 
-namespace ShareLink.Application.Extensions;
+namespace ShareLink.Links.Api.Extensions;
 
 public static class QueryExtensions
 {

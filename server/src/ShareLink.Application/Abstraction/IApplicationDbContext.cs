@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShareLink.Domain.Models;
+using ShareLink.Links.Api.Models;
 
-namespace ShareLink.Application.Abstraction;
+namespace ShareLink.Links.Api.Abstraction;
 
 public interface IApplicationDbContext
 {
